@@ -209,6 +209,17 @@ header{background:rgba(15,23,42,.85);border:1px solid var(--line);border-radius:
 .slot b{display:block;margin-bottom:6px;font-family:var(--f-display)}
 .ck{display:flex;align-items:center;gap:8px;margin-bottom:8px;color:var(--fg)}
 .ck input{width:auto}
+.tour{position:fixed;inset:0;z-index:50;background:rgba(2,6,23,.88);display:flex;align-items:center;justify-content:center;padding:20px}
+.tour[hidden]{display:none}
+.tcard{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:22px 18px;max-width:380px;width:100%;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.tic{font-size:54px;line-height:1;margin-bottom:8px}
+.tcard h3{font:700 22px var(--f-display);margin:0 0 8px;color:var(--accent)}
+.tcard p{margin:0 0 16px;color:var(--fg);font-size:15px;line-height:1.5}
+.tdots{display:flex;justify-content:center;gap:6px;margin-bottom:16px}
+.tdots i{width:8px;height:8px;border-radius:50%;background:var(--line)}
+.tdots i.on{background:var(--accent)}
+.trow{display:flex;gap:10px;justify-content:space-between}
+.trow .btn{flex:1}
 </style>
 
 <div class="wrap">
@@ -316,6 +327,16 @@ header{background:rgba(15,23,42,.85);border:1px solid var(--line);border-radius:
   <button role="tab" data-tab="report" aria-selected="false"><i>📊</i>Rapor</button>
 </nav>
 
+<div class="tour" id="tour" hidden role="dialog" aria-modal="true" aria-labelledby="tourT">
+  <div class="tcard">
+    <div class="tic" id="tourIc">🪳</div>
+    <h3 id="tourT"></h3>
+    <p id="tourP"></p>
+    <div class="tdots" id="tourDots"></div>
+    <div class="trow"><button class="btn" id="tourSkip">Atla</button><button class="btn pri" id="tourNext">İleri</button></div>
+  </div>
+</div>
+
 <div class="toast" id="toast" hidden></div>
 
 <!-- Kayıt ekle / düzenle -->
@@ -366,6 +387,7 @@ header{background:rgba(15,23,42,.85);border:1px solid var(--line);border-radius:
       <div class="form" id="slots" style="margin-top:12px"></div><input type="file" id="upFile" accept="audio/*,video/*" hidden></div>
     <div class="card" style="margin:0"><h2>Görünüm</h2>
       <div class="row"><button class="btn" data-theme-set="light">☀️ Aydınlık mod</button><button class="btn" data-theme-set="dark">🌙 Karanlık mod</button></div></div>
+    <div class="card" style="margin:0"><h2>Tanıtım</h2><button class="btn" id="btnTourAgain">Tanıtımı tekrar göster</button></div>
     <div class="card" style="margin:0"><h2>Yedek</h2>
       <p>Verileriniz bu tarayıcıda saklanır. Başka cihaza taşımak için yedeği kopyalayıp orada yapıştırın.</p>
       <textarea id="bkText" aria-label="Yedek verisi" placeholder="Yedeği buraya yapıştırın"></textarea>
@@ -767,6 +789,29 @@ function tick(){setTxt($('#clock'),longDate(dk(new Date())).replace(/,.*/,'')+' 
 try{speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=function(){}}catch(e){}
 ['pointerdown','touchstart','click'].forEach(function(ev){document.addEventListener(ev,function(){unlockAudio();try{if(!window.__sp){window.__sp=1;var u=new SpeechSynthesisUtterance(' ');u.volume=0;speechSynthesis.speak(u)}}catch(e){}},{capture:true,passive:true})});
 loadFull();idbLoad();slotsBind();
+/* ---------- Tanıtım ---------- */
+var TOUR=[
+ ['🪳','Merhaba, ben Hamam Böceği','Mesainizi ben takip ederim. Her şey ekranın ortasındaki böcekte görünür.'],
+ ['✅','Mesaiye giriş','Sabah gelince "İşe giriş"e basın, ben "Dukturrr yukuuu!" diye bağırırım. Çıkarken "İşten çıkış"a basın.'],
+ ['☕','Molaya çıkın','"Molaya çık"a basınca "lülülü" diye öterim. Dönünce "İçeri gir"e basın.'],
+ ['🆘','15 dakika kuralı','Mola 15 dakikayı geçerse ben ölürüm! Moladan dönünce dirilirim. Bu süreyi Ayarlar\'dan değiştirebilirsiniz.'],
+ ['🗓️','Saatlerinizi girin','Ayarlar\'da hafta içi, cumartesi ve pazar için ayrı saat girin. Kayıtlar, izinler ve rapor sekmelerinden geçmişe bakabilirsiniz.'],
+ ['🎉','Hazırsınız!','Kayıtlar bu telefonda saklanır. Yedeği Ayarlar\'daki Yedek bölümünden alabilirsiniz.']
+];
+var tStep=0;
+function tourSeen(){try{return localStorage.getItem('hb-tour-done')==='1'}catch(e){return true}}
+function tourMark(){try{localStorage.setItem('hb-tour-done','1')}catch(e){}}
+function tourRender(){var t=TOUR[tStep];
+  setTxt($('#tourIc'),t[0]);setTxt($('#tourT'),t[1]);setTxt($('#tourP'),t[2]);
+  setHtml($('#tourDots'),TOUR.map(function(_,i){return '<i class="'+(i===tStep?'on':'')+'"></i>'}).join(''));
+  setTxt($('#tourNext'),tStep===TOUR.length-1?'Başla':'İleri');
+  $('#tourSkip').hidden=tStep===TOUR.length-1}
+function tourOpen(){tStep=0;tourRender();open('#tour')}
+function tourClose(){tourMark();close('#tour')}
+$('#tourNext').onclick=function(){unlockAudio();if(tStep<TOUR.length-1){tStep++;tourRender()}else tourClose()};
+$('#tourSkip').onclick=tourClose;
+$('#btnTourAgain').onclick=function(){close('#shSettings');tourOpen()};
+if(!tourSeen())tourOpen();
 applyTheme();renderAll();tick();setInterval(tick,1000);
 })();
 </script>
