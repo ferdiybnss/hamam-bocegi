@@ -631,6 +631,7 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
 </section>
 
 <section id="tab-prayer" role="tabpanel" hidden>
+  <label class="ck" style="display:flex;gap:8px;align-items:center;margin:0 0 10px;padding:10px 12px;border:1px solid var(--line);border-radius:12px"><input type="checkbox" id="prayerNotifTab"> 🔔 Bildirim panelinde namaz vaktini göster <span class="sub" style="margin:0">(varsayılan kapalı)</span></label>
   <div class="sofi-hero" id="sofiHero">
     <div class="sofi-lantern" aria-hidden="true">🏮 ✨ 🏮</div>
     <div class="sofi-glow"></div>
@@ -3610,11 +3611,11 @@ function populateCitySelects(){
 
 /* ===== Bildirimler: durum (sadece mesaideyken) + namaz vakti ===== */
 function notifGet(k){
-  var d={status:true,prayer:true,pull:true,toolsAuto:true},n=(S.settings&&S.settings.notif)||{};
+  var d={status:true,prayer:false,pull:true,toolsAuto:true},n=(S.settings&&S.settings.notif)||{};
   if(k==='steps')return !!(S.settings&&S.settings.steps);
   return n[k]===undefined?d[k]:!!n[k];
 }
-var NOTIF_IDS={setNotifStatus:'status',setNotifPrayer:'prayer',setNotifPull:'pull',setToolsAuto:'toolsAuto'};
+var NOTIF_IDS={setNotifStatus:'status',setNotifPrayer:'prayer',prayerNotifTab:'prayer',setNotifPull:'pull',setToolsAuto:'toolsAuto'};
 function syncNotifSettings(){
   Object.keys(NOTIF_IDS).forEach(function(id){
     var el=$('#'+id);if(el)el.checked=notifGet(NOTIF_IDS[id]);
@@ -3651,12 +3652,39 @@ function leftText(ms){
   return h>0?(h+' sa '+mm+' dk'):(mm+' dk');
 }
 var PRAYER_SUF={'İmsak':"İmsak'a",'Öğle':"Öğle'ye",'İkindi':"İkindi'ye",'Akşam':"Akşam'a",'Yatsı':"Yatsı'ya"};
+function prayerTimeline(){
+  var city=S.settings.prayerCity||'İstanbul',info=getCityCoords(city);
+  var now=new Date();
+  var yest=new Date(now);yest.setDate(yest.getDate()-1);
+  var tom=new Date(now);tom.setDate(tom.getDate()+1);
+  var yT=calcPrayerTimesOffline(yest,info[1],info[2]);
+  var tT=calcPrayerTimesOffline(tom,info[1],info[2]);
+  var T=getTodayPrayerTimes(city);
+  var list=[
+    {label:'Yatsı',t:yT.Isha,at:atTime(yest,yT.Isha)},
+    {label:'İmsak',t:T.Fajr,at:atTime(now,T.Fajr)},
+    {label:'Güneş',t:T.Sunrise,at:atTime(now,T.Sunrise)},
+    {label:'Öğle',t:T.Dhuhr,at:atTime(now,T.Dhuhr)},
+    {label:'İkindi',t:T.Asr,at:atTime(now,T.Asr)},
+    {label:'Akşam',t:T.Maghrib,at:atTime(now,T.Maghrib)},
+    {label:'Yatsı',t:T.Isha,at:atTime(now,T.Isha)},
+    {label:'İmsak',t:tT.Fajr,at:atTime(tom,tT.Fajr)}
+  ];
+  var cur=list[0],nxt=list[1],i;
+  for(i=0;i<list.length;i++){
+    if(list[i].at<=now)cur=list[i];
+    else{nxt=list[i];break}
+  }
+  return {cur:cur,nxt:nxt,now:now};
+}
 function prayerNotifData(){
-  var np=nextPrayer(),T=np.times,mins=Math.max(0,Math.round((np.at-new Date())/60000));
+  var tl=prayerTimeline();
+  var mins=Math.max(0,Math.round((tl.nxt.at-tl.now)/60000));
   var h=Math.floor(mins/60),m=mins%60,left=(h>0?h+' sa ':'')+m+' dk';
-  var body='🌙 İmsak '+T.Fajr+'  ☀️ Güneş '+T.Sunrise+'  🕛 Öğle '+T.Dhuhr+'\n🌤 İkindi '+T.Asr+'  🌇 Akşam '+T.Maghrib+'  🌃 Yatsı '+T.Isha;
+  var title='Sonraki: '+tl.nxt.label+' '+tl.nxt.t+' · '+left+' kaldı';
+  var body='Şu an: '+tl.cur.label+' '+tl.cur.t;
   if(notifGet('steps')&&S.settings.stepsNotif!==false)body+='\n🚶 '+stepsData().n.toLocaleString('tr-TR')+' adım';
-  return {title:(PRAYER_SUF[np.label]||np.label)+': '+left,body:body};
+  return {title:title,body:body};
 }
 function statusNotifData(){
   var c=calc(dk(new Date()));
@@ -3747,7 +3775,7 @@ if($('#stepsReset')){
   $('#stepsReset').onclick=function(){var o=stepsData();o.n=0;stepsSave(o);renderSteps();pushNotifs()};
 }
 
-var APP_VERSION='2026-11-20-v11';
+var APP_VERSION='2026-11-21-v12';
 var APP_CHANGES=[
   'Lingo\'da Kolay / Orta / Zor seviyeleri eklendi; her kelimede konu cümlesi var.',
   'Hicri tarih Diyanet takvimiyle uyumlu hale getirildi (bugün 10 Cemaziyelahir 1448).',
@@ -3760,7 +3788,8 @@ var APP_CHANGES=[
   'Lingo\'da ipucu artık sadece kelimenin konusunu anlatan bir cümle.',
   'Yeni Adım Sayar: Araçlar sekmesinin en üstünde; Ayarlar › Araçlar bölümünden açılıp kapanır.',
   'Namaz bildirimi daha okunur: vakitler simgelerle, altında bugünkü adım sayısı.',
-  'Tanıtıma Araçlar, Bildirimler ve Adım Sayar anlatımları eklendi.'
+  'Tanıtıma Araçlar, Bildirimler ve Adım Sayar anlatımları eklendi.',
+  'Namaz bildirimi sadeleşti: şu anki vakit ve sonraki vakit ile kalan süre. Varsayılan kapalı; Namaz sekmesinden açabilirsiniz.'
 ];
 function syncToolsTabVisibility(){
   var on=!!(S.settings&&S.settings.toolsTab===true);
