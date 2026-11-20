@@ -923,6 +923,7 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
 
 <section id="tab-tools" role="tabpanel" hidden>
  <div class="tl-wrap">
+  <div class="p-card"><div class="p-card-head"><h3>🚶 Adım Sayar</h3></div><div class="tl-big" id="stepsOut">0</div><p class="sub" id="stepsSub" style="text-align:center;margin:0"></p><div class="tl-row"><button type="button" class="btn small" id="stepsReset">Bugünü sıfırla</button></div></div>
   <details class="p-card tl-acc"><summary class="p-card-head"><h3>🧮 Hesap Makinesi</h3><span class="tl-chev">▾</span></summary><input id="calcOut" class="tl-out" readonly value="0"><div class="tl-grid" id="calcKeys"></div></details>
   <details class="p-card tl-acc"><summary class="p-card-head"><h3>⏱️ Kronometre</h3><span class="tl-chev">▾</span></summary><div class="tl-big" id="swOut">00:00.00</div><div class="tl-row"><button class="btn pri" id="swGo">Başlat</button><button class="btn" id="swLap">Tur</button><button class="btn" id="swReset">Sıfırla</button></div><ol class="tl-laps" id="swLaps"></ol></details>
   <details class="p-card tl-acc"><summary class="p-card-head"><h3>⏲️ Zamanlayıcı</h3><span class="tl-chev">▾</span></summary><div class="tl-big" id="tmOut">00:00</div><div class="tl-row"><button class="btn small" data-tm="1">1 dk</button><button class="btn small" data-tm="5">5 dk</button><button class="btn small" data-tm="10">10 dk</button><button class="btn small" data-tm="25">25 dk</button></div><div class="tl-row"><button class="btn pri" id="tmGo">Başlat</button><button class="btn" id="tmReset">Sıfırla</button></div></details>
@@ -952,6 +953,8 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
   <p style="margin:0">Hesap makinesi, kronometre, zamanlayıcı, birim çevirici ve not defterini içeren Araçlar sekmesi.</p>
   <label class="ck"><input type="checkbox" id="setToolsOn"> Alt menüde Araçlar sekmesini göster</label>
   <label class="ck"><input type="checkbox" id="setToolsAuto"> Uygulama güncellenince Araçlar sekmesini otomatik aç</label>
+  <label class="ck"><input type="checkbox" id="setSteps"> 🚶 Adım sayarı aç (uygulama açıkken sayar)</label>
+  <label class="ck"><input type="checkbox" id="setStepsNotif"> Adım sayısını namaz bildiriminde göster</label>
 </div></details>
 <details class="sec"><summary>🔔 Bildirim</summary><div class="secbody">
   <p style="margin:0">Bildirimleri buradan açıp kapatabilirsiniz. Bildirim izni gerekir.</p>
@@ -3608,6 +3611,7 @@ function populateCitySelects(){
 /* ===== Bildirimler: durum (sadece mesaideyken) + namaz vakti ===== */
 function notifGet(k){
   var d={status:true,prayer:true,pull:true,toolsAuto:true},n=(S.settings&&S.settings.notif)||{};
+  if(k==='steps')return !!(S.settings&&S.settings.steps);
   return n[k]===undefined?d[k]:!!n[k];
 }
 var NOTIF_IDS={setNotifStatus:'status',setNotifPrayer:'prayer',setNotifPull:'pull',setToolsAuto:'toolsAuto'};
@@ -3650,9 +3654,8 @@ var PRAYER_SUF={'İmsak':"İmsak'a",'Öğle':"Öğle'ye",'İkindi':"İkindi'ye",
 function prayerNotifData(){
   var np=nextPrayer(),T=np.times,mins=Math.max(0,Math.round((np.at-new Date())/60000));
   var h=Math.floor(mins/60),m=mins%60,left=(h>0?h+' sa ':'')+m+' dk';
-  var labels=['İmsak','Güneş','Öğle','İkindi','Akşam','Yatsı'];
-  var times=[T.Fajr,T.Sunrise,T.Dhuhr,T.Asr,T.Maghrib,T.Isha];
-  var body=labels.join('    ')+'\n'+times.join('    ');
+  var body='🌙 İmsak '+T.Fajr+'  ☀️ Güneş '+T.Sunrise+'  🕛 Öğle '+T.Dhuhr+'\n🌤 İkindi '+T.Asr+'  🌇 Akşam '+T.Maghrib+'  🌃 Yatsı '+T.Isha;
+  if(notifGet('steps')&&S.settings.stepsNotif!==false)body+='\n🚶 '+stepsData().n.toLocaleString('tr-TR')+' adım';
   return {title:(PRAYER_SUF[np.label]||np.label)+': '+left,body:body};
 }
 function statusNotifData(){
@@ -3687,7 +3690,64 @@ function initNotifs(){
   setTimeout(pushNotifs,2000);
 }
 
-var APP_VERSION='2026-11-20-v10';
+
+/* ===== Adım sayar (hareket sensörü, tahmini; uygulama açıkken) ===== */
+function stepsData(){
+  var today=dk(new Date());
+  try{var o=JSON.parse(localStorage.getItem('hb-steps')||'null');if(o&&o.d===today)return o}catch(e){}
+  return {d:today,n:0};
+}
+function stepsSave(o){try{localStorage.setItem('hb-steps',JSON.stringify(o))}catch(e){}}
+var SK={ema:9.81,lastT:0,on:false};
+function onMotionStep(e){
+  var a=e.accelerationIncludingGravity;if(!a||a.x==null)return;
+  var m=Math.sqrt(a.x*a.x+a.y*a.y+a.z*a.z);
+  SK.ema=SK.ema*0.92+m*0.08;
+  var t=Date.now();
+  if(m-SK.ema>1.6&&t-SK.lastT>350){
+    SK.lastT=t;var o=stepsData();o.n++;stepsSave(o);renderSteps();
+  }
+}
+function stepsStart(){
+  if(SK.on)return;SK.on=true;window.addEventListener('devicemotion',onMotionStep);
+}
+function stepsStop(){
+  SK.on=false;window.removeEventListener('devicemotion',onMotionStep);
+}
+function renderSteps(){
+  var o=stepsData();
+  setTxt($('#stepsOut'),o.n.toLocaleString('tr-TR'));
+  var on=!!(S.settings&&S.settings.steps);
+  setTxt($('#stepsSub'),on?'Bugünkü tahmini adım (uygulama açıkken sayılır)':'Kapalı. Ayarlar › Araçlar › Adım sayarı açın.');
+}
+function syncStepsSettings(){
+  var on=!!(S.settings&&S.settings.steps);
+  if($('#setSteps'))$('#setSteps').checked=on;
+  if($('#setStepsNotif'))$('#setStepsNotif').checked=(S.settings.stepsNotif!==false);
+  if(on)stepsStart();else stepsStop();
+  renderSteps();
+}
+if($('#setSteps')){
+  $('#setSteps').onchange=function(){
+    var want=this.checked,el=this;
+    if(!want){S.settings.steps=false;save();stepsStop();syncStepsSettings();return}
+    if(typeof DeviceMotionEvent==='undefined'){el.checked=false;toast('Bu cihaz adım sensörünü desteklemiyor');return}
+    var go=function(){S.settings.steps=true;save();syncStepsSettings();pushNotifs();toast('🚶 Adım sayar açıldı')};
+    if(typeof DeviceMotionEvent.requestPermission==='function'){
+      DeviceMotionEvent.requestPermission().then(function(st){
+        if(st==='granted')go();else{el.checked=false;toast('Hareket izni verilmedi')}
+      }).catch(function(){el.checked=false;toast('Hareket izni verilmedi')});
+    }else go();
+  };
+}
+if($('#setStepsNotif')){
+  $('#setStepsNotif').onchange=function(){S.settings.stepsNotif=this.checked;save();pushNotifs()};
+}
+if($('#stepsReset')){
+  $('#stepsReset').onclick=function(){var o=stepsData();o.n=0;stepsSave(o);renderSteps();pushNotifs()};
+}
+
+var APP_VERSION='2026-11-20-v11';
 var APP_CHANGES=[
   'Lingo\'da Kolay / Orta / Zor seviyeleri eklendi; her kelimede konu cümlesi var.',
   'Hicri tarih Diyanet takvimiyle uyumlu hale getirildi (bugün 10 Cemaziyelahir 1448).',
@@ -3697,7 +3757,10 @@ var APP_CHANGES=[
   'Mesaideyken durum bildirimi (işe girdiysen) daha düzenli gösteriliyor; işe girmediysen gösterilmez.',
   'Namaz vakti bildirimi eklendi: sıradaki vaktin kalan süresi ve günün vakitleri. Ayarlar › Bildirim\'den açılıp kapatılır.',
   'Araçlar ve Bildirim ayarları ayrı bölümlere ayrıldı; yukarıdan çekince açılan panel de ayarlanabiliyor.',
-  'Lingo\'da ipucu artık sadece kelimenin konusunu anlatan bir cümle.'
+  'Lingo\'da ipucu artık sadece kelimenin konusunu anlatan bir cümle.',
+  'Yeni Adım Sayar: Araçlar sekmesinin en üstünde; Ayarlar › Araçlar bölümünden açılıp kapanır.',
+  'Namaz bildirimi daha okunur: vakitler simgelerle, altında bugünkü adım sayısı.',
+  'Tanıtıma Araçlar, Bildirimler ve Adım Sayar anlatımları eklendi.'
 ];
 function syncToolsTabVisibility(){
   var on=!!(S.settings&&S.settings.toolsTab===true);
@@ -4059,6 +4122,8 @@ var TOUR=[
  ['🆘','Mola hakkınız var!','Hafta içi günlük mola hakkınız 1 saat 15 dakika, hafta sonu 1 saat. Toplamda bu süreyi aşarsanız ben ölürüm, cidden! Ertesi gün yeniden dirilirim.'],
  ['🕌','Namaz Vakitleri & Sofi Böcek','Alt menüdeki “Namaz” sekmesinde 81 il için Diyanet uyumlu vakitleri, Zikirmatiği ve mini bilgi yarışmasını bulabilirsiniz. İsterseniz Ayarlar → Namaz Vakitleri Sekmesi bölümünden kapatıp açabilirsiniz.'],
  ['⚙️','Ayarlara bakın','Ayarlar sekmesinde başlıklara dokunarak açın: çalışma saatleri, sesler, Namaz sekmesi ayarı, yedek ve Excel burada.'],
+ ['🧰','Araçlar & Bildirimler','Araçlar sekmesinde adım sayar, hesap makinesi, kronometre, zamanlayıcı, birim çevirici ve not defteri var. Bildirimler Ayarlar › Bildirim bölümünden açılıp kapanır: mesaideyken molaya çık/dön, namaz vakitleri ve isterseniz adım sayısı.'],
+ ['🚶','Adım sayar','Ayarlar › Araçlar bölümünden açın. Telefonunuzun hareket sensörüyle adımlarınızı tahmin eder. Sayaç uygulama açıkken çalışır ve bugünün adımları namaz bildiriminde küçük bir satırda görünür.'],
  ['🎉','Hazırsınız!','Kayıtlarınız telefonda saklanır ve her 3 günde bir yedek almanız hatırlatılır. Haydi başlayın!']
 ];
 var tStep=0;
@@ -4081,7 +4146,7 @@ if(!isStandaloneMode()&&lsGet('hb-install-guide-seen')!=='1'){
 }else{
   gateCheck();
 }
-populateCitySelects();syncPrayerTabVisibility();syncToolsTabVisibility();checkAppUpdate();syncNotifSettings();initNotifs();autoBackup();applyTheme();applyRoachLook();renderAll();tick();setInterval(tick,1000);
+populateCitySelects();syncPrayerTabVisibility();syncToolsTabVisibility();checkAppUpdate();syncNotifSettings();initNotifs();syncStepsSettings();autoBackup();applyTheme();applyRoachLook();renderAll();tick();setInterval(tick,1000);
 })();
 </script>
 
