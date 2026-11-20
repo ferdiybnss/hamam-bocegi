@@ -948,10 +948,17 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
   <label class="ck"><input type="checkbox" id="setPrayerOn"> Alt menüde Namaz Vakitleri sekmesini göster</label>
   <label>Şehir seçimi (81 İl)<select id="setPrayerCity"></select></label>
 </div></details>
-<details class="sec"><summary>🧰 Araçlar Sekmesi & Bildirimler</summary><div class="secbody">
-  <p style="margin:0">Hesap makinesi, kronometre, zamanlayıcı, birim çevirici ve not defterini içeren Araçlar sekmesini istediğiniz zaman açıp kapatabilirsiniz.</p>
+<details class="sec"><summary>🧰 Araçlar</summary><div class="secbody">
+  <p style="margin:0">Hesap makinesi, kronometre, zamanlayıcı, birim çevirici ve not defterini içeren Araçlar sekmesi.</p>
   <label class="ck"><input type="checkbox" id="setToolsOn"> Alt menüde Araçlar sekmesini göster</label>
-  <div class="row"><button type="button" class="btn" id="btnNotifPerm">🔔 Güncelleme bildirimine izin ver</button></div>
+  <label class="ck"><input type="checkbox" id="setToolsAuto"> Uygulama güncellenince Araçlar sekmesini otomatik aç</label>
+</div></details>
+<details class="sec"><summary>🔔 Bildirim</summary><div class="secbody">
+  <p style="margin:0">Bildirimleri buradan açıp kapatabilirsiniz. Bildirim izni gerekir.</p>
+  <label class="ck"><input type="checkbox" id="setNotifStatus"> Mesaideyken durum bildirimi (sadece işe giriş yaptıysanız)</label>
+  <label class="ck"><input type="checkbox" id="setNotifPrayer"> Namaz vakti bildirimi (kalan süre ve günün vakitleri)</label>
+  <label class="ck"><input type="checkbox" id="setNotifPull"> Yukarıdan aşağı çekince Molaya çık / Moladan dön paneli</label>
+  <div class="row"><button type="button" class="btn" id="btnNotifPerm">🔔 Bildirim iznini ver</button></div>
 </div></details>
 <details class="sec"><summary>🎬 Tanıtım & Kurulum</summary><div class="secbody"><div class="row"><button class="btn" id="btnTourAgain">Tanıtımı tekrar göster</button><button class="btn pri" id="btnInstallGuide">📲 Masaüstüne / Ana Ekrana Ekle</button></div></div></details>
 <details class="sec"><summary>💾 Yedek</summary><div class="secbody">
@@ -2168,15 +2175,120 @@ var LW_HINTS={
 'MÜZİK':'Ses ve ritmin sanatı.',
 'RESİM':'Boya ile yapılan görsel sanat eseri.'
 };
-var LW_ANS=LW.concat(Object.keys(LW_HINTS)).filter(function(w,i,a){return w.length===5&&a.indexOf(w)===i});
+(function(){var X={
+'ÖRDEK':'Gölde yüzen, vaklayarak ses çıkaran bir kuş.',
+'KARGA':'Siyah tüylü, zeki bir kuş.',
+'KUMRU':'Sesi hüzünlü gelen, sakin bir kuş.',
+'KIRPI':'Sırtı dikenli küçük bir memeli.',
+'SİNEK':'Evlerde uçan, rahatsız edici küçük bir böcek.',
+'PANDA':'Bambu yiyen, siyah beyaz renkli bir ayı.',
+'GEYİK':'Boynuzlu, ormanda yaşayan otçul bir hayvan.',
+'DOMUZ':'Çiftlikte beslenen, çamurda yuvarlanmayı seven bir hayvan.',
+'KOYUN':'Yünüyle bilinen evcil bir hayvan.',
+'YILAN':'Sürünerek hareket eden uzun bir canlı.',
+'ÇINAR':'Geniş gölgesiyle bilinen büyük bir ağaç.',
+'ÇİMEN':'Bahçede yetişen yeşil bitki örtüsü.',
+'DİKEN':'Bitkinin sivri uzantısı.',
+'HELVA':'Tahinle yapılan, şekerli bir tatlı.',
+'REÇEL':'Meyveden yapılan, ekmeğe sürülen tatlı.',
+'BAKLA':'Yeşil kabuklu, içi yenen bir baklagil.',
+'NOHUT':'Çorbalarda kullanılan sarımsı bir baklagil.',
+'PİLİÇ':'Tavuğun yavrusu.',
+'KÖFTE':'Kıymadan yapılan, yuvarlak bir yemek.',
+'SUCUK':'Baharatlı, kurutulmuş bir sosis türü.',
+'LOKUM':'Şekerli, yumuşak bir jöle tatlı.',
+'BUZUL':'Donmuş, buzla kaplı.',
+'KUZEY':'Pusula yönlerinden biri.',
+'GÜNEY':'Kuzeyin karşısındaki yön.',
+'KÖPRÜ':'İki yakayı birbirine bağlayan yapı.',
+'BURUN':'Koku alma organı.',
+'DUDAK':'Ağzın kenarındaki yumuşak kısım.',
+'BOYUN':'Başı gövdeye bağlayan kısım.',
+'KALÇA':'Bel ile bacak arasındaki bölge.',
+'BEDEN':'Vücudun tamamı.',
+'PERDE':'Pencereyi kapatmaya yarayan kumaş.',
+'KAZAN':'Yemek pişirilen büyük kap.',
+'KÜVET':'Banyoda içinde yıkanılan büyük kap.',
+'SABUN':'Ellerimizi yıkamaya yarayan köpüklü madde.',
+'HAVLU':'Kurulanmak için kullanılan kumaş.',
+'TARAK':'Saçı düzeltmek için dişli bir araç.',
+'ÇORAP':'Ayağa giyilen örgü giysi.',
+'KABAN':'Kışın giyilen uzun dış giysi.',
+'PALTO':'Kışın giyilen dış giysi.',
+'KAZAK':'Yünlü üst giysi.',
+'ÖNLÜK':'Mutfakta giyilen koruyucu giysi.',
+'SINIF':'Okulda ders yapılan oda.',
+'SINAV':'Öğrencinin bilgisini ölçen değerlendirme.',
+'DEFTER':'Yazı yazmak için kullanılan kağıt kitap.',
+'SILGI':'Yazılanları silmeye yarayan araç.',
+'KATİP':'Yazı işleri yapan kişi.',
+'ÇIRAK':'Usta yanında mesleği öğrenen kişi.',
+'ASKER':'Orduda görev yapan kişi.',
+'POLİS':'Güvenliği sağlayan kamu görevlisi.',
+'TERZİ':'Dikiş işiyle uğraşan kişi.',
+'DİŞÇİ':'Diş tedavisi yapan kişi.',
+'MİMAR':'Yapıları tasarlayan kişi.',
+'ŞOFÖR':'Araç süren kişi.',
+'PİLOT':'Uçağı kullanan kişi.',
+'VOLEY':'Filenin üzerinden vurulan bir top sporu.',
+'YÜZME':'Suda yapılan bir spor.',
+'GÜREŞ':'Vücut gücüyle yapılan bir spor.',
+'ATLET':'Koşu ve atlama sporcusu.',
+'HAKEM':'Maçı yöneten kişi.',
+'KUPA':'Turnuva kazananlara verilen büyük ödül.',
+'SAKİN':'Telaşsız, dingin.',
+'ÖFKELİ':'Öfke duyan, kızgın.',
+'NAZİK':'Kibar ve incelikli.',
+'KIBAR':'Görgülü, saygılı.',
+'TEMİZ':'Kirli olmayan.',
+'KİRLİ':'Temiz olmayan.',
+'HIZLI':'Çabuk, süratli.',
+'YAVAŞ':'Ağır hareket eden.',
+'GÜZEL':'Hoşa giden, göze hoş görünen.',
+'GENİŞ':'Yüzeyi büyük olan.',
+'SICAK':'Yüksek ısılı.',
+'SOĞUK':'Düşük ısılı.',
+'KOLAY':'Zahmetsiz, güç olmayan.',
+'ISLAK':'Su ile nemlenmiş.',
+'SESSİZ':'Ses çıkarmayan.',
+'YORGUN':'Enerjisi tükenmiş, bitkin.',
+'PAZAR':'Haftanın son günü.',
+'BAHAR':'Kışın ardından gelen mevsim.',
+'GECE':'Güneşin battığı ve karanlığın hüküm sürdüğü zaman.',
+'MAYIS':'Baharın ortasındaki ay.',
+'EYLÜL':'Yazın bitişini takip eden ay.',
+'KASIM':'Sonbaharın son aylarından biri.',
+'KİLİT':'Kapıyı kilitlemeye yarayan araç.',
+'DAVUL':'Vurularak çalınan bir müzik aleti.',
+'GİTAR':'Telli bir müzik aleti.',
+'KEMAN':'Yay ile çalınan bir müzik aleti.',
+'BİLGİ':'Öğrenilen ve bilinen şeylerin tümü.',
+'FİKİR':'Düşünce, görüş.',
+'CEVAP':'Sorulan soruya verilen yanıt.',
+'HABER':'Yeni gelişmeleri bildiren yazı ya da söz.',
+'RADYO':'Sesli yayın yapan bir araç.',
+'MESAJ':'Kısa yazılı iletişim.',
+'ÇAĞRI':'Telefonla yapılan arama.',
+'ŞİFRE':'Gizli tutulan parola.',
+'GİZLİ':'Açıklanmamış, saklı.',
+'KAYIT':'Yazılı ya da kaydedilmiş bilgi.',
+'ADRES':'Bir yerin konum bilgisi.',
+'BORÇ':'Geri ödenmesi gereken miktar.',
+'ÜCRET':'Yapılan iş karşılığında verilen ödeme.',
+'FİYAT':'Bir malın bedeli.',
+'ÇİZGİ':'Kalemle çekilen uzun iz.',
+'KARE':'Dört eşit kenarlı şekil.',
+'ÜÇGEN':'Üç kenarlı şekil.',
+'DAİRE':'Yuvarlak şekil.',
+'ÇEMBER':'Yuvarlak bir halka.',
+};Object.keys(X).forEach(function(k){if(!LW_HINTS[k])LW_HINTS[k]=X[k]})})();
+var LW_ANS=Object.keys(LW_HINTS).filter(function(w,i,a){return w.length===5&&a.indexOf(w)===i});
 LW_ANS.forEach(function(w){LW_SET.add(w)});
 
-function lingoTopic(w){return LW_HINTS[w]||('Bu kelime "'+w[0]+'" harfiyle başlıyor ve "'+w[4]+'" harfiyle bitiyor.')}
+function lingoTopic(w){return LW_HINTS[w]||'Bu kelimenin konusu henüz eklenmedi.'}
 function lingoHint(){
   if(LG.over)return '';
-  var base='İpucu: '+lingoTopic(LG.t);
-  if(LG.diff==='kolay')return 'İlk harf: '+LG.t[0]+' · '+base;
-  return base;
+  return 'Konu: '+lingoTopic(LG.t);
 }
 function lingoDiffUI(){
   $('#gameOv').classList.toggle('lk8',LG.maxRows===8);
@@ -3482,13 +3594,98 @@ function populateCitySelects(){
   if($('#prayerCityQuick'))$('#prayerCityQuick').innerHTML=opts;
   if($('#setPrayerCity'))$('#setPrayerCity').innerHTML=opts;
 }
-var APP_VERSION='2026-11-20-v7';
+
+/* ===== Bildirimler: durum (sadece mesaideyken) + namaz vakti ===== */
+function notifGet(k){
+  var d={status:true,prayer:true,pull:true,toolsAuto:true},n=(S.settings&&S.settings.notif)||{};
+  return n[k]===undefined?d[k]:!!n[k];
+}
+var NOTIF_IDS={setNotifStatus:'status',setNotifPrayer:'prayer',setNotifPull:'pull',setToolsAuto:'toolsAuto'};
+function syncNotifSettings(){
+  Object.keys(NOTIF_IDS).forEach(function(id){
+    var el=$('#'+id);if(el)el.checked=notifGet(NOTIF_IDS[id]);
+  });
+  document.body.dataset.notifPull=notifGet('pull')?'on':'off';
+  document.body.dataset.notifStatus=notifGet('status')?'on':'off';
+}
+Object.keys(NOTIF_IDS).forEach(function(id){
+  var el=$('#'+id);if(!el)return;
+  el.onchange=function(){
+    S.settings.notif=S.settings.notif||{};
+    S.settings.notif[NOTIF_IDS[id]]=this.checked;save();
+    syncNotifSettings();pushNotifs();
+  };
+});
+var PRAYER_LIST=[['Fajr','İmsak'],['Dhuhr','Öğle'],['Asr','İkindi'],['Maghrib','Akşam'],['Isha','Yatsı']];
+function atTime(base,hhmm,dayOffset){
+  var p=String(hhmm).split(':'),d=new Date(base);
+  d.setDate(d.getDate()+(dayOffset||0));d.setHours(+p[0],+p[1],0,0);return d;
+}
+function nextPrayer(){
+  var city=S.settings.prayerCity||'İstanbul',info=getCityCoords(city);
+  var now=new Date(),t=getTodayPrayerTimes(city),i;
+  for(i=0;i<PRAYER_LIST.length;i++){
+    var at=atTime(now,t[PRAYER_LIST[i][0]]);
+    if(at>now)return {label:PRAYER_LIST[i][1],at:at,times:t,city:city};
+  }
+  var tom=new Date(now);tom.setDate(tom.getDate()+1);
+  var tt=calcPrayerTimesOffline(tom,info[1],info[2]);
+  return {label:'İmsak',at:atTime(now,tt.Fajr,1),times:t,city:city};
+}
+function leftText(ms){
+  var m=Math.max(0,Math.round(ms/60000)),h=Math.floor(m/60),mm=m%60;
+  return h>0?(h+' sa '+mm+' dk'):(mm+' dk');
+}
+function prayerNotifData(){
+  var np=nextPrayer(),T=np.times;
+  var row='İmsak '+T.Fajr+' · Güneş '+T.Sunrise+' · Öğle '+T.Dhuhr+' · İkindi '+T.Asr+' · Akşam '+T.Maghrib+' · Yatsı '+T.Isha;
+  return {title:'🕌 '+np.label+' vaktine '+leftText(np.at-new Date())+' kaldı',body:'📍 '+np.city+'\n'+row};
+}
+function statusNotifData(){
+  var c=calc(dk(new Date()));
+  if(!c.inside)return null;
+  if(c.onBreak)return {t:'☕ Molada',b:'Moladan dönünce "Moladan dön" butonuna bas.',canBreak:false,canBack:true};
+  return {t:'💼 Mesaidesin',b:'Molaya çıkmak için "Molaya çık" butonuna bas.',canBreak:true,canBack:false};
+}
+function closeTagged(reg,tag){
+  return reg.getNotifications({tag:tag}).then(function(ns){ns.forEach(function(n){n.close()})});
+}
+function pushNotifs(){
+  try{
+    if(!('Notification' in window)||Notification.permission!=='granted'||!navigator.serviceWorker)return;
+    navigator.serviceWorker.ready.then(function(reg){
+      var jobs=[],st=statusNotifData();
+      if(st&&notifGet('status')){
+        var acts=[];
+        if(st.canBreak)acts.push({action:'mola',title:'☕ Molaya çık'});
+        if(st.canBack)acts.push({action:'don',title:'💼 Moladan dön'});
+        jobs.push(reg.showNotification('Hamam Böceği · '+st.t,{body:st.b,tag:'hb-status',icon:'icon-192.png',badge:'icon-192.png',silent:true,requireInteraction:true,renotify:false,actions:acts}));
+      }else{jobs.push(closeTagged(reg,'hb-status'))}
+      if(notifGet('prayer')){
+        var pd=prayerNotifData();
+        jobs.push(reg.showNotification(pd.title,{body:pd.body,tag:'hb-prayer',icon:'icon-192.png',badge:'icon-192.png',silent:true,requireInteraction:false,renotify:false}));
+      }else{jobs.push(closeTagged(reg,'hb-prayer'))}
+      return Promise.all(jobs);
+    }).catch(function(){});
+  }catch(e){}
+}
+function initNotifs(){
+  document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('button'))setTimeout(pushNotifs,250)},true);
+  setInterval(pushNotifs,60000);
+  setTimeout(pushNotifs,2000);
+}
+
+var APP_VERSION='2026-11-20-v8';
 var APP_CHANGES=[
   'Lingo\'da Kolay / Orta / Zor seviyeleri eklendi; her kelimede konu cümlesi var.',
   'Hicri tarih İstanbul saatine göre gösteriliyor.',
   'Kıble pusulası kaldırıldı.',
   'Yeni Araçlar sekmesi: hesap makinesi, kronometre, zamanlayıcı, birim çevirici ve not defteri. Ayarlar\'dan açılıp kapatılır.',
-  'Kayıtlarınız güncellemelerde silinmez; tarayıcıdan kalıcı depolama istenir.'
+  'Kayıtlarınız güncellemelerde silinmez; tarayıcıdan kalıcı depolama istenir.',
+  'Mesaideyken durum bildirimi (işe girdiysen) daha düzenli gösteriliyor; işe girmediysen gösterilmez.',
+  'Namaz vakti bildirimi eklendi: sıradaki vaktin kalan süresi ve günün vakitleri. Ayarlar › Bildirim\'den açılıp kapatılır.',
+  'Araçlar ve Bildirim ayarları ayrı bölümlere ayrıldı; yukarıdan çekince açılan panel de ayarlanabiliyor.',
+  'Lingo\'da ipucu artık sadece kelimenin konusunu anlatan bir cümle.'
 ];
 function syncToolsTabVisibility(){
   var on=!!(S.settings&&S.settings.toolsTab===true);
@@ -3514,6 +3711,7 @@ function checkAppUpdate(){
   if(seen===APP_VERSION)return;
   try{localStorage.setItem('hb-app-ver',APP_VERSION)}catch(e){}
   if(!seen)return;
+  if(notifGet('toolsAuto')){S.settings.toolsTab=true;save();syncToolsTabVisibility()}
   var html='<div id="updSheet" style="position:fixed;inset:0;background:rgba(2,6,23,.75);z-index:9000;display:flex;align-items:center;justify-content:center;padding:16px">'+
     '<div style="background:#0f172a;color:#e2e8f0;border:1px solid #fbbf24;border-radius:16px;padding:16px;max-width:360px;width:100%;max-height:80vh;overflow:auto;font:14px/1.45 system-ui,sans-serif">'+
     '<h3 style="margin:0 0 8px;color:#fbbf24">🆕 Uygulama güncellendi</h3><ul style="padding-left:18px;margin:0 0 10px">'+
@@ -3871,7 +4069,7 @@ if(!isStandaloneMode()&&lsGet('hb-install-guide-seen')!=='1'){
 }else{
   gateCheck();
 }
-populateCitySelects();syncPrayerTabVisibility();syncToolsTabVisibility();checkAppUpdate();autoBackup();applyTheme();applyRoachLook();renderAll();tick();setInterval(tick,1000);
+populateCitySelects();syncPrayerTabVisibility();syncToolsTabVisibility();checkAppUpdate();syncNotifSettings();initNotifs();autoBackup();applyTheme();applyRoachLook();renderAll();tick();setInterval(tick,1000);
 })();
 </script>
 
@@ -4001,22 +4199,8 @@ function runAction(a){
   var st=status();
   if((a==='mola'&&st.canBreak)||(a==='don'&&st.canBack)){$('#btnBreak').click()}
   else if(a==='mola'||a==='don'){toast(st.t+' · bu işlem şu an yapılamaz')}
-  setTimeout(pushStatus,300);
   setTimeout(renderPull,320);
 }
-function pushStatus(){
-  try{
-    if(!('Notification' in window)||Notification.permission!=='granted'||!navigator.serviceWorker)return;
-    var st=status(),acts=[];
-    if(st.canBreak)acts.push({action:'mola',title:'☕ Molaya çık'});
-    if(st.canBack)acts.push({action:'don',title:'💼 Moladan dön'});
-    navigator.serviceWorker.ready.then(function(reg){
-      return reg.showNotification('Hamam Böceği · '+st.t,{body:st.b,tag:'hb-status',renotify:false,silent:true,requireInteraction:true,actions:acts,data:{}});
-    }).catch(function(){});
-  }catch(e){}
-}
-document.addEventListener('click',function(e){if(e.target.closest('button'))setTimeout(pushStatus,250)},true);
-setInterval(pushStatus,60000);
 if(navigator.serviceWorker){
   navigator.serviceWorker.addEventListener('message',function(e){if(e.data&&e.data.type==='hb-action')runAction(e.data.action)});
 }
@@ -4041,7 +4225,7 @@ function renderPull(){
   $('#pullMola').disabled=!st.canBreak;$('#pullDon').disabled=!st.canBack;
   $('#pullMola').style.opacity=st.canBreak?1:.4;$('#pullDon').style.opacity=st.canBack?1:.4;
 }
-function openPull(){renderPull();pull.style.display='flex'}
+function openPull(){if(document.body.dataset.notifPull==='off')return;renderPull();pull.style.display='flex'}
 function closePull(){pull.style.display='none'}
 $('#pullX').onclick=closePull;
 pull.addEventListener('click',function(e){if(e.target===pull)closePull()});
