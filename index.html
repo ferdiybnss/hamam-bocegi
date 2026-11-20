@@ -411,6 +411,14 @@ body.vip-ufo .ufo-beam{display:block}
 #gameOv.lingo-mode .lfoot{display:flex;align-items:center;justify-content:space-between;gap:8px;flex:none;padding-top:2px}
 #gameOv.lingo-mode .lfoot .btn{padding:6px 10px;font-size:12px;border-radius:9px}
 #gameOv.lingo-mode .lfoot #lSt{margin:0;font-size:11.5px;text-align:right}
+#gameOv.lingo-mode .ldiff{display:flex;gap:4px;flex:none}
+#gameOv.lingo-mode.lk8 .lgrid{width:min(100%,214px)}
+#gameOv.lingo-mode.lk8 .lc{font-size:15px;border-width:2px;border-radius:6px}
+#gameOv.lingo-mode.lk8 .lk{padding:7px 0}
+#gameOv.lingo-mode .lfoot{flex-wrap:wrap}
+#gameOv.lingo-mode .lfoot #lSt{white-space:normal;font-size:10.5px;max-width:100%}
+#gameOv.lingo-mode .ldiff .btn{padding:4px 8px;font-size:11.5px;border-radius:8px}
+#gameOv.lingo-mode #lHint{min-height:1.2em;color:#FDE047;font-weight:700}
 @media (max-height:690px){
   #gameOv.lingo-mode .lgrid{width:min(100%,242px);gap:3px}
   #gameOv.lingo-mode .lk{padding:8px 0;font-size:12.5px}
@@ -689,23 +697,6 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
     </div>
   </div>
 
-  <!-- 2. Dini Özellik: Kıble Yönü & Açısı -->
-  <div class="p-card">
-    <div class="p-card-head">
-      <h3>🧭 Kıble Yönü & Açısı</h3>
-      <button type="button" class="p-pill" id="btnCompassSensor">📡 Pusulayı Aç</button>
-    </div>
-    <div class="qibla-row">
-      <div class="qibla-dial">
-        <div class="qibla-needle" id="qiblaNeedle"><span>🕋</span><i></i></div>
-      </div>
-      <div style="flex:1;min-width:0;text-align:left">
-        <b style="font:800 17px var(--f-display);color:#FDE68A" id="qiblaDegTxt">151° Güneydoğu</b>
-        <p style="margin:3px 0 0;font-size:12.5px;color:var(--muted)" id="qiblaHintTxt">Kuzey (0°) referansına göre Kâbe yönüdür. Canlı yön bulmak için “Pusulayı Aç”a dokunun.</p>
-      </div>
-    </div>
-  </div>
-
   <!-- 3. Dini Özellik: Esmaül Hüsna & Günün Ayet / Duası -->
   <div class="p-card">
     <div class="p-card-head">
@@ -741,6 +732,7 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
   <button role="tab" data-tab="log" aria-selected="false"><i>📋</i>Kayıtlar</button>
   <button role="tab" data-tab="leave" aria-selected="false"><i>🏖️</i>İzinler</button>
   <button role="tab" data-tab="prayer" id="tabBtnPrayer" aria-selected="false"><i>🕌</i>Namaz</button>
+  <button role="tab" data-tab="tools" id="tabBtnTools" hidden aria-selected="false"><i>🧰</i>Araçlar</button>
   <button role="tab" data-tab="settings" aria-selected="false"><i>⚙️</i>Ayarlar</button>
 </nav>
 
@@ -791,7 +783,7 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
       <div style="margin-bottom:8px"><b>⚙️ Bu Sekmeyi Nasıl Kapatabilirim?</b><br>
       Alt menüde Namaz sekmesini görmek istemezseniz <b>Ayarlar → 🕌 Namaz Vakitleri Sekmesi</b> bölümünden tek dokunuşla kapatabilir, istediğiniz zaman tekrar açabilirsiniz.</div>
       <div><b>✨ Neler Var?</b><br>
-      Sıradaki vakte canlı geri sayım, <b>Akıllı Zikirmatik</b>, <b>Kıble Pusulası</b>, <b>Esmaül Hüsna</b> ve mola eğlencesi için <b>Dini Bilgi Yarışması</b>!</div>
+      Sıradaki vakte canlı geri sayım, <b>Akıllı Zikirmatik</b>, <b>Esmaül Hüsna</b> ve mola eğlencesi için <b>Dini Bilgi Yarışması</b>!</div>
     </div>
     <div class="trow" style="gap:8px">
       <button type="button" class="btn" id="piDisableBtn">Sekmeyi Kapat</button>
@@ -929,6 +921,15 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
     <div class="row sp"><button type="button" class="btn" data-close>İptal</button><button class="btn pri">Kaydet</button></div>
   </form></div></div>
 
+<section id="tab-tools" role="tabpanel" hidden>
+ <div class="tl-wrap">
+  <div class="p-card"><div class="p-card-head"><h3>🧮 Hesap Makinesi</h3></div><input id="calcOut" class="tl-out" readonly value="0"><div class="tl-grid" id="calcKeys"></div></div>
+  <div class="p-card"><div class="p-card-head"><h3>⏱️ Kronometre</h3></div><div class="tl-big" id="swOut">00:00.00</div><div class="tl-row"><button class="btn pri" id="swGo">Başlat</button><button class="btn" id="swLap">Tur</button><button class="btn" id="swReset">Sıfırla</button></div><ol class="tl-laps" id="swLaps"></ol></div>
+  <div class="p-card"><div class="p-card-head"><h3>⏲️ Zamanlayıcı</h3></div><div class="tl-big" id="tmOut">00:00</div><div class="tl-row"><button class="btn small" data-tm="1">1 dk</button><button class="btn small" data-tm="5">5 dk</button><button class="btn small" data-tm="10">10 dk</button><button class="btn small" data-tm="25">25 dk</button></div><div class="tl-row"><button class="btn pri" id="tmGo">Başlat</button><button class="btn" id="tmReset">Sıfırla</button></div></div>
+  <div class="p-card"><div class="p-card-head"><h3>📏 Birim Çevirici</h3></div><div class="tl-row"><select id="cvCat"><option value="uzunluk">Uzunluk</option><option value="agirlik">Ağırlık</option><option value="sicaklik">Sıcaklık</option></select></div><div class="tl-row"><input id="cvIn" type="number" value="1" inputmode="decimal"><select id="cvFrom"></select><span>→</span><select id="cvTo"></select></div><div class="tl-big" id="cvOut">–</div></div>
+  <div class="p-card"><div class="p-card-head"><h3>📝 Not Defteri</h3></div><textarea id="tNote" class="tl-note" placeholder="Hızlı notlarını buraya yaz..."></textarea><p class="sub" style="margin:4px 0 0">Notlar bu cihazda saklanır.</p></div>
+ </div>
+</section>
 <section id="tab-settings" role="tabpanel" hidden>
 <details class="sec"><summary>⏰ Çalışma saatleri</summary><div class="secbody"><div class="form">
 <div class="slot"><b>Hafta içi (Pzt–Cum)</b><label class="ck"><input type="checkbox" id="onWd"> Bu günlerde çalışıyorum</label><div class="two"><label>Giriş<input type="time" id="wdS"></label><label>Çıkış<input type="time" id="wdE"></label></div><label>Mola hakkı (dakika)<input type="number" id="wdB" min="0" max="480"></label></div>
@@ -946,6 +947,11 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
   <p style="margin:0">Alt menü barında <b>🕌 Namaz</b> sekmesini ve Sofi Böcek vakit ekranını istediğiniz zaman açıp kapatabilirsiniz.</p>
   <label class="ck"><input type="checkbox" id="setPrayerOn"> Alt menüde Namaz Vakitleri sekmesini göster</label>
   <label>Şehir seçimi (81 İl)<select id="setPrayerCity"></select></label>
+</div></details>
+<details class="sec"><summary>🧰 Araçlar Sekmesi & Bildirimler</summary><div class="secbody">
+  <p style="margin:0">Hesap makinesi, kronometre, zamanlayıcı, birim çevirici ve not defterini içeren Araçlar sekmesini istediğiniz zaman açıp kapatabilirsiniz.</p>
+  <label class="ck"><input type="checkbox" id="setToolsOn"> Alt menüde Araçlar sekmesini göster</label>
+  <div class="row"><button type="button" class="btn" id="btnNotifPerm">🔔 Güncelleme bildirimine izin ver</button></div>
 </div></details>
 <details class="sec"><summary>🎬 Tanıtım & Kurulum</summary><div class="secbody"><div class="row"><button class="btn" id="btnTourAgain">Tanıtımı tekrar göster</button><button class="btn pri" id="btnInstallGuide">📲 Masaüstüne / Ana Ekrana Ekle</button></div></div></details>
 <details class="sec"><summary>💾 Yedek</summary><div class="secbody">
@@ -2048,9 +2054,139 @@ LW=(function(arr){
 var LW_SET=new Set(LW);
 
 var LG={t:'',rows:[],cur:'',over:false,won:false,lastWord:'',popRow:-1,badRow:-1,errMsg:''};
+var LDIFF={kolay:{n:'Kolay',rows:8},orta:{n:'Orta',rows:6},zor:{n:'Zor',rows:5}};
+LG.diff=(function(){var d=lsGet('hb-lingo-diff');return LDIFF[d]?d:'orta'})();
+LG.maxRows=LDIFF[LG.diff].rows;
+var LW_HINTS={
+'ÇİÇEK':'Bahçede ve vazoda açan, kokusuyla bilinen bitki.',
+'GÜNEŞ':'Dünyaya ışık ve ısı veren yıldız.',
+'DENİZ':'Tuzlu suyu olan büyük su kütlesi.',
+'BULUT':'Gökyüzünde süzülen, yağmur taşıyabilen beyaz ya da gri kütle.',
+'KALEM':'Yazı yazmaya yarayan kırtasiye aracı.',
+'KİTAP':'Sayfalardan oluşan, okunmak için yazılmış eser.',
+'ARABA':'Yolda giden, dört tekerlekli motorlu taşıt.',
+'EKMEK':'Fırında pişen, her sofrada bulunan temel gıda.',
+'YEMEK':'Öğünde yenen, pişirilmiş besin genel adı.',
+'PASTA':'Doğum günü ya da kutlamalarda kesilen tatlı.',
+'BÖREK':'Yufka arasına peynir ya da kıyma konularak yapılan hamur işi.',
+'ÇORBA':'Kaşıkla içilen, genelde sıcak servis edilen sıvı yemek.',
+'SİMİT':'Susamla kaplı, halka şeklinde sokak lezzeti.',
+'AYRAN':'Yoğurttan yapılan, soğuk servis edilen içecek.',
+'GAZOZ':'Köpüklü ve şekerli, serinletici bir içecek.',
+'PATEN':'Ayağa takılan tekerleklerle kayılan spor aracı.',
+'SABAH':'Gecenin bitip günün başladığı zaman dilimi.',
+'AKŞAM':'Güneşin battığı, gecenin başladığı vakit.',
+'KAHVE':'Kavrulmuş çekirdeklerden yapılan, sıcak içilen koyu içecek.',
+'ŞEKER':'Yiyecekleri tatlandırmak için kullanılan beyaz kristal.',
+'GOLCÜ':'Futbolda ağlara top gönderen oyuncu.',
+'ÇAYCI':'Çay ocağında çay servis eden kişi.',
+'BÖCEK':'Altı bacaklı, genelde küçük ve dağınık yerlerde yaşayan canlı.',
+'MESAİ':'İşte geçirilen çalışma saatleri.',
+'ARMUT':'Ağaçta yetişen, sulu ve tatlı bir meyve.',
+'KİRAZ':'Yaz aylarında yetişen, küçük kırmızı bir meyve.',
+'ÇİLEK':'Kırmızı, tatlı ve küçük bir meyve.',
+'KAVUN':'Yazın yenen, tatlı ve kokulu büyük bir meyve.',
+'BALIK':'Suda yaşayan, pulları olan canlı.',
+'KÖPEK':'Sadık bir evcil hayvan.',
+'ASLAN':'Ormanın kralı olarak bilinen yırtıcı kedi.',
+'TAVUK':'Yumurtlayan, çiftlikte beslenen kanatlı.',
+'ORMAN':'Ağaçların yoğun olduğu geniş alan.',
+'NEHİR':'Denize ya da göle dökülen büyük akarsu.',
+'TARLA':'Ekin ekilen açık alan.',
+'BAHÇE':'Ev yanında çiçek ve sebze yetiştirilen alan.',
+'MASAL':'Çocuklara anlatılan hayal ürünü hikâye.',
+'ROMAN':'Uzun, kurgusal bir edebi eser.',
+'MÜDÜR':'Bir kurumu yöneten kişi.',
+'HASTA':'Tedavi gören, sağlığı bozuk kişi.',
+'ZAMAN':'Geçen süreyi anlatan kavram.',
+'DALGA':'Denizde kabarıp kıyıya vuran su hareketi.',
+'SAHİL':'Denizle karanın buluştuğu kıyı şeridi.',
+'KAYIK':'Küçük, genelde kürekle ilerleyen tekne.',
+'ÇANTA':'Eşya taşımaya yarayan el ya da omuz eşyası.',
+'ŞAPKA':'Başa takılan giysi aksesuarı.',
+'KEMER':'Pantolonu beline sabitleyen aksesuar.',
+'YÜZÜK':'Parmağa takılan, genelde metalden süs.',
+'BİLEK':'El ile kol arasındaki eklem.',
+'TATLI':'Şeker içeren, lezzetli yiyecek ya da sıfat.',
+'ÜZGÜN':'Hüzünlü, mutsuz hali anlatan sıfat.',
+'MUTLU':'Sevinçli ve memnun hissettiren hal.',
+'KORKU':'Tehlike karşısında hissedilen duygu.',
+'SEVGİ':'Birine karşı duyulan sıcak bağlılık duygusu.',
+'HUZUR':'Rahatlık ve dinginlik hali.',
+'BARIŞ':'Savaşın olmadığı, huzurlu dönem.',
+'ÖZGÜR':'Baskı altında olmayan, bağımsız kişi.',
+'BABAM':'Çocuğun kendi babası için kullandığı ad.',
+'ANNEM':'Çocuğun kendi annesi için kullandığı ad.',
+'DEDEM':'Büyükbabaya verilen sevgi dolu ad.',
+'NENEM':'Büyükanneye verilen sevgi dolu ad.',
+'AMCAM':'Babanın erkek kardeşi.',
+'HALAM':'Babanın kız kardeşi.',
+'TEYZE':'Annenin kız kardeşi.',
+'DÜĞÜN':'Evlilik kutlaması.',
+'NİŞAN':'Evlenmeden önce yapılan söz kesme töreni.',
+'KAPAK':'Bir kabın ağzını kapatan parça.',
+'YATAK':'Üzerinde uyunan, yatılan mobilya.',
+'DOLAP':'Giysi ve eşya konulan kapaklı mobilya.',
+'TABAK':'Yemek konulan yassı kap.',
+'ÇATAL':'Yemek yemek için kullanılan, uçları sivri alet.',
+'KAŞIK':'Sıvı yemekleri yemek için kullanılan alet.',
+'TEPSİ':'Yemek taşımak için kullanılan düz, kenarlı kap.',
+'SOFRA':'Yemeğin üzerine konduğu, yenen masa.',
+'TUZLU':'Tuz içeren, tatlı olmayan lezzet.',
+'KEBAP':'Şişe geçirilip ateşte pişirilen et yemeği.',
+'DÖNER':'Dikey şişte pişen, ince dilimlenen et yemeği.',
+'PİLAV':'Pirinçten yapılan, tereyağlı ya da sebzeli yemek.',
+'MANTI':'İçi kıymalı küçük hamur parçalarından yapılan yemek.',
+'TURŞU':'Sirkeli suda saklanan sebze.',
+'BİBER':'Acı ya da tatlı, yeşil veya kırmızı sebze.',
+'SOĞAN':'Gözyaşı yaratan kökü yenen sebze.',
+'MARUL':'Salata yapılan yeşil yapraklı sebze.',
+'LİMON':'Ekşi tadı olan sarı narenciye.',
+'SALÇA':'Domatesten yapılan koyu kıvamlı sos.',
+'KONUK':'Ziyarete gelen misafir.',
+'SAYFA':'Kitabın bir yüzü.',
+'SABIR':'Zor durumlarda dayanma gücü.',
+'CÜMLE':'Anlam bildiren söz dizisi.',
+'MEKAN':'Bulunulan yer.',
+'ŞEHİR':'Büyük ve kalabalık yerleşim yeri.',
+'KÖYLÜ':'Köyde yaşayan kişi.',
+'YAŞLI':'Yaşı ilerlemiş kişi.',
+'KIZIL':'Kanın rengi, kırmızı.',
+'YEŞİL':'Çimenin rengi.',
+'BEYAZ':'Karın rengi.',
+'SİYAH':'Kömürün rengi, en koyu renk.',
+'ALTIN':'Değerli, sarı bir maden.',
+'DEMİR':'İnşaatta kullanılan sert bir metal.',
+'TAHTA':'Ağaçtan elde edilen, mobilyada kullanılan malzeme.',
+'DUVAR':'Odayı çevreleyen dikey yapı.',
+'TAVAN':'Odanın üst yüzeyi.',
+'MİNİK':'Çok küçük.',
+'HAFTA':'Yedi günlük zaman dilimi.',
+'AYLIK':'Her ay tekrarlanan, ay boyunca olan.',
+'TATİL':'Dinlenmek için ayrılan süre.',
+'ŞARKI':'Melodiyle söylenen söz.',
+'MÜZİK':'Ses ve ritmin sanatı.',
+'RESİM':'Boya ile yapılan görsel sanat eseri.'
+};
+var LW_ANS=LW.concat(Object.keys(LW_HINTS)).filter(function(w,i,a){return w.length===5&&a.indexOf(w)===i});
+LW_ANS.forEach(function(w){LW_SET.add(w)});
+
+function lingoTopic(w){return LW_HINTS[w]||('Bu kelime "'+w[0]+'" harfiyle başlıyor ve "'+w[4]+'" harfiyle bitiyor.')}
+function lingoHint(){
+  if(LG.over)return '';
+  var base='İpucu: '+lingoTopic(LG.t);
+  if(LG.diff==='kolay')return 'İlk harf: '+LG.t[0]+' · '+base;
+  return base;
+}
+function lingoDiffUI(){
+  $('#gameOv').classList.toggle('lk8',LG.maxRows===8);
+  $('#lDiff').innerHTML=Object.keys(LDIFF).map(function(k){
+    return '<button type="button" class="btn'+(LG.diff===k?' pri':'')+'" data-diff="'+k+'">'+LDIFF[k].n+'</button>';
+  }).join('');
+}
 function lstat(){try{return JSON.parse(lsGet('hb-lingo'))||{p:0,w:0,s:0}}catch(e){return{p:0,w:0,s:0}}}
 function pickRandomWord(){
-  var w;do{w=LW[Math.floor(Math.random()*LW.length)]}while(w===LG.lastWord&&LW.length>1);
+  var w;do{w=LW_ANS[Math.floor(Math.random()*LW_ANS.length)]}while(w===LG.lastWord&&LW_ANS.length>1);
   LG.lastWord=w;return w;
 }
 function evalG(g,t){var r=['n','n','n','n','n'],cnt={},i,j;for(i=0;i<5;i++){if(g[i]===t[i])r[i]='g';else cnt[t[i]]=(cnt[t[i]]||0)+1}
@@ -2058,13 +2194,14 @@ function evalG(g,t){var r=['n','n','n','n','n'],cnt={},i,j;for(i=0;i<5;i++){if(g
 function lingoOpen(){
   openGame('🔤 Lingo',
     '<p class="lsub" id="lSub"></p>'+
+    '<p class="lsub" id="lHint"></p>'+
     '<div class="lgrid" id="lGrid"></div>'+
     '<div class="lmsg" id="lMsg"></div>'+
     '<div class="lkb" id="lKb"></div>'+
-    '<div class="lfoot"><div id="lEnd"></div><p class="lsub" id="lSt"></p></div>'
+    '<div class="lfoot"><div id="lEnd"></div><div class="ldiff" id="lDiff"></div><p class="lsub" id="lSt"></p></div>'
   );
   $('#gameOv').classList.add('lingo-mode');
-  $('#gBody').onpointerdown=function(e){if(e.target.closest('[data-k],#lNew')){e.preventDefault();lingoClick(e)}};
+  $('#gBody').onpointerdown=function(e){if(e.target.closest('[data-k],#lNew,[data-diff]')){e.preventDefault();lingoClick(e)}};
   var onKey=function(e){
     if($('#gameOv').hidden||!$('#lGrid'))return;
     if(e.key==='Backspace'){lingoInput('SİL');return}
@@ -2077,7 +2214,7 @@ function lingoOpen(){
   lingoNew();
 }
 function lingoNew(){
-  LG.t=pickRandomWord();LG.rows=[];LG.cur='';LG.over=false;LG.won=false;LG.popRow=-1;LG.badRow=-1;LG.errMsg='';
+  LG.t=pickRandomWord();LG.rows=[];LG.cur='';LG.over=false;LG.won=false;LG.popRow=-1;LG.badRow=-1;LG.errMsg='';LG.maxRows=LDIFF[LG.diff].rows;
   /* Türkçe Telefon Q Klavye Dizilimi + Sol GİR + Sağ Silme (⌫) Tuşu */
   var kb='';
   ['ERTYUIOPĞÜ','ASDFGHJKLŞİ'].forEach(function(r){
@@ -2090,8 +2227,8 @@ function lingoNew(){
 }
 function lingoRender(){
   var kState={};
-  var g='';for(var r=0;r<6;r++){var row=LG.rows[r],ev=row?evalG(row.w,LG.t):null,cur=(!row&&r===LG.rows.length)?LG.cur:'';
-    if(row&&ev){for(var i=0;i<5;i++){var ch0=row.w[i],st=ev[i];if(st==='g')kState[ch0]='g';else if(st==='y'&&kState[ch0]!=='g')kState[ch0]='y';else if(!kState[ch0])kState[ch0]='n'}}
+  var g='';for(var r=0;r<LG.maxRows;r++){var row=LG.rows[r],ev=row?evalG(row.w,LG.t):null,cur=(!row&&r===LG.rows.length)?LG.cur:'';
+    if(row&&ev&&LG.diff!=='zor'){for(var i=0;i<5;i++){var ch0=row.w[i],st=ev[i];if(st==='g')kState[ch0]='g';else if(st==='y'&&kState[ch0]!=='g')kState[ch0]='y';else if(!kState[ch0])kState[ch0]='n'}}
     for(var c=0;c<5;c++){var ch=row?row.w[c]:(cur[c]||''),cl=ev?(ev[c]==='g'?' g':ev[c]==='y'?' y':' n'):'';
       var isPop=(!row&&r===LG.rows.length&&c===cur.length-1&&LG.popRow===r)?' pop':'';
       var isBad=(!row&&r===LG.badRow)?' bad':'';
@@ -2101,7 +2238,9 @@ function lingoRender(){
   document.querySelectorAll('#lKb [data-k]').forEach(function(btn){
     var k=btn.dataset.k;btn.classList.remove('g','y','n');if(kState[k])btn.classList.add(kState[k]);
   });
-  $('#lSub').textContent=LW.length+' kelimelik Türkçe sözlük · 5 harf, 6 hak';
+  $('#lSub').textContent=LW_ANS.length+' kelimelik cevap havuzu · '+LG.maxRows+' hak';
+  $('#lHint').textContent=lingoHint();
+  lingoDiffUI();
   var msgEl=$('#lMsg');
   if(LG.over){
     msgEl.style.color='var(--accent)';
@@ -2129,7 +2268,7 @@ function lingoInput(key){
       synthPop(220,140,.18,'sawtooth');lingoRender();return;
     }
     LG.rows.push({w:LG.cur});LG.cur='';var last=LG.rows[LG.rows.length-1].w;
-    if(last===LG.t||LG.rows.length===6){LG.over=true;LG.won=last===LG.t;var x=lstat();x.p++;
+    if(last===LG.t||LG.rows.length===LG.maxRows){LG.over=true;LG.won=last===LG.t;var x=lstat();x.p++;
       if(LG.won){x.w++;x.s++;gameVoice('lululu','Lülülü! Kelimeyi bildin! 🎉','🥳')}
       else{x.s=0;gameVoice('aaaaa','Aaaaa! Kelime: '+LG.t,'😱')}
       lsSet('hb-lingo',JSON.stringify(x))}
@@ -2139,6 +2278,8 @@ function lingoInput(key){
 }
 function lingoClick(e){
   if(e.target.closest('#lNew')){lingoNew();return}
+  var dd=e.target.closest('[data-diff]');
+  if(dd){LG.diff=dd.dataset.diff;lsSet('hb-lingo-diff',LG.diff);lingoNew();return}
   var k=e.target.closest('[data-k]');if(!k)return;
   lingoInput(k.dataset.k);
 }
@@ -2910,7 +3051,7 @@ document.querySelectorAll('[data-close]').forEach(function(b){b.onclick=function
 document.querySelectorAll('.sheet').forEach(function(s){s.addEventListener('click',function(e){if(e.target===s)s.hidden=true})});
 function switchTab(name){
   document.querySelectorAll('.tabs button').forEach(function(x){x.setAttribute('aria-selected',x.dataset.tab===name)});
-  ['today','log','leave','prayer','settings'].forEach(function(n){var el=$('#tab-'+n);if(el)el.hidden=(n!==name)});
+  ['today','log','leave','prayer','tools','settings'].forEach(function(n){var el=$('#tab-'+n);if(el)el.hidden=(n!==name)});
   if(name==='log')renderLog();
   if(name==='prayer'){
     renderPrayerTab();
@@ -2951,12 +3092,26 @@ function getCityCoords(name){
   for(var i=0;i<TR_CITIES.length;i++){if(TR_CITIES[i][0]===name)return TR_CITIES[i]}
   return ['İstanbul',41.01,28.98];
 }
+var HIJRI_AY=['Muharrem','Safer','Rebiülevvel','Rebiülahir','Cemaziyelevvel','Cemaziyelahir','Recep','Şaban','Ramazan','Şevval','Zilkade','Zilhicce'];
+function hijriTabular(d){
+  var g=new Intl.DateTimeFormat('en-CA',{year:'numeric',month:'numeric',day:'numeric',timeZone:'Europe/Istanbul'}).formatToParts(d);
+  var Y,M,D;g.forEach(function(p){if(p.type==='year')Y=+p.value;if(p.type==='month')M=+p.value;if(p.type==='day')D=+p.value});
+  var jd=Math.floor(Date.UTC(Y,M-1,D)/86400000)+2440588;
+  var l=jd-1948440+10632;var n=Math.floor((l-1)/10631);l=l-10631*n+354;
+  var j=(Math.floor((10985-l)/5316))*(Math.floor((50*l)/17719))+(Math.floor(l/5670))*(Math.floor((43*l)/15238));
+  l=l-(Math.floor((30-j)/15))*(Math.floor((17719*j)/50))-(Math.floor(j/16))*(Math.floor((15238*j)/43))+29;
+  var m=Math.floor((24*l)/709),day=l-Math.floor((709*m)/24),yr=30*n+j-30;
+  return '🌙 '+day+' '+HIJRI_AY[m-1]+' '+yr;
+}
 function getHijriDateStr(d){
   try{
-    var fmt=new Intl.DateTimeFormat('tr-TR-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'});
-    return '🌙 '+fmt.format(d);
+    var parts=new Intl.DateTimeFormat('en-u-ca-islamic-umalqura',{day:'numeric',month:'numeric',year:'numeric',timeZone:'Europe/Istanbul'}).formatToParts(d);
+    var day,mon,yr;
+    parts.forEach(function(p){if(p.type==='day')day=p.value;if(p.type==='month')mon=+p.value;if(p.type==='year')yr=p.value});
+    if(!day||!mon||!yr)throw new Error('hijri');
+    return '🌙 '+day+' '+HIJRI_AY[mon-1]+' '+yr;
   }catch(e){
-    return '🌙 Hicri Takvim';
+    try{return hijriTabular(d)}catch(e2){return '🌙 Hicri Takvim'}
   }
 }
 /* Diyanet (18° İmsak, 17° Yatsı, Türkiye +3 UTC) Çevrimdışı Astronomik Vakit Hesabı */
@@ -3063,104 +3218,6 @@ var VAKIT_AUTO_QUOTES={
   Isha:'🌃 Yatsı Vakti: "Günün tüm yorgunluğunu secdede bırak; huzurlu ve güven dolu bir geceye adım at."'
 };
 var sofiQuoteIdx=0,lastAutoVakitKey='',sofiManualOverrideUntil=0;
-
-/* Kıble Açısı Hesabı (Kâbe: 21.4225° K, 39.8262° D) & Akıllı Pusula */
-function calcQiblaAngle(lat,lng){
-  var rad=Math.PI/180,deg=180/Math.PI;
-  var kLat=21.4225*rad,kLng=39.8262*rad;
-  var uLat=lat*rad,uLng=lng*rad;
-  var dLng=kLng-uLng;
-  var y=Math.sin(dLng);
-  var x=Math.cos(uLat)*Math.tan(kLat)-Math.sin(uLat)*Math.cos(dLng);
-  var brng=Math.atan2(y,x)*deg;
-  return Math.round((brng+360)%360);
-}
-var compassHeading=null,compassActive=false,compassGotData=false,compassCheckTimer=null;
-function updateQiblaUI(city){
-  var info=getCityCoords(city);
-  var qAng=calcQiblaAngle(info[1],info[2]);
-  var dirStr=(qAng>=112&&qAng<=157)?'Güneydoğu':(qAng>157&&qAng<=202?'Güney':'Doğu-Güneydoğu');
-  setTxt($('#qiblaDegTxt'),qAng+'° '+dirStr+' ('+city+')');
-  var needle=$('#qiblaNeedle');
-  if(needle){
-    var rot=(compassHeading!==null)?(qAng-compassHeading):qAng;
-    needle.style.transform='rotate('+rot+'deg)';
-  }
-}
-function handleOrientEvent(e){
-  if(!compassActive)return;
-  var h=null;
-  if(typeof e.webkitCompassHeading==='number'&&!isNaN(e.webkitCompassHeading)){
-    h=e.webkitCompassHeading;
-  }else if(typeof e.alpha==='number'&&e.alpha!==null){
-    h=(360-e.alpha)%360;
-  }
-  if(h!==null){
-    compassGotData=true;
-    compassHeading=h;
-    updateQiblaUI(S.settings.prayerCity||'İstanbul');
-    setTxt($('#qiblaHintTxt'),'🟢 Canlı pusula aktif! 🕋 Kâbe simgesi tam yukarı (12 yönü) geldiğinde Kıbleye dönmüş olursunuz.');
-  }
-}
-function stopCompass(){
-  compassActive=false;compassHeading=null;compassGotData=false;
-  clearTimeout(compassCheckTimer);
-  window.removeEventListener('deviceorientationabsolute',handleOrientEvent,true);
-  window.removeEventListener('deviceorientation',handleOrientEvent,true);
-  setTxt($('#btnCompassSensor'),'📡 Pusulayı Aç');
-  updateQiblaUI(S.settings.prayerCity||'İstanbul');
-}
-function showCompassHelp(reason){
-  stopCompass();
-  var isInApp=/Instagram|FBAN|FBAV|WhatsApp|Line|wv/i.test(navigator.userAgent||'');
-  var isHttp=location.protocol!=='https:'&&location.hostname!=='localhost'&&location.hostname!=='127.0.0.1';
-  var msg='⚠️ '+reason+' ';
-  if(isHttp){
-    msg+='Tarayıcı güvenliği gereği pusula sadece HTTPS (GitHub Pages) bağlantısında çalışır. ';
-  }else if(isInApp){
-    msg+='Uygulama içi tarayıcı sensörü engelliyor olabilir; sağ üstten "Chrome / Safari ile Aç" yapın. ';
-  }else{
-    msg+='Çözüm: iPhone\'da Ayarlar → Safari → Hareket ve Yön Erişimi\'ni açın; Android Chrome\'da adres çubuğu solundaki 🔒 simgesine dokunup İzinler → Hareket Sensörleri\'ne izin verin. ';
-  }
-  msg+='(Şimdilik telefonun üstünü Kuzey\'e çevirip ibrenin gösterdiği '+$('#qiblaDegTxt').textContent.split(' ')[0]+' açısına dönebilirsiniz.)';
-  setTxt($('#qiblaHintTxt'),msg);
-  toast('Pusula izni gerekli — açıklama kutusuna yazıldı 🧭');
-}
-if($('#btnCompassSensor')){
-  $('#btnCompassSensor').onclick=function(){
-    if(compassActive){
-      stopCompass();
-      setTxt($('#qiblaHintTxt'),'Kuzey (0°) referansına göre Kâbe yönüdür. Canlı yön bulmak için “Pusulayı Aç”a dokunun.');
-      toast('Canlı pusula kapatıldı');
-      return;
-    }
-    function startOrient(){
-      compassActive=true;compassGotData=false;
-      setTxt($('#btnCompassSensor'),'🟢 Canlı Pusula');
-      setTxt($('#qiblaHintTxt'),'📡 Sensör dinleniyor... Telefonu yere paralel tutup 8 çizerek kalibre edin.');
-      window.addEventListener('deviceorientationabsolute',handleOrientEvent,true);
-      window.addEventListener('deviceorientation',handleOrientEvent,true);
-      clearTimeout(compassCheckTimer);
-      compassCheckTimer=setTimeout(function(){
-        if(compassActive&&!compassGotData){
-          showCompassHelp('Pusula sensöründen veri alınamadı.');
-        }
-      },2200);
-    }
-    if(typeof DeviceOrientationEvent!=='undefined'&&typeof DeviceOrientationEvent.requestPermission==='function'){
-      DeviceOrientationEvent.requestPermission().then(function(st){
-        if(st==='granted')startOrient();
-        else showCompassHelp('Pusula sensörü izni verilmedi.');
-      }).catch(function(){
-        showCompassHelp('Pusula izni reddedildi veya engellendi.');
-      });
-    }else if('ondeviceorientationabsolute' in window || 'ondeviceorientation' in window){
-      startOrient();
-    }else{
-      showCompassHelp('Bu cihaz/tarayıcı pusula sensörünü desteklemiyor.');
-    }
-  };
-}
 
 /* Akıllı Zikirmatik (Sayaç + Genel Toplam 3 Tık / Butonla Sıfırlama) */
 var zikirCount=+(lsGet('hb-zikir-cnt')||0);
@@ -3425,6 +3482,48 @@ function populateCitySelects(){
   if($('#prayerCityQuick'))$('#prayerCityQuick').innerHTML=opts;
   if($('#setPrayerCity'))$('#setPrayerCity').innerHTML=opts;
 }
+var APP_VERSION='2026-11-20-v7';
+var APP_CHANGES=[
+  'Lingo\'da Kolay / Orta / Zor seviyeleri eklendi; her kelimede konu cümlesi var.',
+  'Hicri tarih İstanbul saatine göre gösteriliyor.',
+  'Kıble pusulası kaldırıldı.',
+  'Yeni Araçlar sekmesi: hesap makinesi, kronometre, zamanlayıcı, birim çevirici ve not defteri. Ayarlar\'dan açılıp kapatılır.',
+  'Kayıtlarınız güncellemelerde silinmez; tarayıcıdan kalıcı depolama istenir.'
+];
+function syncToolsTabVisibility(){
+  var on=!!(S.settings&&S.settings.toolsTab===true);
+  var b=$('#tabBtnTools');if(b)b.hidden=!on;
+  if(!on&&$('#tab-tools')&&!$('#tab-tools').hidden)switchTab('today');
+  if($('#setToolsOn'))$('#setToolsOn').checked=on;
+}
+if($('#setToolsOn')){
+  $('#setToolsOn').onchange=function(){
+    S.settings.toolsTab=this.checked;save();syncToolsTabVisibility();
+    toast(this.checked?'🧰 Araçlar sekmesi eklendi':'Araçlar sekmesi gizlendi');
+  };
+}
+if($('#btnNotifPerm')){
+  $('#btnNotifPerm').onclick=function(){
+    if(!('Notification' in window)){toast('Bu tarayıcı bildirimleri desteklemiyor');return}
+    Notification.requestPermission().then(function(st){toast(st==='granted'?'🔔 Bildirim izni verildi':'Bildirim izni verilmedi')},function(){});
+  };
+}
+function checkAppUpdate(){
+  try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(function(){})}catch(e){}
+  var seen=null;try{seen=localStorage.getItem('hb-app-ver')}catch(e){}
+  if(seen===APP_VERSION)return;
+  try{localStorage.setItem('hb-app-ver',APP_VERSION)}catch(e){}
+  if(!seen)return;
+  var html='<div id="updSheet" style="position:fixed;inset:0;background:rgba(2,6,23,.75);z-index:9000;display:flex;align-items:center;justify-content:center;padding:16px">'+
+    '<div style="background:#0f172a;color:#e2e8f0;border:1px solid #fbbf24;border-radius:16px;padding:16px;max-width:360px;width:100%;max-height:80vh;overflow:auto;font:14px/1.45 system-ui,sans-serif">'+
+    '<h3 style="margin:0 0 8px;color:#fbbf24">🆕 Uygulama güncellendi</h3><ul style="padding-left:18px;margin:0 0 10px">'+
+    APP_CHANGES.map(function(c){return '<li style="margin-bottom:4px">'+c+'</li>'}).join('')+
+    '</ul><p style="font-size:12px;opacity:.8;margin:0 0 12px">Kayıtlarınız silinmedi.</p>'+
+    '<button type="button" id="updOk" style="background:#fbbf24;color:#1E1B00;border:0;border-radius:10px;padding:9px 16px;font-weight:700;width:100%">Tamam</button></div></div>';
+  document.body.insertAdjacentHTML('beforeend',html);
+  document.getElementById('updOk').onclick=function(){document.getElementById('updSheet').remove()};
+  try{if('Notification' in window&&Notification.permission==='granted')new Notification('Hamam Böceği güncellendi',{body:APP_CHANGES[0]})}catch(e){}
+}
 function syncPrayerTabVisibility(){
   var enabled=(S.settings.prayerTab!==false);
   var btn=$('#tabBtnPrayer');
@@ -3489,7 +3588,6 @@ function renderPrayerTab(){
     return '<div class="vakit-row'+(isNext?' next':'')+'"><div class="vn"><span>'+r[1]+'</span>'+r[2]+'</div><div class="vt">'+r[3]+'</div></div>';
   }).join('');
   setHtml($('#vakitList'),listHtml);
-  updateQiblaUI(city);
   renderZikir();
   renderWisdom();
   syncPQuizScore();
@@ -3749,7 +3847,7 @@ var TOUR=[
  ['✅','Mesaiye başlayalım!','Sabah gelince “İşe giriş”e basın, ben de “Aaaaaaa duktur yok mu duktur!” diye bağırırım. Çıkarken “İşten çıkış”a basınca “Lülülü!” diyerek uğurlarım.'],
  ['☕','Molaya çıkalım!','“Molaya çık”a basınca “lülülülü” diye öterim. Dönünce “İçeri gir”e basın, ben de hemen toparlanırım!'],
  ['🆘','Mola hakkınız var!','Hafta içi günlük mola hakkınız 1 saat 15 dakika, hafta sonu 1 saat. Toplamda bu süreyi aşarsanız ben ölürüm, cidden! Ertesi gün yeniden dirilirim.'],
- ['🕌','Namaz Vakitleri & Sofi Böcek','Alt menüdeki “Namaz” sekmesinde 81 il için Diyanet uyumlu vakitleri, Zikirmatiği, Kıble pusulasını ve mini bilgi yarışmasını bulabilirsiniz. İsterseniz Ayarlar → Namaz Vakitleri Sekmesi bölümünden kapatıp açabilirsiniz.'],
+ ['🕌','Namaz Vakitleri & Sofi Böcek','Alt menüdeki “Namaz” sekmesinde 81 il için Diyanet uyumlu vakitleri, Zikirmatiği ve mini bilgi yarışmasını bulabilirsiniz. İsterseniz Ayarlar → Namaz Vakitleri Sekmesi bölümünden kapatıp açabilirsiniz.'],
  ['⚙️','Ayarlara bakın','Ayarlar sekmesinde başlıklara dokunarak açın: çalışma saatleri, sesler, Namaz sekmesi ayarı, yedek ve Excel burada.'],
  ['🎉','Hazırsınız!','Kayıtlarınız telefonda saklanır ve her 3 günde bir yedek almanız hatırlatılır. Haydi başlayın!']
 ];
@@ -3773,10 +3871,192 @@ if(!isStandaloneMode()&&lsGet('hb-install-guide-seen')!=='1'){
 }else{
   gateCheck();
 }
-populateCitySelects();syncPrayerTabVisibility();autoBackup();applyTheme();applyRoachLook();renderAll();tick();setInterval(tick,1000);
+populateCitySelects();syncPrayerTabVisibility();syncToolsTabVisibility();checkAppUpdate();autoBackup();applyTheme();applyRoachLook();renderAll();tick();setInterval(tick,1000);
 })();
 </script>
 
 <script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}</script>
+<style>
+.tl-wrap{display:grid;gap:12px}
+.tl-out{width:100%;box-sizing:border-box;background:#0b1222;color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:10px;font:700 22px var(--f-display,system-ui);text-align:right;margin-bottom:8px}
+.tl-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.tl-k{background:#1e293b;color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:12px 0;font:700 16px system-ui;cursor:pointer}
+.tl-k:active{transform:translateY(1px)}
+.tl-big{font:800 30px var(--f-display,system-ui);text-align:center;margin:8px 0;color:#FDE68A;font-variant-numeric:tabular-nums}
+.tl-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;align-items:center;margin-top:8px}
+.tl-row input,.tl-row select{width:auto;min-width:0;flex:1 1 90px}
+.tl-laps{margin:8px 0 0;padding-left:20px;font-size:13px;color:var(--muted);max-height:120px;overflow:auto}
+.tl-note{width:100%;box-sizing:border-box;min-height:120px;background:#0b1222;color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit}
+</style>
+<script>
+(function(){
+var $=function(s){return document.querySelector(s)};
+function pad(n){return (n<10?'0':'')+n}
+function get(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function put(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+
+/* Hesap makinesi */
+var expr='';
+var KEYS=['C','(',')','%','÷','7','8','9','×','4','5','6','−','1','2','3','+','0','.','='];
+$('#calcKeys').innerHTML=KEYS.map(function(k){return '<button type="button" class="tl-k" data-ck="'+k+'">'+k+'</button>'}).join('');
+function calcEval(x){
+  var e=x.replace(/÷/g,'/').replace(/×/g,'*').replace(/−/g,'-').replace(/%/g,'/100');
+  if(!/^[0-9+\-*\/(). ]+$/.test(e))throw new Error('bad');
+  var r=Function('"use strict";return ('+e+')')();
+  if(typeof r!=='number'||!isFinite(r))throw new Error('nan');
+  return String(Math.round(r*1e10)/1e10);
+}
+function calcPress(k){
+  if(k==='C'){expr='';$('#calcOut').value='0';return}
+  if(k==='='){try{expr=calcEval(expr);$('#calcOut').value=expr}catch(e){$('#calcOut').value='Hata';expr=''}return}
+  if(k==='Backspace'){expr=expr.slice(0,-1);$('#calcOut').value=expr||'0';return}
+  expr+=k;$('#calcOut').value=expr;
+}
+$('#calcKeys').onclick=function(e){var b=e.target.closest('[data-ck]');if(b)calcPress(b.dataset.ck)};
+document.addEventListener('keydown',function(e){
+  if($('#tab-tools').hidden||/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))return;
+  if(/^[0-9+\-*\/().%]$/.test(e.key)){calcPress(e.key==='/'?'÷':(e.key==='*'?'×':(e.key==='-'?'−':e.key)))}
+  else if(e.key==='Enter'){calcPress('=')}
+  else if(e.key==='Backspace'){calcPress('Backspace')}
+});
+
+/* Kronometre */
+var swT0=0,swElapsed=0,swRun=false,laps=[];
+function swNow(){return swElapsed+(swRun?performance.now()-swT0:0)}
+function swFmt(ms){var t=Math.floor(ms/10),cs=t%100,s=Math.floor(t/100)%60,m=Math.floor(t/6000);return pad(m)+':'+pad(s)+'.'+pad(cs)}
+function swRender(){$('#swOut').textContent=swFmt(swNow())}
+$('#swGo').onclick=function(){
+  if(swRun){swElapsed=swNow();swRun=false;this.textContent='Başlat'}
+  else{swT0=performance.now();swRun=true;this.textContent='Durdur'}
+};
+$('#swLap').onclick=function(){if(!swRun&&swElapsed===0)return;laps.unshift(swFmt(swNow()));$('#swLaps').innerHTML=laps.slice(0,20).map(function(x){return '<li>'+x+'</li>'}).join('')};
+$('#swReset').onclick=function(){swRun=false;swElapsed=0;laps=[];$('#swLaps').innerHTML='';$('#swGo').textContent='Başlat';swRender()};
+setInterval(function(){if(!$('#tab-tools').hidden)swRender()},50);
+
+/* Zamanlayıcı */
+var tmMs=0,tmEnd=0,tmRun=false;
+function tmRender(ms){$('#tmOut').textContent=pad(Math.floor(ms/60000))+':'+pad(Math.floor(ms/1000)%60)}
+document.querySelectorAll('[data-tm]').forEach(function(b){b.onclick=function(){if(tmRun)return;tmMs=+b.dataset.tm*60000;tmRender(tmMs)}});
+$('#tmGo').onclick=function(){
+  if(tmRun){tmMs=Math.max(0,tmEnd-Date.now());tmRun=false;this.textContent='Başlat';return}
+  if(tmMs<=0)return;
+  tmEnd=Date.now()+tmMs;tmRun=true;this.textContent='Durdur';
+};
+$('#tmReset').onclick=function(){tmRun=false;tmMs=0;tmRender(0);$('#tmGo').textContent='Başlat'};
+setInterval(function(){
+  if(!tmRun)return;
+  var left=tmEnd-Date.now();
+  if(left<=0){tmRun=false;tmMs=0;tmRender(0);$('#tmGo').textContent='Başlat';$('#tmOut').textContent='Bitti!';
+    try{if('speechSynthesis' in window){var u=new SpeechSynthesisUtterance('Süre doldu');u.lang='tr-TR';speechSynthesis.speak(u)}}catch(e){}
+    return}
+  tmRender(left);
+},250);
+
+/* Birim çevirici */
+var UNITS={
+  uzunluk:{m:['metre',1],km:['kilometre',1000],cm:['santimetre',0.01],mm:['milimetre',0.001],mil:['mil',1609.344],ft:['fit',0.3048],inc:['inç',0.0254]},
+  agirlik:{kg:['kilogram',1],g:['gram',0.001],lb:['pound',0.45359237],oz:['ons',0.0283495],ton:['ton',1000]},
+  sicaklik:{C:['°C',null],F:['°F',null],K:['Kelvin',null]}
+};
+function fillUnits(){
+  var cat=$('#cvCat').value,names=Object.keys(UNITS[cat]);
+  var opts=names.map(function(k){return '<option value="'+k+'">'+UNITS[cat][k][0]+'</option>'}).join('');
+  $('#cvFrom').innerHTML=opts;$('#cvTo').innerHTML=opts;
+  $('#cvTo').selectedIndex=Math.min(1,names.length-1);
+  convert();
+}
+function toC(v,u){return u==='F'?(v-32)*5/9:(u==='K'?v-273.15:v)}
+function fromC(c,u){return u==='F'?c*9/5+32:(u==='K'?c+273.15:c)}
+function convert(){
+  var cat=$('#cvCat').value,f=$('#cvFrom').value,t=$('#cvTo').value,v=parseFloat($('#cvIn').value);
+  if(isNaN(v)||!f||!t){$('#cvOut').textContent='–';return}
+  var r;
+  if(cat==='sicaklik')r=fromC(toC(v,f),t);
+  else r=v*UNITS[cat][f][1]/UNITS[cat][t][1];
+  r=Math.round(r*1e6)/1e6;
+  $('#cvOut').textContent=r+' '+(cat==='sicaklik'?UNITS[cat][t][0]:UNITS[cat][t][0]);
+}
+$('#cvCat').onchange=fillUnits;
+['#cvIn','#cvFrom','#cvTo'].forEach(function(s){$(s).addEventListener('input',convert);$(s).addEventListener('change',convert)});
+fillUnits();
+
+/* Not defteri */
+$('#tNote').value=get('hb-tool-note')||'';
+$('#tNote').addEventListener('input',function(){put('hb-tool-note',this.value)});
+swRender();tmRender(0);
+})();
+</script>
+
+
+<script>
+(function(){
+var $=function(s){return document.querySelector(s)};
+function status(){
+  var bb=$('#btnBreak'),txt=bb?(bb.textContent||''):'';
+  if(!bb||bb.disabled)return {t:'⏸️ Mesai dışı',b:'Mesai saatinde mola ve dönüş butonları açılır.',canBreak:false,canBack:false};
+  if(/Molaya/i.test(txt))return {t:'💼 Mesaide',b:'Molaya çıkınca "Molaya çık" butonuna bas.',canBreak:true,canBack:false};
+  return {t:'☕ Molada',b:'Moladan dönünce "Moladan dön" butonuna bas.',canBreak:false,canBack:true};
+}
+function runAction(a){
+  var st=status();
+  if((a==='mola'&&st.canBreak)||(a==='don'&&st.canBack)){$('#btnBreak').click()}
+  else if(a==='mola'||a==='don'){toast(st.t+' · bu işlem şu an yapılamaz')}
+  setTimeout(pushStatus,300);
+  setTimeout(renderPull,320);
+}
+function pushStatus(){
+  try{
+    if(!('Notification' in window)||Notification.permission!=='granted'||!navigator.serviceWorker)return;
+    var st=status(),acts=[];
+    if(st.canBreak)acts.push({action:'mola',title:'☕ Molaya çık'});
+    if(st.canBack)acts.push({action:'don',title:'💼 Moladan dön'});
+    navigator.serviceWorker.ready.then(function(reg){
+      return reg.showNotification('Hamam Böceği · '+st.t,{body:st.b,tag:'hb-status',renotify:false,silent:true,requireInteraction:true,actions:acts,data:{}});
+    }).catch(function(){});
+  }catch(e){}
+}
+document.addEventListener('click',function(e){if(e.target.closest('button'))setTimeout(pushStatus,250)},true);
+setInterval(pushStatus,60000);
+if(navigator.serviceWorker){
+  navigator.serviceWorker.addEventListener('message',function(e){if(e.data&&e.data.type==='hb-action')runAction(e.data.action)});
+}
+var q=new URLSearchParams(location.search).get('aksiyon');
+if(q){history.replaceState(null,'',location.pathname);setTimeout(function(){runAction(q)},1200)}
+
+/* Yukarıdan aşağı çekince açılan panel */
+var pull=document.createElement('div');
+pull.id='pullSheet';
+pull.setAttribute('style','position:fixed;inset:0;background:rgba(2,6,23,.6);z-index:8500;display:none;align-items:flex-start;justify-content:center;padding:14px;padding-top:max(14px,env(safe-area-inset-top,0px))');
+pull.innerHTML='<div style="background:#0f172a;color:#e2e8f0;border:1px solid #fbbf24;border-radius:18px;padding:16px;width:100%;max-width:380px;font:14px/1.45 system-ui,sans-serif;box-shadow:0 12px 40px rgba(0,0,0,.5)">'+
+  '<div style="display:flex;justify-content:space-between;align-items:center"><b id="pullT" style="font-size:17px;color:#fbbf24"></b><button id="pullX" type="button" style="background:none;border:0;color:#94a3b8;font-size:20px">✕</button></div>'+
+  '<p id="pullB" style="margin:6px 0 12px;color:#94a3b8"></p>'+
+  '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'+
+  '<button id="pullMola" type="button" style="background:#fbbf24;color:#1E1B00;border:0;border-radius:12px;padding:12px;font-weight:800">☕ Molaya çık</button>'+
+  '<button id="pullDon" type="button" style="background:#0ea5e9;color:#082f49;border:0;border-radius:12px;padding:12px;font-weight:800">💼 Moladan dön</button></div>'+
+  '<p style="margin:10px 0 0;font-size:11.5px;color:#64748b">Bu panel sayfanın en üstünden aşağı çekince açılır.</p></div>';
+document.body.appendChild(pull);
+function renderPull(){
+  var st=status();
+  $('#pullT').textContent=st.t;$('#pullB').textContent=st.b;
+  $('#pullMola').disabled=!st.canBreak;$('#pullDon').disabled=!st.canBack;
+  $('#pullMola').style.opacity=st.canBreak?1:.4;$('#pullDon').style.opacity=st.canBack?1:.4;
+}
+function openPull(){renderPull();pull.style.display='flex'}
+function closePull(){pull.style.display='none'}
+$('#pullX').onclick=closePull;
+pull.addEventListener('click',function(e){if(e.target===pull)closePull()});
+$('#pullMola').onclick=function(){closePull();runAction('mola')};
+$('#pullDon').onclick=function(){closePull();runAction('don')};
+var y0=null;
+document.addEventListener('touchstart',function(e){
+  y0=(window.scrollY<=0&&e.touches.length===1&&!document.querySelector('[role=dialog]:not([hidden]),.sheet:not([hidden])'))?e.touches[0].clientY:null;
+},{passive:true});
+document.addEventListener('touchmove',function(e){
+  if(y0==null)return;
+  if(e.touches[0].clientY-y0>90){y0=null;openPull()}
+},{passive:true});
+document.addEventListener('touchend',function(){y0=null},{passive:true});
+})();
+</script>
 </body>
 </html>

@@ -10,5 +10,21 @@
   "icons": [
     { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Molaya çık",
+      "short_name": "Molaya çık",
+      "description": "Mesaideyken molaya çıkar",
+      "url": "./?aksiyon=mola",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Moladan dön",
+      "short_name": "Moladan dön",
+      "description": "Molada iken mesaiye döner",
+      "url": "./?aksiyon=don",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
   ]
 }
