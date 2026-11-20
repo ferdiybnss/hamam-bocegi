@@ -923,11 +923,11 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
 
 <section id="tab-tools" role="tabpanel" hidden>
  <div class="tl-wrap">
-  <div class="p-card"><div class="p-card-head"><h3>🧮 Hesap Makinesi</h3></div><input id="calcOut" class="tl-out" readonly value="0"><div class="tl-grid" id="calcKeys"></div></div>
-  <div class="p-card"><div class="p-card-head"><h3>⏱️ Kronometre</h3></div><div class="tl-big" id="swOut">00:00.00</div><div class="tl-row"><button class="btn pri" id="swGo">Başlat</button><button class="btn" id="swLap">Tur</button><button class="btn" id="swReset">Sıfırla</button></div><ol class="tl-laps" id="swLaps"></ol></div>
-  <div class="p-card"><div class="p-card-head"><h3>⏲️ Zamanlayıcı</h3></div><div class="tl-big" id="tmOut">00:00</div><div class="tl-row"><button class="btn small" data-tm="1">1 dk</button><button class="btn small" data-tm="5">5 dk</button><button class="btn small" data-tm="10">10 dk</button><button class="btn small" data-tm="25">25 dk</button></div><div class="tl-row"><button class="btn pri" id="tmGo">Başlat</button><button class="btn" id="tmReset">Sıfırla</button></div></div>
-  <div class="p-card"><div class="p-card-head"><h3>📏 Birim Çevirici</h3></div><div class="tl-row"><select id="cvCat"><option value="uzunluk">Uzunluk</option><option value="agirlik">Ağırlık</option><option value="sicaklik">Sıcaklık</option></select></div><div class="tl-row"><input id="cvIn" type="number" value="1" inputmode="decimal"><select id="cvFrom"></select><span>→</span><select id="cvTo"></select></div><div class="tl-big" id="cvOut">–</div></div>
-  <div class="p-card"><div class="p-card-head"><h3>📝 Not Defteri</h3></div><textarea id="tNote" class="tl-note" placeholder="Hızlı notlarını buraya yaz..."></textarea><p class="sub" style="margin:4px 0 0">Notlar bu cihazda saklanır.</p></div>
+  <details class="p-card tl-acc"><summary class="p-card-head"><h3>🧮 Hesap Makinesi</h3><span class="tl-chev">▾</span></summary><input id="calcOut" class="tl-out" readonly value="0"><div class="tl-grid" id="calcKeys"></div></details>
+  <details class="p-card tl-acc"><summary class="p-card-head"><h3>⏱️ Kronometre</h3><span class="tl-chev">▾</span></summary><div class="tl-big" id="swOut">00:00.00</div><div class="tl-row"><button class="btn pri" id="swGo">Başlat</button><button class="btn" id="swLap">Tur</button><button class="btn" id="swReset">Sıfırla</button></div><ol class="tl-laps" id="swLaps"></ol></details>
+  <details class="p-card tl-acc"><summary class="p-card-head"><h3>⏲️ Zamanlayıcı</h3><span class="tl-chev">▾</span></summary><div class="tl-big" id="tmOut">00:00</div><div class="tl-row"><button class="btn small" data-tm="1">1 dk</button><button class="btn small" data-tm="5">5 dk</button><button class="btn small" data-tm="10">10 dk</button><button class="btn small" data-tm="25">25 dk</button></div><div class="tl-row"><button class="btn pri" id="tmGo">Başlat</button><button class="btn" id="tmReset">Sıfırla</button></div></details>
+  <details class="p-card tl-acc"><summary class="p-card-head"><h3>📏 Birim Çevirici</h3><span class="tl-chev">▾</span></summary><div class="tl-row"><select id="cvCat"><option value="uzunluk">Uzunluk</option><option value="agirlik">Ağırlık</option><option value="sicaklik">Sıcaklık</option></select></div><div class="tl-row"><input id="cvIn" type="number" value="1" inputmode="decimal"><select id="cvFrom"></select><span>→</span><select id="cvTo"></select></div><div class="tl-big" id="cvOut">–</div></details>
+  <details class="p-card tl-acc"><summary class="p-card-head"><h3>📝 Not Defteri</h3><span class="tl-chev">▾</span></summary><textarea id="tNote" class="tl-note" placeholder="Hızlı notlarını buraya yaz..."></textarea><p class="sub" style="margin:4px 0 0">Notlar bu cihazda saklanır.</p></details>
  </div>
 </section>
 <section id="tab-settings" role="tabpanel" hidden>
@@ -3215,8 +3215,18 @@ function hijriTabular(d){
   var m=Math.floor((24*l)/709),day=l-Math.floor((709*m)/24),yr=30*n+j-30;
   return '🌙 '+day+' '+HIJRI_AY[m-1]+' '+yr;
 }
+/* Umm al-Qura ay başlangıçları (Gregoryen, İstanbul); tarayıcılar arası farkı önlemek için sabit tablo */
+var HIJRI_TBL=[["2025-01-01",1446,7],["2025-01-31",1446,8],["2025-03-01",1446,9],["2025-03-30",1446,10],["2025-04-29",1446,11],["2025-05-28",1446,12],["2025-06-26",1447,1],["2025-07-26",1447,2],["2025-08-24",1447,3],["2025-09-23",1447,4],["2025-10-23",1447,5],["2025-11-22",1447,6],["2025-12-21",1447,7],["2026-01-20",1447,8],["2026-02-18",1447,9],["2026-03-20",1447,10],["2026-04-18",1447,11],["2026-05-18",1447,12],["2026-06-16",1448,1],["2026-07-15",1448,2],["2026-08-14",1448,3],["2026-09-12",1448,4],["2026-10-12",1448,5],["2026-11-11",1448,6],["2026-12-10",1448,7],["2027-01-09",1448,8],["2027-02-08",1448,9],["2027-03-09",1448,10],["2027-04-08",1448,11],["2027-05-07",1448,12],["2027-06-06",1449,1],["2027-07-05",1449,2],["2027-08-03",1449,3],["2027-09-02",1449,4],["2027-10-01",1449,5],["2027-10-31",1449,6],["2027-11-29",1449,7],["2027-12-29",1449,8]];
 function getHijriDateStr(d){
   try{
+    var ymd=new Intl.DateTimeFormat('en-CA',{year:'numeric',month:'2-digit',day:'2-digit',timeZone:'Europe/Istanbul'}).format(d);
+    var i,hit=null;
+    for(i=0;i<HIJRI_TBL.length;i++){if(HIJRI_TBL[i][0]<=ymd)hit=HIJRI_TBL[i];else break}
+    if(hit&&ymd<='2027-12-31'){
+      var a=ymd.split('-'),b=hit[0].split('-');
+      var days=Math.round((Date.UTC(+a[0],+a[1]-1,+a[2])-Date.UTC(+b[0],+b[1]-1,+b[2]))/86400000)+1;
+      return '🌙 '+days+' '+HIJRI_AY[hit[2]-1]+' '+hit[1];
+    }
     var parts=new Intl.DateTimeFormat('en-u-ca-islamic-umalqura',{day:'numeric',month:'numeric',year:'numeric',timeZone:'Europe/Istanbul'}).formatToParts(d);
     var day,mon,yr;
     parts.forEach(function(p){if(p.type==='day')day=p.value;if(p.type==='month')mon=+p.value;if(p.type==='year')yr=p.value});
@@ -3636,16 +3646,20 @@ function leftText(ms){
   var m=Math.max(0,Math.round(ms/60000)),h=Math.floor(m/60),mm=m%60;
   return h>0?(h+' sa '+mm+' dk'):(mm+' dk');
 }
+var PRAYER_SUF={'İmsak':"İmsak'a",'Öğle':"Öğle'ye",'İkindi':"İkindi'ye",'Akşam':"Akşam'a",'Yatsı':"Yatsı'ya"};
 function prayerNotifData(){
-  var np=nextPrayer(),T=np.times;
-  var row='İmsak '+T.Fajr+' · Güneş '+T.Sunrise+' · Öğle '+T.Dhuhr+' · İkindi '+T.Asr+' · Akşam '+T.Maghrib+' · Yatsı '+T.Isha;
-  return {title:'🕌 '+np.label+' vaktine '+leftText(np.at-new Date())+' kaldı',body:'📍 '+np.city+'\n'+row};
+  var np=nextPrayer(),T=np.times,mins=Math.max(0,Math.round((np.at-new Date())/60000));
+  var h=Math.floor(mins/60),m=mins%60,left=(h>0?h+' sa ':'')+m+' dk';
+  var labels=['İmsak','Güneş','Öğle','İkindi','Akşam','Yatsı'];
+  var times=[T.Fajr,T.Sunrise,T.Dhuhr,T.Asr,T.Maghrib,T.Isha];
+  var body=labels.join('    ')+'\n'+times.join('    ');
+  return {title:(PRAYER_SUF[np.label]||np.label)+': '+left,body:body};
 }
 function statusNotifData(){
   var c=calc(dk(new Date()));
   if(!c.inside)return null;
-  if(c.onBreak)return {t:'☕ Molada',b:'Moladan dönünce "Moladan dön" butonuna bas.',canBreak:false,canBack:true};
-  return {t:'💼 Mesaidesin',b:'Molaya çıkmak için "Molaya çık" butonuna bas.',canBreak:true,canBack:false};
+  if(c.onBreak)return {label:'Moladan dön',canBreak:false,canBack:true};
+  return {label:'Molaya çık',canBreak:true,canBack:false};
 }
 function closeTagged(reg,tag){
   return reg.getNotifications({tag:tag}).then(function(ns){ns.forEach(function(n){n.close()})});
@@ -3656,14 +3670,12 @@ function pushNotifs(){
     navigator.serviceWorker.ready.then(function(reg){
       var jobs=[],st=statusNotifData();
       if(st&&notifGet('status')){
-        var acts=[];
-        if(st.canBreak)acts.push({action:'mola',title:'☕ Molaya çık'});
-        if(st.canBack)acts.push({action:'don',title:'💼 Moladan dön'});
-        jobs.push(reg.showNotification('Hamam Böceği · '+st.t,{body:st.b,tag:'hb-status',icon:'icon-192.png',badge:'icon-192.png',silent:true,requireInteraction:true,renotify:false,actions:acts}));
+        var acts=[{action:st.canBreak?'mola':'don',title:st.label}];
+        jobs.push(reg.showNotification(st.label,{body:'',tag:'hb-status',icon:'icon-192.png',badge:'icon-192.png',silent:true,requireInteraction:true,renotify:false,actions:acts}));
       }else{jobs.push(closeTagged(reg,'hb-status'))}
       if(notifGet('prayer')){
         var pd=prayerNotifData();
-        jobs.push(reg.showNotification(pd.title,{body:pd.body,tag:'hb-prayer',icon:'icon-192.png',badge:'icon-192.png',silent:true,requireInteraction:false,renotify:false}));
+        jobs.push(reg.showNotification(pd.title,{body:pd.body,tag:'hb-prayer',icon:'moon-192.png',badge:'moon-badge-96.png',silent:true,requireInteraction:false,renotify:false}));
       }else{jobs.push(closeTagged(reg,'hb-prayer'))}
       return Promise.all(jobs);
     }).catch(function(){});
@@ -3675,10 +3687,10 @@ function initNotifs(){
   setTimeout(pushNotifs,2000);
 }
 
-var APP_VERSION='2026-11-20-v8';
+var APP_VERSION='2026-11-20-v10';
 var APP_CHANGES=[
   'Lingo\'da Kolay / Orta / Zor seviyeleri eklendi; her kelimede konu cümlesi var.',
-  'Hicri tarih İstanbul saatine göre gösteriliyor.',
+  'Hicri tarih Diyanet takvimiyle uyumlu hale getirildi (bugün 10 Cemaziyelahir 1448).',
   'Kıble pusulası kaldırıldı.',
   'Yeni Araçlar sekmesi: hesap makinesi, kronometre, zamanlayıcı, birim çevirici ve not defteri. Ayarlar\'dan açılıp kapatılır.',
   'Kayıtlarınız güncellemelerde silinmez; tarayıcıdan kalıcı depolama istenir.',
@@ -4076,6 +4088,14 @@ populateCitySelects();syncPrayerTabVisibility();syncToolsTabVisibility();checkAp
 <script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}</script>
 <style>
 .tl-wrap{display:grid;gap:12px}
+.tl-acc{padding:0;overflow:hidden}
+.tl-acc>summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.tl-acc>summary::-webkit-details-marker{display:none}
+.tl-acc>summary h3{margin:0}
+.tl-chev{transition:transform .2s;color:var(--muted)}
+.tl-acc[open] .tl-chev{transform:rotate(180deg)}
+.tl-acc>*:not(summary){margin-left:14px;margin-right:14px}
+.tl-acc>*:last-child{margin-bottom:14px}
 .tl-out{width:100%;box-sizing:border-box;background:#0b1222;color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:10px;font:700 22px var(--f-display,system-ui);text-align:right;margin-bottom:8px}
 .tl-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 .tl-k{background:#1e293b;color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:12px 0;font:700 16px system-ui;cursor:pointer}
