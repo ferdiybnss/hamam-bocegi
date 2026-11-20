@@ -3682,9 +3682,9 @@ function prayerNotifData(){
   var tl=prayerTimeline();
   var mins=Math.max(0,Math.round((tl.nxt.at-tl.now)/60000));
   var h=Math.floor(mins/60),m=mins%60,left=(h>0?h+' sa ':'')+m+' dk';
-  var title='🕌 '+tl.nxt.label+' '+tl.nxt.t+'  ·  '+left;
-  var body=(PRAYER_EMO[tl.cur.label]||'🕌')+' '+tl.cur.label+' '+tl.cur.t;
-  if(notifGet('steps')&&S.settings.stepsNotif!==false)body+='\n🚶 '+stepsData().n.toLocaleString('tr-TR')+' adım';
+  var title=(PRAYER_EMO[tl.cur.label]||'🕌')+' '+tl.cur.label+' '+tl.cur.t;
+  var body=(PRAYER_EMO[tl.nxt.label]||'🕌')+' '+tl.nxt.label+' '+tl.nxt.t+'\n⏳ '+left+' kaldı';
+  if(notifGet('steps')&&S.settings.stepsNotif!==false)body+='  ·  🚶 '+stepsData().n.toLocaleString('tr-TR')+' adım';
   return {title:title,body:body};
 }
 function statusNotifData(){
@@ -3776,7 +3776,7 @@ if($('#stepsReset')){
   $('#stepsReset').onclick=function(){var o=stepsData();o.n=0;stepsSave(o);renderSteps();pushNotifs()};
 }
 
-var APP_VERSION='2026-11-21-v13';
+var APP_VERSION='2026-11-21-v14';
 var APP_CHANGES=[
   'Lingo\'da Kolay / Orta / Zor seviyeleri eklendi; her kelimede konu cümlesi var.',
   'Hicri tarih Diyanet takvimiyle uyumlu hale getirildi (bugün 10 Cemaziyelahir 1448).',
