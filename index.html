@@ -3677,12 +3677,13 @@ function prayerTimeline(){
   }
   return {cur:cur,nxt:nxt,now:now};
 }
+var PRAYER_EMO={'İmsak':'🌙','Güneş':'🌅','Öğle':'☀️','İkindi':'🌤','Akşam':'🌇','Yatsı':'🌃'};
 function prayerNotifData(){
   var tl=prayerTimeline();
   var mins=Math.max(0,Math.round((tl.nxt.at-tl.now)/60000));
   var h=Math.floor(mins/60),m=mins%60,left=(h>0?h+' sa ':'')+m+' dk';
-  var title='Sonraki: '+tl.nxt.label+' '+tl.nxt.t+' · '+left+' kaldı';
-  var body='Şu an: '+tl.cur.label+' '+tl.cur.t;
+  var title='🕌 '+tl.nxt.label+' '+tl.nxt.t+'  ·  '+left;
+  var body=(PRAYER_EMO[tl.cur.label]||'🕌')+' '+tl.cur.label+' '+tl.cur.t;
   if(notifGet('steps')&&S.settings.stepsNotif!==false)body+='\n🚶 '+stepsData().n.toLocaleString('tr-TR')+' adım';
   return {title:title,body:body};
 }
@@ -3775,7 +3776,7 @@ if($('#stepsReset')){
   $('#stepsReset').onclick=function(){var o=stepsData();o.n=0;stepsSave(o);renderSteps();pushNotifs()};
 }
 
-var APP_VERSION='2026-11-21-v12';
+var APP_VERSION='2026-11-21-v13';
 var APP_CHANGES=[
   'Lingo\'da Kolay / Orta / Zor seviyeleri eklendi; her kelimede konu cümlesi var.',
   'Hicri tarih Diyanet takvimiyle uyumlu hale getirildi (bugün 10 Cemaziyelahir 1448).',
@@ -3789,7 +3790,7 @@ var APP_CHANGES=[
   'Yeni Adım Sayar: Araçlar sekmesinin en üstünde; Ayarlar › Araçlar bölümünden açılıp kapanır.',
   'Namaz bildirimi daha okunur: vakitler simgelerle, altında bugünkü adım sayısı.',
   'Tanıtıma Araçlar, Bildirimler ve Adım Sayar anlatımları eklendi.',
-  'Namaz bildirimi sadeleşti: şu anki vakit ve sonraki vakit ile kalan süre. Varsayılan kapalı; Namaz sekmesinden açabilirsiniz.'
+  'Namaz bildirimi sadeleşti: vakit adları ve kalan süre. Varsayılan kapalı; Namaz sekmesinden açabilirsiniz.'
 ];
 function syncToolsTabVisibility(){
   var on=!!(S.settings&&S.settings.toolsTab===true);
