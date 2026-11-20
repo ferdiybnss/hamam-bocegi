@@ -459,6 +459,95 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
 .ig-hero{background:linear-gradient(145deg,rgba(251,191,36,.16),rgba(15,23,42,.95));border:1px solid rgba(251,191,36,.45);border-radius:18px;padding:14px;margin:8px 0 12px}
 .ig-dl-btn{width:100%;padding:14px 16px;font:800 16px var(--f-display);border-radius:14px;border:0;background:linear-gradient(90deg,#F59E0B,#FBBF24);color:#1E1B00;box-shadow:0 8px 20px rgba(245,158,11,.32);display:flex;align-items:center;justify-content:center;gap:8px}
 .ig-dl-btn:active{transform:scale(.98)}
+
+/* Gelişmiş Tek Kale Futbol & Sinirli Kaleci */
+.pitch{cursor:crosshair}
+.goal-frame{pointer-events:none;display:block}
+.goal-corner{position:absolute;top:4px;font-size:9px;font-weight:800;color:rgba(251,191,36,.75);background:rgba(2,6,23,.45);padding:1px 5px;border-radius:4px}
+.goal-corner.tl{left:4px}.goal-corner.tr{right:4px}
+.goal-post-lbl{position:absolute;bottom:4px;left:50%;transform:translateX(-50%);font-size:9.5px;font-weight:800;color:rgba(255,255,255,.5);letter-spacing:.06em;white-space:nowrap}
+.f-aim-line{position:absolute;height:3px;background:linear-gradient(90deg,rgba(251,191,36,.95),rgba(239,68,68,.95));transform-origin:0 50%;border-radius:999px;pointer-events:none;z-index:5;box-shadow:0 0 8px rgba(251,191,36,.7)}
+.f-target-dot{position:absolute;width:18px;height:18px;margin:-9px 0 0 -9px;border:2px solid #FBBF24;border-radius:50%;background:rgba(251,191,36,.22);pointer-events:none;z-index:5;transition:opacity .25s}
+.f-spd-hud{position:absolute;left:10px;bottom:10px;background:rgba(2,6,23,.82);border:1px solid rgba(251,191,36,.45);border-radius:10px;padding:4px 9px;font:800 11px var(--f-body);color:var(--accent);z-index:6;pointer-events:none;display:flex;align-items:center;gap:6px}
+.f-spd-bar{width:46px;height:6px;background:#1E293B;border-radius:999px;overflow:hidden}
+.f-spd-bar i{display:block;height:100%;width:50%;background:linear-gradient(90deg,#34D399,#FBBF24,#EF4444);transition:width .08s}
+.gk-angry-fx{display:none}
+.gk-roach.angry .gk-angry-fx{display:block}
+.gk-roach.angry .roach-shell{fill:#DC2626!important;stroke:#7F1D1D!important}
+.gk-roach.angry .roach-head{fill:#EF4444!important;stroke:#7F1D1D!important}
+.gk-roach.angry svg{filter:drop-shadow(0 0 12px rgba(239,68,68,.95))!important;animation:gkRageShake .14s linear infinite}
+@keyframes gkRageShake{0%,100%{transform:translate(0,0) rotate(0)}25%{transform:translate(-3px,-2px) rotate(-6deg)}75%{transform:translate(3px,2px) rotate(6deg)}}
+.goal-top-banner.out{background:linear-gradient(90deg,#EF4444,#F97316);color:#fff;border-color:#FECACA}
+
+
+/* Namaz Vakitleri Sekmesi & Sofi Böcek (Premium) */
+.sofi-hero{position:relative;background:radial-gradient(circle at 50% 0%,rgba(16,185,129,.22),transparent 65%),linear-gradient(155deg,#05241B 0%,#091627 55%,#061322 100%);border:1px solid rgba(251,191,36,.38);border-radius:26px;padding:16px;margin-bottom:12px;display:flex;flex-direction:column;align-items:center;text-align:center;overflow:hidden;box-shadow:0 16px 36px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.08)}
+.sofi-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(251,191,36,.12) 1px,transparent 1px);background-size:18px 18px;opacity:.45;pointer-events:none}
+.sofi-glow{position:absolute;top:36px;width:190px;height:190px;border-radius:50%;background:radial-gradient(circle,rgba(16,185,129,.28),rgba(251,191,36,.12));filter:blur(34px);pointer-events:none}
+.sofi-top{position:relative;z-index:2;width:100%;display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:6px;flex-wrap:wrap}
+.sofi-badge{padding:5px 11px;border-radius:999px;font:800 11px var(--f-body);background:linear-gradient(90deg,rgba(16,185,129,.22),rgba(251,191,36,.18));color:#FDE68A;border:1px solid rgba(251,191,36,.4)}
+.sofi-top-r{display:flex;align-items:center;gap:6px}
+.sofi-info-btn{border:1px solid rgba(251,191,36,.4);background:rgba(2,6,23,.75);color:#FDE68A;border-radius:999px;padding:5px 10px;font:800 11.5px var(--f-body)}
+.sofi-city-sel{width:auto!important;padding:5px 10px!important;font:700 12px var(--f-body)!important;border-radius:999px!important;background:rgba(2,6,23,.8)!important;border-color:rgba(16,185,129,.45)!important;color:#F1F5F9!important}
+.sofi-hijri{position:relative;z-index:2;font:700 11.5px var(--f-body);color:#6EE7B7;letter-spacing:.03em;margin-bottom:2px}
+.sofi-juma{display:inline-block;background:linear-gradient(90deg,#F59E0B,#FDE047);color:#1E1B00;font:800 10.5px var(--f-body);padding:2px 10px;border-radius:999px;margin-bottom:4px;box-shadow:0 4px 12px rgba(245,158,11,.3)}
+.sofi-wrap{position:relative;z-index:2;width:142px;height:142px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .15s}
+.sofi-wrap:active{transform:scale(.95)}
+.sofi-wrap svg{width:100%;height:100%;filter:drop-shadow(0 10px 14px rgba(0,0,0,.5))}
+.sofi-quote{position:relative;z-index:2;font:600 12.5px var(--f-body);color:#D1FAE5;background:rgba(2,6,23,.62);border:1px solid rgba(16,185,129,.3);border-radius:14px;padding:8px 12px;margin-top:4px;max-width:100%}
+.prayer-next{position:relative;z-index:2;width:100%;margin-top:10px;background:rgba(2,6,23,.78);border:1px solid rgba(251,191,36,.45);border-radius:18px;padding:11px 14px;box-shadow:inset 0 1px 0 rgba(251,191,36,.15)}
+.prayer-next-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.prayer-next small{display:block;font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.prayer-next strong{font:800 17px var(--f-display);color:#6EE7B7}
+.prayer-next b{font:800 24px ui-monospace,Menlo,monospace;color:var(--accent);font-variant-numeric:tabular-nums}
+.p-prog{height:6px;background:rgba(30,41,59,.9);border-radius:999px;overflow:hidden;margin-top:8px;border:1px solid rgba(251,191,36,.2)}
+.p-prog i{display:block;height:100%;background:linear-gradient(90deg,#10B981,#FBBF24);border-radius:999px;transition:width .4s ease}
+.vakit-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:12px}
+.vakit-row{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:10px 12px;transition:border-color .2s,background .2s,box-shadow .2s}
+.vakit-row.next{background:linear-gradient(145deg,rgba(251,191,36,.09),rgba(15,23,42,.92));border:1.5px solid rgba(217,119,6,.72);box-shadow:inset 0 0 0 1px rgba(251,191,36,.16),0 3px 10px rgba(0,0,0,.28)}
+.vakit-row .vn{display:flex;align-items:center;gap:7px;font:700 14px var(--f-display)}
+.vakit-row .vn span{font-size:17px}
+.vakit-row .vt{font:800 16px ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums}
+.vakit-row.next .vt{color:#FCD34D}
+.zikir-tot-wrap{display:inline-flex;align-items:center;gap:5px}
+.zikir-tot-pill{cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;transition:transform .1s,border-color .15s}
+.zikir-tot-pill:active{transform:scale(.94)}
+.zikir-tot-rst{border:1px solid rgba(251,191,36,.38);background:rgba(2,6,23,.7);color:var(--muted);border-radius:999px;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;padding:0;line-height:1}
+.zikir-tot-rst:active{transform:scale(.9);color:var(--accent);border-color:var(--accent)}
+.sofi-lantern{display:none;position:absolute;top:10px;left:50%;transform:translateX(-50%);font-size:22px;filter:drop-shadow(0 0 10px rgba(251,191,36,.85));animation:lanternSway 2.6s ease-in-out infinite;pointer-events:none;z-index:3}
+.sofi-hero.nur-mode{border-color:#FBBF24;box-shadow:0 0 32px rgba(251,191,36,.28),inset 0 0 24px rgba(16,185,129,.22)}
+.sofi-hero.nur-mode .sofi-lantern{display:block}
+.sofi-hero.nur-mode .sofi-glow{background:radial-gradient(circle,rgba(251,191,36,.42),rgba(16,185,129,.25));width:230px;height:230px}
+@keyframes lanternSway{0%,100%{transform:translateX(-50%) rotate(-7deg)}50%{transform:translateX(-50%) rotate(7deg)}}
+.secret-prayer-card{background:linear-gradient(155deg,rgba(6,78,59,.45),rgba(15,23,42,.95));border:1px solid rgba(251,191,36,.48);border-radius:16px;padding:12px;margin-top:8px;text-align:left}
+.secret-prayer-card h4{margin:0 0 6px;font:800 14.5px var(--f-display);color:#FDE68A;display:flex;align-items:center;justify-content:space-between}
+.sp-tool-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:8px}
+.p-card{background:linear-gradient(160deg,var(--surface),rgba(6,40,30,.45));border:1px solid rgba(16,185,129,.32);border-radius:20px;padding:14px;margin-bottom:12px;box-shadow:0 8px 22px rgba(0,0,0,.22)}
+.p-card-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.p-card-head h3{font:800 16px var(--f-display);margin:0;color:#FDE68A;display:flex;align-items:center;gap:6px}
+.p-pill{font:700 11px var(--f-body);padding:4px 10px;border-radius:999px;border:1px solid rgba(251,191,36,.38);background:rgba(2,6,23,.65);color:var(--accent)}
+.zikir-box{display:flex;flex-direction:column;align-items:center;gap:10px}
+.zikir-ring{width:132px;height:132px;border-radius:50%;border:4px solid #10B981;background:radial-gradient(circle at 35% 30%,#064E3B,#022C22);box-shadow:0 10px 24px rgba(16,185,129,.28),inset 0 2px 8px rgba(255,255,255,.15);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;transition:transform .08s,box-shadow .15s}
+.zikir-ring:active{transform:scale(.94);box-shadow:0 4px 12px rgba(16,185,129,.4)}
+.zikir-ring b{font:800 36px/1 ui-monospace,Menlo,monospace;color:#FDE68A}
+.zikir-ring small{font:700 11px var(--f-body);color:#A7F3D0;margin-top:4px}
+.zikir-ctrls{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;width:100%}
+.qibla-row{display:flex;align-items:center;gap:14px}
+.qibla-dial{position:relative;width:86px;height:86px;flex:none;border-radius:50%;border:2px solid rgba(251,191,36,.55);background:radial-gradient(circle,#0F172A,#020617);display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 14px rgba(251,191,36,.15)}
+.qibla-needle{position:absolute;inset:8px;transition:transform .35s cubic-bezier(.22,1,.36,1);display:flex;flex-direction:column;align-items:center;justify-content:space-between}
+.qibla-needle span{font-size:17px;line-height:1}
+.qibla-needle i{width:3px;flex:1;background:linear-gradient(180deg,#FBBF24,#10B981);border-radius:999px;margin:2px 0}
+.esma-box{background:rgba(2,6,23,.55);border:1px solid rgba(251,191,36,.25);border-radius:15px;padding:12px;text-align:center}
+.esma-ar{font:700 26px/1.3 serif;color:#FDE047;margin-bottom:4px}
+.esma-tr{font:800 15px var(--f-display);color:#6EE7B7}
+.esma-desc{font:500 12.5px var(--f-body);color:var(--fg);margin-top:4px;line-height:1.45}
+.p-fun-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:8px}
+.quiz-opts{display:grid;gap:7px;margin-top:10px}
+.qopt{text-align:left;padding:9px 12px;border-radius:12px;border:1px solid var(--line);background:rgba(2,6,23,.7);font:700 13px var(--f-body);transition:all .15s}
+.qopt.ok{background:rgba(22,163,74,.28);border-color:#22C55E;color:#BBF7D0}
+.qopt.no{background:rgba(220,38,38,.28);border-color:#EF4444;color:#FECACA}
+.hikmet-card{margin-top:10px;padding:11px 12px;border-radius:14px;background:linear-gradient(135deg,rgba(251,191,36,.14),rgba(16,185,129,.12));border:1px solid rgba(251,191,36,.35);font:600 13px var(--f-body);color:#FEF3C7;line-height:1.45}
+
 </style>
 
 <div class="wrap">
@@ -533,6 +622,115 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
   <ul class="list" id="extraList"></ul>
 </section>
 
+<section id="tab-prayer" role="tabpanel" hidden>
+  <div class="sofi-hero" id="sofiHero">
+    <div class="sofi-lantern" aria-hidden="true">🏮 ✨ 🏮</div>
+    <div class="sofi-glow"></div>
+    <div class="sofi-top">
+      <span class="sofi-badge">🕌 Sofi Böcek • Huzur Vakti</span>
+      <div class="sofi-top-r">
+        <button type="button" class="sofi-info-btn" id="btnPrayerInfo" aria-label="Namaz sekmesi açıklaması">ℹ️ Bilgi</button>
+        <select id="prayerCityQuick" class="sofi-city-sel" aria-label="Şehir seç"></select>
+      </div>
+    </div>
+    <div class="sofi-hijri" id="pHijriDate">🌙 Hicri Takvim</div>
+    <div class="sofi-juma" id="pJumaBadge" hidden>✨ Hayırlı Cumalar • Cumanız Mübarek Olsun ✨</div>
+    <div class="sofi-wrap roach-sofi" id="sofiWrap" role="button" tabindex="0" aria-label="Sofi Böceğe dokun">
+      <svg id="sofiSvg" class="rsvg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
+    </div>
+    <div class="sofi-quote" id="sofiQuote">📿 "Subhanallah, Elhamdülillah, Allahu Ekber" — Sofi Böceğe dokun!</div>
+    <div class="prayer-next">
+      <div class="prayer-next-row">
+        <div style="text-align:left">
+          <small id="pNextLbl">Sıradaki Vakit</small>
+          <strong id="pNextName">--</strong>
+        </div>
+        <div style="text-align:right">
+          <small>Kalan Süre</small>
+          <b id="pCountdown">--:--:--</b>
+        </div>
+      </div>
+      <div class="p-prog" aria-hidden="true"><i id="pProgBar" style="width:0%"></i></div>
+    </div>
+  </div>
+
+  <div class="row sp" style="margin:6px 0 8px">
+    <h2 style="margin:0;font-size:15px" id="pDateHead">📅 Günün Vakitleri</h2>
+    <span style="font-size:11px;color:#6EE7B7;font-weight:700" id="pSrcBadge">Diyanet Uyumlu</span>
+  </div>
+  <div class="vakit-list" id="vakitList"></div>
+
+  <!-- 1. Dini Özellik: Akıllı Zikirmatik -->
+  <div class="p-card">
+    <div class="p-card-head">
+      <h3>📿 Akıllı Zikirmatik</h3>
+      <div class="zikir-tot-wrap">
+        <span class="p-pill zikir-tot-pill" id="zikirTotLbl" title="Sıfırlamak için 3 kez dokunun">Toplam: 0</span>
+        <button type="button" class="zikir-tot-rst" id="btnZikirTotReset" aria-label="Genel toplamı sıfırla" title="Toplamı sıfırla">↺</button>
+      </div>
+    </div>
+    <div class="zikir-box">
+      <select id="zikirPreset" aria-label="Zikir seç" style="text-align:center;font-weight:700">
+        <option value="Subhanallah (33)">✨ Subhanallah (33)</option>
+        <option value="Elhamdülillah (33)">🌿 Elhamdülillah (33)</option>
+        <option value="Allahu Ekber (33)">🕌 Allahu Ekber (33)</option>
+        <option value="Estağfirullah el-Azîm (99)">💧 Estağfirullah el-Azîm (99)</option>
+        <option value="Allahümme Salli Alâ Seyyidinâ Muhammed">🌹 Salavat-ı Şerife (∞)</option>
+        <option value="Lâ ilâhe illallah">💫 Kelime-i Tevhid (∞)</option>
+      </select>
+      <button type="button" class="zikir-ring" id="btnZikirTap" aria-label="Zikir sayacını artır">
+        <b id="zikirCount">0</b>
+        <small id="zikirTargetTxt">Hedef: 33 • Dokun</small>
+      </button>
+      <div class="zikir-ctrls">
+        <button type="button" class="btn" id="btnZikirTarget">🎯 Hedef: 33</button>
+        <button type="button" class="btn" id="btnZikirReset">↺ Sıfırla</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Dini Özellik: Kıble Yönü & Açısı -->
+  <div class="p-card">
+    <div class="p-card-head">
+      <h3>🧭 Kıble Yönü & Açısı</h3>
+      <button type="button" class="p-pill" id="btnCompassSensor">📡 Pusulayı Aç</button>
+    </div>
+    <div class="qibla-row">
+      <div class="qibla-dial">
+        <div class="qibla-needle" id="qiblaNeedle"><span>🕋</span><i></i></div>
+      </div>
+      <div style="flex:1;min-width:0;text-align:left">
+        <b style="font:800 17px var(--f-display);color:#FDE68A" id="qiblaDegTxt">151° Güneydoğu</b>
+        <p style="margin:3px 0 0;font-size:12.5px;color:var(--muted)" id="qiblaHintTxt">Kuzey (0°) referansına göre Kâbe yönüdür. Canlı yön bulmak için “Pusulayı Aç”a dokunun.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Dini Özellik: Esmaül Hüsna & Günün Ayet / Duası -->
+  <div class="p-card">
+    <div class="p-card-head">
+      <h3>📖 Esmaül Hüsna & Günün Sözü</h3>
+      <button type="button" class="p-pill" id="btnNextWisdom">🔄 Değiştir</button>
+    </div>
+    <div class="esma-box" id="wisdomBox"></div>
+  </div>
+
+  <!-- 4. Eğlence & İnteraktif Bölüm: Sofi Böcek Bilgi Yarışması & Hikmet Kesesi -->
+  <div class="p-card" style="border-color:rgba(251,191,36,.42)">
+    <div class="p-card-head">
+      <h3>🎁 Huzur & Bilgi Köşesi</h3>
+      <span class="p-pill" id="pQuizScore">🏆 Puan: 0</span>
+    </div>
+    <p style="margin:0 0 8px;font-size:12.5px;color:var(--muted)">Mola verirken hem eğlen hem bilgini tazele! Sofi Böcek senin için sorular ve hikmet kartları hazırladı.</p>
+    <div class="p-fun-grid">
+      <button type="button" class="btn pri" id="btnStartPQuiz">🧠 Dini Bilgi Yarışması</button>
+      <button type="button" class="btn" id="btnDrawHikmet" style="border-color:rgba(16,185,129,.5);color:#6EE7B7">💌 Niyet & Şükür Çek</button>
+    </div>
+    <div id="pFunArea" hidden></div>
+  </div>
+</section>
+
+
 
 </main>
 </div>
@@ -542,6 +740,7 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
   <button role="tab" data-tab="today" aria-selected="true"><i>🏢</i>Hareketler</button>
   <button role="tab" data-tab="log" aria-selected="false"><i>📋</i>Kayıtlar</button>
   <button role="tab" data-tab="leave" aria-selected="false"><i>🏖️</i>İzinler</button>
+  <button role="tab" data-tab="prayer" id="tabBtnPrayer" aria-selected="false"><i>🕌</i>Namaz</button>
   <button role="tab" data-tab="settings" aria-selected="false"><i>⚙️</i>Ayarlar</button>
 </nav>
 
@@ -578,6 +777,58 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
       <button type="button" class="btn" id="igToggleSteps">📋 Manuel Kurulum Adımları</button>
       <button type="button" class="btn pri" id="igClose">Uygulamaya Geç →</button>
     </div>
+  </div>
+</div>
+
+
+<div class="tour" id="prayerIntroModal" hidden role="dialog" aria-modal="true" aria-labelledby="piT">
+  <div class="tcard" style="max-width:410px;max-height:92vh;overflow:auto">
+    <div class="tic">🕌📿</div>
+    <h3 id="piT">Namaz Vakitleri & Sofi Böcek</h3>
+    <div class="pwa-steps" style="margin:10px 0 12px">
+      <div style="margin-bottom:8px"><b>📡 Vakitler Nereden Çekiliyor?</b><br>
+      81 il için <b>Diyanet İşleri Başkanlığı</b> hesaplama yöntemine (18° İmsak, 17° Yatsı, Türkiye +3 saat dilimi) birebir uyumlu canlı vakit servisinden çekilir; internetiniz yoksa bile yerleşik astronomik algoritma anında kesintisiz hesaplar.</div>
+      <div style="margin-bottom:8px"><b>⚙️ Bu Sekmeyi Nasıl Kapatabilirim?</b><br>
+      Alt menüde Namaz sekmesini görmek istemezseniz <b>Ayarlar → 🕌 Namaz Vakitleri Sekmesi</b> bölümünden tek dokunuşla kapatabilir, istediğiniz zaman tekrar açabilirsiniz.</div>
+      <div><b>✨ Neler Var?</b><br>
+      Sıradaki vakte canlı geri sayım, <b>Akıllı Zikirmatik</b>, <b>Kıble Pusulası</b>, <b>Esmaül Hüsna</b> ve mola eğlencesi için <b>Dini Bilgi Yarışması</b>!</div>
+    </div>
+    <div class="trow" style="gap:8px">
+      <button type="button" class="btn" id="piDisableBtn">Sekmeyi Kapat</button>
+      <button type="button" class="btn pri" id="piOkBtn">Anladım, Başla 🕌</button>
+    </div>
+  </div>
+</div>
+
+<div class="tour" id="pQuizModal" hidden role="dialog" aria-modal="true" aria-labelledby="pqmT">
+  <div class="tcard" style="max-width:430px;max-height:92vh;overflow:auto;text-align:left">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px">
+      <h3 id="pqmT" style="margin:0;font-size:19px">🧠 Dini Bilgi Yarışması</h3>
+      <span class="p-pill" id="pqmScoreBadge">🏆 0 Puan</span>
+    </div>
+    <div id="pqmBody"></div>
+    <div class="trow" style="margin-top:12px">
+      <button type="button" class="btn" id="pqmClose">Kapat</button>
+    </div>
+  </div>
+</div>
+
+<div class="tour" id="prayerSecretModal" hidden role="dialog" aria-modal="true" aria-labelledby="psmT">
+  <div class="tcard" style="max-width:430px;max-height:92vh;overflow:auto">
+    <span class="vip-badge">✨ Sofi Böcek Gizli Hazine Odası</span>
+    <div class="tic" style="margin-top:4px">🕌🌟</div>
+    <h3 id="psmT">Huzur & Hikmet Sırları</h3>
+    <p style="font-size:12.5px;margin-bottom:10px">Sofi Böceğe 5 kez dokunanlara özel manevi araçlar, tefekkür oyunları ve sürprizler!</p>
+    <div class="trow" style="flex-wrap:wrap;gap:7px">
+      <button type="button" class="btn pri" id="spNurMode">🏮 Kandil & Nur Modu</button>
+      <button type="button" class="btn" id="spEsmaGame">🎯 Esmaül Hüsna Eşleştir</button>
+      <button type="button" class="btn" id="spSalavat">🌹 Salavat Halkası</button>
+      <button type="button" class="btn" id="spAmel">🌱 Günün Gizli İyiliği</button>
+      <button type="button" class="btn" id="spBreath">🌬️ Tefekkür Nefesi</button>
+      <button type="button" class="btn" id="spHadis">📜 Enderun Hikmetleri</button>
+    </div>
+    <div id="spOut" style="margin-top:10px" hidden></div>
+    <div class="trow" style="margin-top:12px"><button type="button" class="btn pri" id="psmClose">Kapat</button></div>
   </div>
 </div>
 
@@ -691,6 +942,11 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
       <div class="row"><button class="btn" id="btnSound"></button></div>
       <div class="form" id="slots" style="margin-top:12px"></div><input type="file" id="upFile" accept="audio/*,video/*" hidden></div></details>
 <details class="sec"><summary>🎨 Görünüm</summary><div class="secbody"><div class="row"><button class="btn" data-theme-set="light">☀️ Aydınlık mod</button><button class="btn" data-theme-set="dark">🌙 Karanlık mod</button></div></div></details>
+<details class="sec"><summary>🕌 Namaz Vakitleri Sekmesi</summary><div class="secbody">
+  <p style="margin:0">Alt menü barında <b>🕌 Namaz</b> sekmesini ve Sofi Böcek vakit ekranını istediğiniz zaman açıp kapatabilirsiniz.</p>
+  <label class="ck"><input type="checkbox" id="setPrayerOn"> Alt menüde Namaz Vakitleri sekmesini göster</label>
+  <label>Şehir seçimi (81 İl)<select id="setPrayerCity"></select></label>
+</div></details>
 <details class="sec"><summary>🎬 Tanıtım & Kurulum</summary><div class="secbody"><div class="row"><button class="btn" id="btnTourAgain">Tanıtımı tekrar göster</button><button class="btn pri" id="btnInstallGuide">📲 Masaüstüne / Ana Ekrana Ekle</button></div></div></details>
 <details class="sec"><summary>💾 Yedek</summary><div class="secbody">
 <p>Her 3 günde bir yedek indirmeniz istenir. İstediğiniz zaman da indirebilirsiniz.</p>
@@ -709,7 +965,7 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
 'use strict';
 var KEY='papatya-bocekleri-v1';
 var DEF_LOOK={glasses:'default',mustache:'none',head:'none',extra:'none',vehicle:'none'};
-var DEF={events:{},leaves:[],extras:[],settings:{sched:{wd:{on:true,start:'08:00',end:'18:00',brk:75},sat:{on:true,start:'08:00',end:'14:00',brk:60},sun:{on:false,start:'08:00',end:'14:00',brk:60}},breakLimit:15,sound:true,theme:'dark',look:clone(DEF_LOOK)}};
+var DEF={events:{},leaves:[],extras:[],settings:{sched:{wd:{on:true,start:'08:00',end:'18:00',brk:75},sat:{on:true,start:'08:00',end:'14:00',brk:60},sun:{on:false,start:'08:00',end:'14:00',brk:60}},breakLimit:15,sound:true,theme:'dark',prayerTab:true,prayerCity:'İstanbul',look:clone(DEF_LOOK)}};
 function clone(o){return JSON.parse(JSON.stringify(o))}
 var S=load();
 function load(){try{var r=localStorage.getItem(KEY);if(r){var o=JSON.parse(r),d=clone(DEF);
@@ -1046,7 +1302,21 @@ $('#tab-leave').onclick=function(e){var b=e.target.closest('button');if(!b)retur
 var BL=[['wd','Wd','Hafta içi'],['sat','Sat','Cumartesi'],['sun','Sun','Pazar']];
 function buildSettings(){var sc=S.settings.sched;
   BL.forEach(function(x){var b=sc[x[0]];$('#on'+x[1]).checked=!!b.on;$('#'+x[0]+'S').value=b.start;$('#'+x[0]+'E').value=b.end;$('#'+x[0]+'B').value=(b.brk==null?60:b.brk)});
+  if($('#setPrayerOn'))$('#setPrayerOn').checked=(S.settings.prayerTab!==false);
+  populateCitySelects();
   hint();syncSound();renderSlots()}
+if($('#setPrayerOn')){
+  $('#setPrayerOn').onchange=function(){
+    S.settings.prayerTab=this.checked;save();syncPrayerTabVisibility();
+    toast(this.checked?'🕌 Namaz Vakitleri sekmesi alt bara eklendi':'Namaz Vakitleri sekmesi gizlendi');
+  };
+}
+if($('#setPrayerCity')){
+  $('#setPrayerCity').onchange=function(){
+    S.settings.prayerCity=this.value;save();populateCitySelects();renderPrayerTab();
+    toast('Şehir güncellendi: '+this.value);
+  };
+}
 function hint(){
   var out=BL.map(function(x){var on=$('#on'+x[1]).checked,a=toSec($('#'+x[0]+'S').value||'00:00'),b=toSec($('#'+x[0]+'E').value||'00:00'),m=+$('#'+x[0]+'B').value||0;
     return x[2]+': '+(on?hm(Math.max(0,b-a-m*60)):'kapalı')});
@@ -1921,10 +2191,21 @@ function bugStop(ended){
   }
 }
 
-/* ---------- 3. Oyun: Tek Kale Böcek Futbolu (Gol Atınca Durmaz, Gol Yazısı Kalenin Üstünde Çıkar, Yanana Kadar Devam Eder!) ---------- */
-var FOOT={goals:0,saves:0,shooting:false,diveUntil:0,dragStart:null,gkX:50,gkDir:1,raf:null,lastTs:0,banT:null};
+/* ---------- 3. Oyun: Tek Kale Böcek Futbolu (Serbest Nişan + Şut Hızı + Köşeler & Aut + Sinirlenen ve Hiç Durmayan Kaleci) ---------- */
+var FOOT={goals:0,saves:0,shooting:false,angryUntil:0,dragStart:null,dragCur:null,gkX:50,gkDir:1,raf:null,lastTs:0,banT:null,shotT:null};
 function footPatrolSpeed(){
-  return Math.min(230, 46 + FOOT.goals * 13);
+  return Math.min(240, 48 + FOOT.goals * 13);
+}
+function gkKeeperSvg(){
+  var base=buildRoachInnerSvg(getLook());
+  var angryFx='<g class="gk-angry-fx">'+
+    '<path d="M 71 57 L 94 66" stroke="#FEF08A" stroke-width="4.5" stroke-linecap="round"/>'+
+    '<path d="M 129 57 L 106 66" stroke="#FEF08A" stroke-width="4.5" stroke-linecap="round"/>'+
+    '<path d="M 38 42 L 46 50 M 46 42 L 38 50 M 156 38 L 164 46 M 164 38 L 156 46" stroke="#EF4444" stroke-width="3.5" stroke-linecap="round"/>'+
+    '<circle cx="42" cy="46" r="10" fill="none" stroke="#F87171" stroke-width="2" stroke-dasharray="4 3"/>'+
+    '<circle cx="160" cy="42" r="10" fill="none" stroke="#F87171" stroke-width="2" stroke-dasharray="4 3"/>'+
+  '</g>';
+  return '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'+base+angryFx+'</svg>';
 }
 function footStartPatrol(){
   cancelAnimationFrame(FOOT.raf);
@@ -1934,119 +2215,228 @@ function footStartPatrol(){
     if(!gk){FOOT.raf=null;return}
     var dt=Math.min(0.05,(ts-FOOT.lastTs)/1000);
     FOOT.lastTs=ts;
-    if(FOOT.saves<3 && ts>=FOOT.diveUntil){
+    var isAngry = ts < FOOT.angryUntil;
+    gk.classList.toggle('angry', isAngry);
+    /* Kaleci gol sırasında dahi HİÇ durmaz, sürekli hareket eder! */
+    if(FOOT.saves < 3){
       gk.classList.add('patrol');
-      FOOT.gkX += FOOT.gkDir * footPatrolSpeed() * dt;
-      if(FOOT.gkX >= 78){FOOT.gkX = 78; FOOT.gkDir = -1;}
-      else if(FOOT.gkX <= 22){FOOT.gkX = 22; FOOT.gkDir = 1;}
-      var sway=Math.sin(ts/105)*7;
-      gk.style.left=FOOT.gkX+'%';
-      gk.style.transform='rotate('+sway+'deg)';
+      var spd = footPatrolSpeed() * (isAngry ? 1.28 : 1);
+      FOOT.gkX += FOOT.gkDir * spd * dt;
+      if(FOOT.gkX >= 80){FOOT.gkX = 80; FOOT.gkDir = -1;}
+      else if(FOOT.gkX <= 20){FOOT.gkX = 20; FOOT.gkDir = 1;}
+      var sway = Math.sin(ts / (isAngry ? 55 : 105)) * (isAngry ? 13 : 7);
+      gk.style.left = FOOT.gkX + '%';
+      gk.style.transform = 'rotate(' + sway + 'deg)' + (isAngry ? ' scale(1.08)' : '');
     }
     FOOT.raf=requestAnimationFrame(step);
   }
   FOOT.raf=requestAnimationFrame(step);
 }
-function showGoalTopBanner(txt,isSave){
+function showGoalTopBanner(txt,mode){
   var ban=$('#fGoalBan');if(!ban)return;
   ban.textContent=txt;
-  ban.classList.toggle('save',!!isSave);
+  ban.classList.remove('save','out');
+  if(mode==='save')ban.classList.add('save');
+  else if(mode==='out')ban.classList.add('out');
   ban.classList.remove('show');void ban.offsetWidth;ban.classList.add('show');
   clearTimeout(FOOT.banT);
-  FOOT.banT=setTimeout(function(){if(ban)ban.classList.remove('show')},950);
+  FOOT.banT=setTimeout(function(){if(ban)ban.classList.remove('show')},1050);
+}
+function updateSpeedHud(kmh){
+  var lbl=$('#fSpdTxt'),bar=$('#fSpdFill');
+  var pct=Math.max(15,Math.min(100,Math.round((kmh-55)/90*100)));
+  if(lbl)lbl.textContent=kmh+' km/s';
+  if(bar)bar.style.width=pct+'%';
 }
 function footOpen(){
-  cancelAnimationFrame(FOOT.raf);clearTimeout(FOOT.banT);
-  FOOT={goals:0,saves:0,shooting:false,diveUntil:0,dragStart:null,gkX:50,gkDir:1,raf:null,lastTs:0,banT:null};
+  cancelAnimationFrame(FOOT.raf);clearTimeout(FOOT.banT);clearTimeout(FOOT.shotT);
+  FOOT={goals:0,saves:0,shooting:false,angryUntil:0,dragStart:null,dragCur:null,gkX:50,gkDir:1,raf:null,lastTs:0,banT:null,shotT:null};
   var best=+(lsGet('hb-foot-best')||0);
   openGame('⚽ Tek Kale Böcek Futbolu',
-    '<p class="lsub">Kaleci sürekli hareket eder ve gol attıkça hızlanır! Gol atınca oyun durmaz, 3 kurtarışa (yanana) kadar devam eder.</p>'+
-    '<div class="bstat">Gol <b id="fG">0</b> · Kaleci Hızı <b id="fSp">1.0x</b> · Hak <b id="fL">❤️❤️❤️</b> · Rekor <b id="fB">'+best+'</b></div>'+
+    '<p class="lsub">Kalenin her yerine (köşelere, 90\'a) şut çekebilirsin! Parmağınla hızlı çekersen sert şut, yavaş çekersen plase gider; fazla açarsan <b>auta</b> çıkar!</p>'+
+    '<div class="bstat">Gol <b id="fG">0</b> · Kaleci <b id="fSp">1.0x</b> · Hak <b id="fL">❤️❤️❤️</b> · Rekor <b id="fB">'+best+'</b></div>'+
     '<div class="pitch" id="fPitch">'+
       '<div class="goal-top-banner" id="fGoalBan">⚽ GOOOOOL!</div>'+
       '<div class="goal-frame" id="fGoal">'+
-        '<div class="goal-zone" data-dir="0" data-lbl="SOL"></div>'+
-        '<div class="goal-zone" data-dir="1" data-lbl="ORTA"></div>'+
-        '<div class="goal-zone" data-dir="2" data-lbl="SAĞ"></div>'+
+        '<span class="goal-corner tl">90\'</span>'+
+        '<span class="goal-corner tr">90\'</span>'+
+        '<span class="goal-post-lbl">KÖŞELERE & HER YERE VUR</span>'+
       '</div>'+
-      '<div class="gk-roach patrol" id="fGk">'+roachMiniSvg()+'</div>'+
+      '<div class="gk-roach patrol" id="fGk">'+gkKeeperSvg()+'</div>'+
       '<div class="pitch-lines"></div><div class="pitch-spot"></div>'+
+      '<div class="f-aim-line" id="fAim" hidden></div>'+
+      '<div class="f-target-dot" id="fDot" hidden></div>'+
+      '<div class="f-spd-hud"><span>⚡ <b id="fSpdTxt">95 km/s</b></span><span class="f-spd-bar"><i id="fSpdFill"></i></span></div>'+
       '<div class="fbanner" id="fBan">🏁 MAÇ BİTTİ!</div>'+
       '<div class="fball" id="fBall">⚽</div>'+
     '</div>'+
     '<div class="row" style="justify-content:center;margin-top:12px"><button class="btn pri" id="fRst" hidden>🔄 Tekrar Oyna</button></div>'
   );
-  activeGameStop=function(){cancelAnimationFrame(FOOT.raf);clearTimeout(FOOT.banT);FOOT.raf=null};
-  var pitch=$('#fPitch'),ball=$('#fBall');
+  activeGameStop=function(){cancelAnimationFrame(FOOT.raf);clearTimeout(FOOT.banT);clearTimeout(FOOT.shotT);FOOT.raf=null};
+  var pitch=$('#fPitch'),aim=$('#fAim');
   pitch.onpointerdown=function(e){
-    if(FOOT.saves>=3)return;
-    var z=e.target.closest('.goal-zone');
-    if(z){e.preventDefault();footShoot(+z.dataset.dir);return}
-    if(e.target===ball){FOOT.dragStart={x:e.clientX,y:e.clientY};return}
-    if(e.target===pitch||e.target.classList.contains('pitch-lines')){
-      var r=pitch.getBoundingClientRect(),rel=(e.clientX-r.left)/r.width;
-      footShoot(rel<0.38?0:(rel>0.62?2:1));
+    if(FOOT.saves>=3||FOOT.shooting)return;
+    e.preventDefault();
+    var r=pitch.getBoundingClientRect();
+    FOOT.dragStart={x:e.clientX,y:e.clientY,t:performance.now(),rect:r};
+    FOOT.dragCur={x:e.clientX,y:e.clientY};
+  };
+  pitch.onpointermove=function(e){
+    if(!FOOT.dragStart||FOOT.shooting)return;
+    FOOT.dragCur={x:e.clientX,y:e.clientY};
+    var dx=e.clientX-FOOT.dragStart.x,dy=e.clientY-FOOT.dragStart.y;
+    var dist=Math.hypot(dx,dy);
+    if(dist>12&&aim){
+      var r=FOOT.dragStart.rect;
+      var bx=r.width*0.5,by=r.height*(1-0.155);
+      var dt=Math.max(16,performance.now()-FOOT.dragStart.t);
+      var vel=dist/dt;
+      var kmh=Math.round(Math.max(60,Math.min(145,62+vel*42+dist*0.18)));
+      updateSpeedHud(kmh);
+      var ang=Math.atan2(dy,dx)*180/Math.PI;
+      aim.hidden=false;
+      aim.style.left=bx+'px';aim.style.top=by+'px';
+      aim.style.width=Math.min(r.height*0.75,Math.max(30,dist*1.4))+'px';
+      aim.style.transform='rotate('+ang+'deg)';
     }
   };
   pitch.onpointerup=function(e){
-    if(!FOOT.dragStart)return;
-    var dx=e.clientX-FOOT.dragStart.x,dy=e.clientY-FOOT.dragStart.y;FOOT.dragStart=null;
-    if(dy<-20){footShoot(dx<-26?0:(dx>26?2:1))}
+    if(aim)aim.hidden=true;
+    if(!FOOT.dragStart||FOOT.saves>=3||FOOT.shooting){FOOT.dragStart=null;return}
+    var st=FOOT.dragStart;FOOT.dragStart=null;
+    var r=st.rect;
+    var dx=e.clientX-st.x,dy=e.clientY-st.y;
+    var dist=Math.hypot(dx,dy);
+    var dt=Math.max(18,performance.now()-st.t);
+    var targetX,targetBottom,kmh;
+    if(dist>22 && dy<-12){
+      /* Parmağı kaydırarak şut: açı + çekiş hızına göre top hızı ve yönü */
+      var slopeX=dx/Math.abs(dy);
+      targetX=50+slopeX*58;
+      var powerRatio=Math.min(1.25,dist/(r.height*0.42));
+      targetBottom=62+powerRatio*26;
+      var vel=dist/dt;
+      kmh=Math.round(Math.max(60,Math.min(145,62+vel*44+dist*0.16)));
+    }else{
+      /* Herhangi bir noktaya (köşeler, üst doksan, direk veya aut) dokunarak şut */
+      targetX=((e.clientX-r.left)/r.width)*100;
+      var relTop=((e.clientY-r.top)/r.height)*100;
+      targetBottom=100-relTop;
+      /* Dokunulan yer çok aşağıdaysa kaleye doğru yükselt */
+      if(targetBottom<58)targetBottom=65+Math.random()*22;
+      /* Basılı tutma süresine ve mesafeye göre dinamik şut hızı */
+      var holdBoost=Math.min(48,dt*0.11);
+      var edgeBoost=Math.abs(targetX-50)*0.45;
+      kmh=Math.round(Math.max(64,Math.min(142,72+holdBoost+edgeBoost+(Math.random()*14-7))));
+    }
+    targetX=Math.max(3,Math.min(97,targetX));
+    targetBottom=Math.max(58,Math.min(96,targetBottom));
+    footShootAt(targetX,targetBottom,kmh);
   };
+  pitch.onpointercancel=function(){FOOT.dragStart=null;if(aim)aim.hidden=true};
   $('#fRst').onclick=footOpen;
   footStartPatrol();
 }
 function footResetBallInstant(){
-  var ball=$('#fBall');if(!ball)return;
+  var ball=$('#fBall'),dot=$('#fDot');
+  if(dot)dot.hidden=true;
+  if(!ball)return;
   ball.style.transition='none';
   ball.style.left='50%';ball.style.bottom='13%';ball.style.transform='scale(1) rotate(0deg)';
   void ball.offsetWidth;
-  ball.style.transition='left .24s cubic-bezier(.16,1,.3,1),bottom .24s cubic-bezier(.16,1,.3,1),transform .24s ease-out';
   FOOT.shooting=false;
 }
-function footShoot(dir){
+function footLoseHeart(bannerTxt,mode,voiceKind,speechTxt,speechIc){
+  FOOT.saves++;
+  var hearts='';for(var i=0;i<3-FOOT.saves;i++)hearts+='❤️';for(var j=0;j<FOOT.saves;j++)hearts+='🖤';
+  $('#fL').textContent=hearts;
+  showGoalTopBanner(bannerTxt+' ('+(3-FOOT.saves)+' hak)',mode);
+  if(FOOT.saves>=3){
+    var endBan=$('#fBan');
+    if(endBan){endBan.textContent='🏁 MAÇ BİTTİ! TOPLAM GOL: '+FOOT.goals;endBan.classList.add('show')}
+    $('#fRst').hidden=false;
+    gameVoice('death','Maç bitti! Toplam '+FOOT.goals+' gol attın!','⚽');
+  }else{
+    gameVoice(voiceKind,speechTxt,speechIc);
+    FOOT.shotT=setTimeout(footResetBallInstant,290);
+  }
+}
+function footShootAt(targetX,targetBottom,kmh){
   if(FOOT.shooting||FOOT.saves>=3)return;
-  FOOT.shooting=true;gameVoice('kick');
-  var ball=$('#fBall'),gk=$('#fGk');
-  var shotX=[22,50,78][dir];
-  ball.style.transition='left .24s cubic-bezier(.16,1,.3,1),bottom .24s cubic-bezier(.16,1,.3,1),transform .24s ease-out';
-  ball.style.left=shotX+'%';ball.style.bottom='67%';ball.style.transform='scale(0.56) rotate(540deg)';
-  var dist=Math.abs(FOOT.gkX - shotX);
-  var caught = dist < 16.5;
-  var diveX = caught ? shotX : Math.max(20, Math.min(80, FOOT.gkX + (FOOT.gkDir * 10)));
-  var diveTilt = diveX < FOOT.gkX ? -46 : (diveX > FOOT.gkX ? 46 : 0);
-  gk.classList.remove('patrol');
-  gk.style.left=diveX+'%';
-  gk.style.transform='rotate('+diveTilt+'deg) translateY(3px) scale(1.07)';
-  FOOT.diveUntil=performance.now()+280;
-  setTimeout(function(){
+  FOOT.shooting=true;
+  updateSpeedHud(kmh);
+  gameVoice('kick');
+  var ball=$('#fBall'),dot=$('#fDot');
+  /* Şut hızına göre topun uçuş süresi değişir (145 km/s -> ~150ms roket, 60 km/s -> ~410ms plase) */
+  var flightMs=Math.round(Math.max(150,Math.min(420,490-(kmh*2.35))));
+  var spinDeg=Math.round(kmh*6.5);
+  var endScale=Math.max(0.44,0.68-(targetBottom-60)*0.006);
+  if(dot){
+    dot.style.left=targetX+'%';
+    dot.style.bottom=targetBottom+'%';
+    dot.hidden=false;
+  }
+  ball.style.transition='left '+flightMs+'ms cubic-bezier(.15,.88,.32,1),bottom '+flightMs+'ms cubic-bezier(.15,.88,.32,1),transform '+flightMs+'ms linear';
+  ball.style.left=targetX+'%';
+  ball.style.bottom=targetBottom+'%';
+  ball.style.transform='scale('+endScale.toFixed(2)+') rotate('+spinDeg+'deg)';
+
+  /* Kale sınırları: left 12%..88% (iç ağ 13.5%..86.5%), üst direk bottom 89% */
+  var isWideOut = (targetX < 12.6 || targetX > 87.4);
+  var isHighOut = (targetBottom > 89.4);
+  var hitPost = (!isWideOut && !isHighOut) && (targetX <= 14.2 || targetX >= 85.8 || targetBottom >= 88.0);
+
+  FOOT.shotT=setTimeout(function(){
     if(!$('#fPitch'))return;
+    if(isWideOut || isHighOut){
+      /* Top auta çıktı! */
+      ball.style.transition='left 180ms ease-out,bottom 180ms ease-out,opacity 180ms';
+      ball.style.left=(targetX<50?Math.max(1,targetX-6):Math.min(99,targetX+6))+'%';
+      ball.style.bottom=Math.min(98,targetBottom+5)+'%';
+      footLoseHeart('🚫 AUT! Top dışarı çıktı!','out','lululu','Hahaha auta gitti! Lülülü! 😜','🚫');
+      return;
+    }
+    if(hitPost){
+      /* Direkten döndü! */
+      synthPop(260,110,.22,'square');
+      ball.style.transition='left 220ms ease-out,bottom 220ms ease-out';
+      ball.style.bottom='48%';
+      ball.style.left=(targetX<50?'26%':'74%');
+      footLoseHeart('🥅 DİREKTEN DÖNDÜ!','out','lululu','Direk kurtardı! Lülülü! 🥅','💥');
+      return;
+    }
+    /* Kalecinin o anki X konumuna göre kurtarış kontrolü (hızlı şutlarda kurtarmak zorlaşır) */
+    var dist=Math.abs(FOOT.gkX - targetX);
+    var reach=Math.max(9.5, 16.2 - (kmh - 60) * 0.065);
+    var caught = dist < reach;
     if(caught){
-      FOOT.saves++;
-      var hearts='';for(var i=0;i<3-FOOT.saves;i++)hearts+='❤️';for(var j=0;j<FOOT.saves;j++)hearts+='🖤';
-      $('#fL').textContent=hearts;
-      showGoalTopBanner('🧤 KURTARDI! ('+(3-FOOT.saves)+' hak kaldı)',true);
-      ball.style.bottom='48%';ball.style.left=(dir===0?'14%':(dir===2?'86%':'50%'));
-      gameVoice('lululu');
-      if(FOOT.saves>=3){
-        var endBan=$('#fBan');
-        if(endBan){endBan.textContent='🏁 MAÇ BİTTİ! TOPLAM GOL: '+FOOT.goals;endBan.classList.add('show')}
-        $('#fRst').hidden=false;
-        gameVoice('death','Maç bitti! Toplam '+FOOT.goals+' gol attın!','⚽');
-      }else{
-        setTimeout(footResetBallInstant,260);
-      }
+      ball.style.transition='left 200ms ease-out,bottom 200ms ease-out';
+      ball.style.bottom='47%';
+      ball.style.left=(targetX<50?'16%':'84%');
+      footLoseHeart('🧤 KURTARDI! ('+kmh+' km/s)','save','lululu','Kurtardım lülülü! 🧤','🧤');
     }else{
+      /* GOOOOOL! Kaleci HİÇ durmadan hareket etmeye devam eder ve SINIRLENIR! */
       FOOT.goals++;$('#fG').textContent=FOOT.goals;
-      var mult=(footPatrolSpeed()/46).toFixed(1)+'x';
+      FOOT.angryUntil=performance.now()+1450;
+      var mult=(footPatrolSpeed()/48).toFixed(1)+'x';
       if($('#fSp'))$('#fSp').textContent=mult;
       var best=Math.max(+(lsGet('hb-foot-best')||0),FOOT.goals);lsSet('hb-foot-best',best);$('#fB').textContent=best;
-      showGoalTopBanner('⚽ GOOOOOL! ('+FOOT.goals+') · Hız '+mult,false);
-      gameVoice(FOOT.goals%2===0?'aaaaa':'duktur');
-      /* Oyun hiç durmadan anında yeni top gelir, akıcı şekilde devam eder */
-      setTimeout(footResetBallInstant,180);
+      var isCorner=(targetX<=22 || targetX>=78);
+      var isTopBin=(isCorner && targetBottom>=80);
+      var gTitle=isTopBin?'🚀 90\'A TAKTI! GOOOOOL!':(isCorner?'🔥 TAM KÖŞEYE! GOOOOOL!':'⚽ GOOOOOL! ('+kmh+' km/s)');
+      showGoalTopBanner(gTitle+' · '+FOOT.goals, 'goal');
+      var angryLines=[
+        ['aaaaa','😡 YETER BE! GOL YEDİK!','😡'],
+        ['duktur','🤬 NASIL KAÇIRDIM BUNU!','🤬'],
+        ['death','💢 Bİ DAHA ATAMAZSIN!','💢'],
+        ['aaaaa','😤 ÇILDIRACAĞIM! KÖŞEYE VURDU!','😤']
+      ];
+      var pick=angryLines[FOOT.goals % angryLines.length];
+      gameVoice(pick[0],pick[1],pick[2]);
+      /* Gol sırasında oyun ve kaleci HİÇ durmaz, top anında yenilenir */
+      FOOT.shotT=setTimeout(footResetBallInstant,165);
     }
-  },235);
+  },flightMs);
 }
 
 /* ---------- 4. Oyun: Bardak Altında Saklamaca (Sayılar Kaldırıldı, Akıcı Kaydırma) ---------- */
@@ -2423,36 +2813,30 @@ function vipBadgesHtml(){
   return '🎖️ <b>Rütben: '+rank+'</b><br><div style="margin-top:6px;font-size:13px">'+badges.join('<br>')+'</div>';
 }
 var SOZ=[
-  'Bir böcek kadar sabırlı, bir aslan kadar cesur olun! 🦁',
-  'Küçük adımlar da bir mesaidir; önemli olan yönünü kaybetmemektir. 🐾',
-  'Mola da işin parçasıdır ama tadında bırakınca güzeldir! ☕',
-  'Bugün de alnınızın akıyla bir gün daha kazandınız. 🏅',
-  'Hamam böceği bile fırtınada yıkılmaz, siz hiç yıkılmazsınız! 💪',
-  'Zorluklar antenlerini bükmek yerine yolunu bulmanı sağlar. 🧭',
-  'Disiplin, motivasyon bittiğinde bile seni hedefe taşıyan motordur. 🚀',
-  'En uzun yolculuklar bile sabah atılan ilk “İşe giriş” adımıyla başlar. 🌅',
-  'Dinlenmeyi bilmeyen zihin, en keskin kılıcı bile köreltir; molanı güzel kullan! 🌿',
-  'Başarı tesadüf değil, her gün üst üste koyduğun küçük emeklerin toplamıdır. 🧱',
-  'Bugün yorulduysan dinlen ama asla pes etme; yarın yepyeni bir sayfa! 📖',
-  'Sakin kalan, fırtınanın ortasında bile doğru kararı verir. 🌊',
-  'İşini sevgi ve özenle yapan insan, sıradan bir günü bile sanata dönüştürür. ✨',
-  'Büyük hedefler, küçük ama kararlı adımların eseridir. 🎯',
-  'Gülümsemek en ucuz ama etkisi en yüksek mesai yakıtıdır! 😄',
-  'Dünün tecrübesi, bugünün enerjisi ve yarının umudu seninle olsun. 🌟',
-  'Hata yapmaktan korkma; hiç adım atmayan sadece yerinde sayar. 👣',
-  'Bir fincan sıcak çay ve kısa bir nefes, en karmaşık düğümü bile çözer. 🍵',
-  'Kendi hızında ilerle; önemli olan başkalarını geçmek değil, dünkü halini geçmektir. 🏃',
-  'Azim, kapalı kapıların anahtarını sabırla cebinde taşımaktır. 🔑',
-  'Zaman en kıymetli hazinedir; onu hem işine hem kendine adil paylaştır. ⏳',
-  'En karanlık gece bile sabah güneşine yenilir; enerjini yüksek tut! ☀️',
-  'Takım ruhu ve güzel bir selam, en ağır iş yükünü bile hafifletir. 🤝',
-  'Skuter gibi seri, antenlerin gibi uyanık, kalbin gibi ferah bir gün olsun! 🛴',
-  'Bugün attığın her sağlam adım, gelecekteki huzurunun temelidir. 🏗️',
-  'Kendine inan; içinde sandığından çok daha büyük bir güç saklı! 🔥',
-  'İyi planlanmış bir gün, yarısı tamamlanmış bir iştir. 📋',
-  'Sabır acıdır ama meyvesi her zaman tatlıdır. 🍯',
-  'Pozitif düşünce, en yorucu mesaiyi bile keyifli bir serüvene çevirir. 🌈',
-  'Hedefine odaklan, gereksiz gürültüyü kapat ve kendi ritmini yakala! 🎧'
+  'Biz hamam böcekleri 300 milyon yıldır hayattayız; sen iki toplantıya girdin diye hemen pes etme! 🪳💪',
+  'Karanlık mutfak tezgâhından korkmayan, pazartesi sabahından mı korkacak? Antenleri dik tut! 🌅',
+  'Işıklar aniden yanınca panik yapma; stratejik geri çekilme her zaman hayat kurtarır! 💡🏃',
+  'Terlik havadayken bile soğukkanlılığını koruyan tek canlı benim; sen de kriz anında derin nefes al! 🩴🧘',
+  'İnsanlar bizi sevmez ama kimse bizim kadar istikrarlı ve dayanıklı değildir; azmin böceği ol! 🏆',
+  'Mola süresini bir saniye aşarsan "Adam ölüyor!" diye bağırırım, çünkü iş disiplini şakaya gelmez! ⏰🚨',
+  'Bir kırıntıyla bile ziyafet çeken bir böcekten hayat dersi: Elindekinin kıymetini bil, bereketi gör! 🍞✨',
+  'Duvarın kenarından sessizce ilerlemek korkaklık değil, trafikten kaçma sanatıdır! 🧱🧭',
+  'Bütün ofis kaos içindeyken buzdolabının arkasında çayını yudumlayan bilge böcek gibi sakin kal! ☕🧊',
+  'Unutma; en büyük fırtınalar geçer, dinozorlar gider ama işini sağlam yapanlar ayakta kalır! 🦖🪳',
+  'Bugün çok yorulduysan antenlerini biraz dinlendir; yarın yine aynı tezgâhta buluşacağız! 🌙😴',
+  'Süper güç istemiyorum, sadece mola saatinde kimse bana yeni iş kitlemesin yeter! 🛑📋',
+  'En dar çatlaktan bile bir çıkış yolu bulunur; yeter ki kafayı duvarlara vurmak yerine yön değiştir! 🚪🔑',
+  'İnsanlar "motivasyon" arar, biz ise sadece açık kalmış bir bisküvi paketi... Hedefini net koy! 🎯🍪',
+  'Patronun ayak sesini üç oda öteden duyan antenlerim diyor ki: Bugün şans senden yana! 📡🍀',
+  'Kendi hızında yürü; tavşan uyur, kaplumbağa geçer, hamam böceği ise her türlü hedefine varır! 🏁🐾',
+  'Hayat bazen üstüne terlik gibi gelse de yana doğru atacağın ufak bir adım her şeyi değiştirir! 👟✨',
+  'Gülümse! En azından altı bacağın birden aynı anda uyuşmuyor, şükretmek için sebebin çok! 😄🦵',
+  'Büyük başarılar, kimse bakmazken sessizce toplanan küçük emek kırıntılarından doğar! 🧱🌟',
+  'Bugün de alnının akıyla mesaiyi bitirdin; şimdi "Lülülü" diyerek özgürlüğe koşma vakti! 🥳🎉',
+  'Zorluklar seni ezmek için değil, kabuğunu biraz daha sertleştirmek için var! 🛡️🔥',
+  'Kahve bahane, altı bacağı uzatıp iki dakika kafa dinlemek şahane! 🍵🛋️',
+  'Her karanlık mutfağın bir sabahı, her yoğun mesainin bir cuma akşamı vardır! ☀️📅',
+  'Başkalarının ne dediğini boş ver; bizim hakkımızda da efsaneler uyduruyorlar ama keyfimiz yerinde! 😎👑'
 ];
 var lastSozIdx=-1;
 $('#secSwarm').onclick=swarmToggle;
@@ -2524,14 +2908,761 @@ $('#roachWrap').onclick=function(){
 /* ---------- Sheets & tabs ---------- */
 document.querySelectorAll('[data-close]').forEach(function(b){b.onclick=function(){b.closest('.sheet').hidden=true}});
 document.querySelectorAll('.sheet').forEach(function(s){s.addEventListener('click',function(e){if(e.target===s)s.hidden=true})});
-document.querySelectorAll('.tabs button').forEach(function(b){b.onclick=function(){
-  document.querySelectorAll('.tabs button').forEach(function(x){x.setAttribute('aria-selected',x===b)});
-  ['today','log','leave','settings'].forEach(function(n){$('#tab-'+n).hidden=n!==b.dataset.tab});
-  if(b.dataset.tab==='log')renderLog();
-  if(b.dataset.tab==='settings'){buildSettings();renderSnaps()}}});
+function switchTab(name){
+  document.querySelectorAll('.tabs button').forEach(function(x){x.setAttribute('aria-selected',x.dataset.tab===name)});
+  ['today','log','leave','prayer','settings'].forEach(function(n){var el=$('#tab-'+n);if(el)el.hidden=(n!==name)});
+  if(name==='log')renderLog();
+  if(name==='prayer'){
+    renderPrayerTab();
+    if(lsGet('hb-prayer-tour-done')!=='1'){
+      open('#prayerIntroModal');
+    }
+  }
+  if(name==='settings'){buildSettings();renderSnaps()}
+}
+document.querySelectorAll('.tabs button').forEach(function(b){b.onclick=function(){switchTab(b.dataset.tab)}});
+
+/* ---------- Namaz Vakitleri Sistemi & Sofi Böcek (Premium) ---------- */
+var TR_CITIES=[
+  ['Adana',37.00,35.32],['Adıyaman',37.76,38.28],['Afyonkarahisar',38.75,30.54],['Ağrı',39.72,43.05],
+  ['Aksaray',38.37,34.03],['Amasya',40.65,35.83],['Ankara',39.93,32.86],['Antalya',36.89,30.71],
+  ['Ardahan',41.11,42.70],['Artvin',41.18,41.82],['Aydın',37.85,27.84],['Balıkesir',39.65,27.88],
+  ['Bartın',41.64,32.34],['Batman',37.88,41.13],['Bayburt',40.26,40.22],['Bilecik',40.14,29.98],
+  ['Bingöl',38.88,40.50],['Bitlis',38.40,42.11],['Bolu',40.73,31.61],['Burdur',37.72,30.29],
+  ['Bursa',40.18,29.06],['Çanakkale',40.15,26.41],['Çankırı',40.60,33.62],['Çorum',40.55,34.95],
+  ['Denizli',37.77,29.09],['Diyarbakır',37.91,40.24],['Düzce',40.84,31.16],['Edirne',41.68,26.56],
+  ['Elazığ',38.67,39.22],['Erzincan',39.75,39.49],['Erzurum',39.90,41.27],['Eskişehir',39.78,30.52],
+  ['Gaziantep',37.07,37.38],['Giresun',40.91,38.39],['Gümüşhane',40.46,39.48],['Hakkari',37.57,43.74],
+  ['Hatay',36.20,36.16],['Iğdır',39.92,44.04],['Isparta',37.76,30.55],['İstanbul',41.01,28.98],
+  ['İzmir',38.42,27.14],['Kahramanmaraş',37.58,36.94],['Karabük',41.20,32.63],['Karaman',37.18,33.23],
+  ['Kars',40.60,43.10],['Kastamonu',41.38,33.78],['Kayseri',38.73,35.49],['Kırıkkale',39.85,33.51],
+  ['Kırklareli',41.73,27.22],['Kırşehir',39.15,34.16],['Kilis',36.72,37.12],['Kocaeli',40.77,29.92],
+  ['Konya',37.87,32.48],['Kütahya',39.42,29.98],['Malatya',38.35,38.31],['Manisa',38.61,27.43],
+  ['Mardin',37.31,40.74],['Mersin',36.80,34.63],['Muğla',37.22,28.36],['Muş',38.73,41.49],
+  ['Nevşehir',38.62,34.71],['Niğde',37.97,34.68],['Ordu',40.98,37.88],['Osmaniye',37.07,36.25],
+  ['Rize',41.02,40.52],['Sakarya',40.78,30.40],['Samsun',41.29,36.33],['Siirt',37.93,41.94],
+  ['Sinop',42.03,35.15],['Sivas',39.75,37.02],['Şanlıurfa',37.16,38.79],['Şırnak',37.52,42.46],
+  ['Tekirdağ',40.98,27.51],['Tokat',40.31,36.55],['Trabzon',41.00,39.72],['Tunceli',39.11,39.55],
+  ['Uşak',38.68,29.41],['Van',38.49,43.38],['Yalova',40.65,29.27],['Yozgat',39.82,34.81],
+  ['Zonguldak',41.45,31.79]
+];
+var PRAYER_CACHE={};
+function getCityCoords(name){
+  for(var i=0;i<TR_CITIES.length;i++){if(TR_CITIES[i][0]===name)return TR_CITIES[i]}
+  return ['İstanbul',41.01,28.98];
+}
+function getHijriDateStr(d){
+  try{
+    var fmt=new Intl.DateTimeFormat('tr-TR-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'});
+    return '🌙 '+fmt.format(d);
+  }catch(e){
+    return '🌙 Hicri Takvim';
+  }
+}
+/* Diyanet (18° İmsak, 17° Yatsı, Türkiye +3 UTC) Çevrimdışı Astronomik Vakit Hesabı */
+function calcPrayerTimesOffline(dateObj,lat,lng){
+  var y=dateObj.getFullYear(),m=dateObj.getMonth()+1,d=dateObj.getDate();
+  if(m<=2){y-=1;m+=12}
+  var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+  var jd=Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5;
+  var D=jd-2451545.0;
+  var rad=Math.PI/180,deg=180/Math.PI;
+  var g=(357.529+0.98560028*D)%360;if(g<0)g+=360;
+  var q=(280.459+0.98564736*D)%360;if(q<0)q+=360;
+  var L=(q+1.915*Math.sin(g*rad)+0.020*Math.sin(2*g*rad))%360;if(L<0)L+=360;
+  var e=23.439-0.00000036*D;
+  var decl=Math.asin(Math.sin(e*rad)*Math.sin(L*rad))*deg;
+  var ra=Math.atan2(Math.cos(e*rad)*Math.sin(L*rad),Math.cos(L*rad))*deg/15;
+  if(ra<0)ra+=24;
+  var eqT=q/15-ra;if(eqT>12)eqT-=24;if(eqT<-12)eqT+=24;
+  var tz=3;
+  var dhuhr=12+tz-lng/15-eqT;
+  function hourAngle(ang){
+    var cosH=(Math.sin(ang*rad)-Math.sin(lat*rad)*Math.sin(decl*rad))/(Math.cos(lat*rad)*Math.cos(decl*rad));
+    cosH=Math.max(-1,Math.min(1,cosH));
+    return Math.acos(cosH)*deg/15;
+  }
+  var fajr=dhuhr-hourAngle(-18.0);
+  var sunrise=dhuhr-hourAngle(-0.833)-4/60;
+  var asrAlt=Math.atan(1/(1+Math.tan(Math.abs(lat-decl)*rad)))*deg;
+  var asr=dhuhr+hourAngle(asrAlt)+3/60;
+  var maghrib=dhuhr+hourAngle(-0.833)+7/60;
+  var isha=dhuhr+hourAngle(-17.0)+2/60;
+  var ogle=dhuhr+5/60;
+  function fmtH(h){
+    h=(h%24+24)%24;
+    var totMin=Math.round(h*60);
+    return pad(Math.floor(totMin/60)%24)+':'+pad(totMin%60);
+  }
+  return {Fajr:fmtH(fajr),Sunrise:fmtH(sunrise),Dhuhr:fmtH(ogle),Asr:fmtH(asr),Maghrib:fmtH(maghrib),Isha:fmtH(isha),src:'Diyanet Çevrimdışı'};
+}
+function fetchPrayerOnline(city,dateKey){
+  var cKey=city+'_'+dateKey;
+  if(PRAYER_CACHE[cKey])return;
+  try{
+    var lsCached=localStorage.getItem('hb-pray-'+cKey);
+    if(lsCached){PRAYER_CACHE[cKey]=JSON.parse(lsCached);return}
+  }catch(e){}
+  PRAYER_CACHE[cKey]='loading';
+  var parts=dateKey.split('-');
+  var url='https://api.aladhan.com/v1/timingsByCity/'+parts[2]+'-'+parts[1]+'-'+parts[0]+'?city='+encodeURIComponent(city)+'&country=Turkey&method=13';
+  fetch(url).then(function(r){return r.json()}).then(function(j){
+    if(j&&j.data&&j.data.timings){
+      var t=j.data.timings;
+      var obj={Fajr:t.Fajr.slice(0,5),Sunrise:t.Sunrise.slice(0,5),Dhuhr:t.Dhuhr.slice(0,5),Asr:t.Asr.slice(0,5),Maghrib:t.Maghrib.slice(0,5),Isha:t.Isha.slice(0,5),src:'Diyanet Canlı'};
+      PRAYER_CACHE[cKey]=obj;
+      try{localStorage.setItem('hb-pray-'+cKey,JSON.stringify(obj))}catch(e){}
+      if(!$('#tab-prayer').hidden)renderPrayerTab();
+    }
+  }).catch(function(){delete PRAYER_CACHE[cKey]});
+}
+function getTodayPrayerTimes(city){
+  var now=new Date(),k=dk(now),cKey=city+'_'+k;
+  if(PRAYER_CACHE[cKey]&&typeof PRAYER_CACHE[cKey]==='object')return PRAYER_CACHE[cKey];
+  try{
+    var lsCached=localStorage.getItem('hb-pray-'+cKey);
+    if(lsCached){PRAYER_CACHE[cKey]=JSON.parse(lsCached);return PRAYER_CACHE[cKey]}
+  }catch(e){}
+  fetchPrayerOnline(city,k);
+  var info=getCityCoords(city);
+  return calcPrayerTimesOffline(now,info[1],info[2]);
+}
+function buildSofiSvg(){
+  var savedSofi=document.body.classList.contains('vip-sofi');
+  if(!savedSofi)document.body.classList.add('vip-sofi');
+  var inner=buildRoachInnerSvg({glasses:'none',mustache:'none',head:'none',extra:'none',vehicle:'none'});
+  if(!savedSofi)document.body.classList.remove('vip-sofi');
+  return inner;
+}
+var SOFI_QUOTES=[
+  '📿 "Subhanallah, Elhamdülillah, Allahu Ekber" — Gönlün ferah olsun!',
+  '💧 "Vakit yaklaşıyor, abdest tazeleyip huzura duralım mı?"',
+  '🕌 "Namaz, günün koşturmacasında ruha verilen en güzel moladır."',
+  '🤲 "Rabbim işlerinize bereket, ömrünüze huzur versin."',
+  '🌿 "Acele işe şeytan karışır; Sofi Böcek gibi sakin ve sabırlı ol!"',
+  '✨ "Kalpler ancak Allah\'ı anmakla huzur bulur." (Ra\'d, 28)',
+  '🌙 "Seher vakti edilen dua, kapıları açan en gizli anahtardır."',
+  '☀️ "Güneş doğarken şükürle uyanan, gün boyu bereket bulur."',
+  '🌤️ "Günün ortasında bir nefes dur; dünya telaşı ruha ağır gelmesin."',
+  '🌇 "Akşamın huzuru çökerken bugün verdiğin emekler için şükret."',
+  '🌃 "Geceye teslim olmadan önce kalbini affetmekle hafiflet."',
+  '🕊️ "Sabır, yüzünü ekşitmeden acıyı yudumlamak ve Rabbine güvenmektir."',
+  '🌸 "Bir tebessüm sadakadır; bugün bir gönle dokunmayı unutma."',
+  '📖 "Kur\'an gönlün baharı, namaz müminin miracıdır."',
+  '🧭 "Kıblen doğruysa, rüzgâr ters esse de yolun her zaman huzura çıkar."',
+  '💫 "Niyetin hayır olursa, attığın her adım ibadete dönüşür."',
+  '🕯️ "Az da olsa devamlı yapılan iyilik, Allah katında en sevimli olandır."',
+  '🌊 "Fırtına ne kadar sert olursa olsun, secdeye varan baş sarsılmaz."'
+];
+var VAKIT_AUTO_QUOTES={
+  Fajr:'🌙 İmsak & Sabah Vakti: "Sabah namazı günün bereket anahtarıdır; gecenin karanlığını nurla aydınlat."',
+  Sunrise:'🌅 İşrak & Kuşluk Vakti: "Yeni bir güne uyanmak en büyük nimettir; rızkın ve işin bereketli olsun."',
+  Dhuhr:'☀️ Öğle Vakti: "Günün en yoğun anında kısa bir mola ver; ruhunu secdeyle dinlendir."',
+  Asr:'🌤️ İkindi Vakti: "Günün ikindisi yaklaşırken telaşı bırak; kalan vaktini hayırla değerlendir."',
+  Maghrib:'🌇 Akşam Vakti: "Güneş batarken günün muhasebesini yap; verdiğin nimetler için Elhamdülillah de."',
+  Isha:'🌃 Yatsı Vakti: "Günün tüm yorgunluğunu secdede bırak; huzurlu ve güven dolu bir geceye adım at."'
+};
+var sofiQuoteIdx=0,lastAutoVakitKey='',sofiManualOverrideUntil=0;
+
+/* Kıble Açısı Hesabı (Kâbe: 21.4225° K, 39.8262° D) & Akıllı Pusula */
+function calcQiblaAngle(lat,lng){
+  var rad=Math.PI/180,deg=180/Math.PI;
+  var kLat=21.4225*rad,kLng=39.8262*rad;
+  var uLat=lat*rad,uLng=lng*rad;
+  var dLng=kLng-uLng;
+  var y=Math.sin(dLng);
+  var x=Math.cos(uLat)*Math.tan(kLat)-Math.sin(uLat)*Math.cos(dLng);
+  var brng=Math.atan2(y,x)*deg;
+  return Math.round((brng+360)%360);
+}
+var compassHeading=null,compassActive=false,compassGotData=false,compassCheckTimer=null;
+function updateQiblaUI(city){
+  var info=getCityCoords(city);
+  var qAng=calcQiblaAngle(info[1],info[2]);
+  var dirStr=(qAng>=112&&qAng<=157)?'Güneydoğu':(qAng>157&&qAng<=202?'Güney':'Doğu-Güneydoğu');
+  setTxt($('#qiblaDegTxt'),qAng+'° '+dirStr+' ('+city+')');
+  var needle=$('#qiblaNeedle');
+  if(needle){
+    var rot=(compassHeading!==null)?(qAng-compassHeading):qAng;
+    needle.style.transform='rotate('+rot+'deg)';
+  }
+}
+function handleOrientEvent(e){
+  if(!compassActive)return;
+  var h=null;
+  if(typeof e.webkitCompassHeading==='number'&&!isNaN(e.webkitCompassHeading)){
+    h=e.webkitCompassHeading;
+  }else if(typeof e.alpha==='number'&&e.alpha!==null){
+    h=(360-e.alpha)%360;
+  }
+  if(h!==null){
+    compassGotData=true;
+    compassHeading=h;
+    updateQiblaUI(S.settings.prayerCity||'İstanbul');
+    setTxt($('#qiblaHintTxt'),'🟢 Canlı pusula aktif! 🕋 Kâbe simgesi tam yukarı (12 yönü) geldiğinde Kıbleye dönmüş olursunuz.');
+  }
+}
+function stopCompass(){
+  compassActive=false;compassHeading=null;compassGotData=false;
+  clearTimeout(compassCheckTimer);
+  window.removeEventListener('deviceorientationabsolute',handleOrientEvent,true);
+  window.removeEventListener('deviceorientation',handleOrientEvent,true);
+  setTxt($('#btnCompassSensor'),'📡 Pusulayı Aç');
+  updateQiblaUI(S.settings.prayerCity||'İstanbul');
+}
+function showCompassHelp(reason){
+  stopCompass();
+  var isInApp=/Instagram|FBAN|FBAV|WhatsApp|Line|wv/i.test(navigator.userAgent||'');
+  var isHttp=location.protocol!=='https:'&&location.hostname!=='localhost'&&location.hostname!=='127.0.0.1';
+  var msg='⚠️ '+reason+' ';
+  if(isHttp){
+    msg+='Tarayıcı güvenliği gereği pusula sadece HTTPS (GitHub Pages) bağlantısında çalışır. ';
+  }else if(isInApp){
+    msg+='Uygulama içi tarayıcı sensörü engelliyor olabilir; sağ üstten "Chrome / Safari ile Aç" yapın. ';
+  }else{
+    msg+='Çözüm: iPhone\'da Ayarlar → Safari → Hareket ve Yön Erişimi\'ni açın; Android Chrome\'da adres çubuğu solundaki 🔒 simgesine dokunup İzinler → Hareket Sensörleri\'ne izin verin. ';
+  }
+  msg+='(Şimdilik telefonun üstünü Kuzey\'e çevirip ibrenin gösterdiği '+$('#qiblaDegTxt').textContent.split(' ')[0]+' açısına dönebilirsiniz.)';
+  setTxt($('#qiblaHintTxt'),msg);
+  toast('Pusula izni gerekli — açıklama kutusuna yazıldı 🧭');
+}
+if($('#btnCompassSensor')){
+  $('#btnCompassSensor').onclick=function(){
+    if(compassActive){
+      stopCompass();
+      setTxt($('#qiblaHintTxt'),'Kuzey (0°) referansına göre Kâbe yönüdür. Canlı yön bulmak için “Pusulayı Aç”a dokunun.');
+      toast('Canlı pusula kapatıldı');
+      return;
+    }
+    function startOrient(){
+      compassActive=true;compassGotData=false;
+      setTxt($('#btnCompassSensor'),'🟢 Canlı Pusula');
+      setTxt($('#qiblaHintTxt'),'📡 Sensör dinleniyor... Telefonu yere paralel tutup 8 çizerek kalibre edin.');
+      window.addEventListener('deviceorientationabsolute',handleOrientEvent,true);
+      window.addEventListener('deviceorientation',handleOrientEvent,true);
+      clearTimeout(compassCheckTimer);
+      compassCheckTimer=setTimeout(function(){
+        if(compassActive&&!compassGotData){
+          showCompassHelp('Pusula sensöründen veri alınamadı.');
+        }
+      },2200);
+    }
+    if(typeof DeviceOrientationEvent!=='undefined'&&typeof DeviceOrientationEvent.requestPermission==='function'){
+      DeviceOrientationEvent.requestPermission().then(function(st){
+        if(st==='granted')startOrient();
+        else showCompassHelp('Pusula sensörü izni verilmedi.');
+      }).catch(function(){
+        showCompassHelp('Pusula izni reddedildi veya engellendi.');
+      });
+    }else if('ondeviceorientationabsolute' in window || 'ondeviceorientation' in window){
+      startOrient();
+    }else{
+      showCompassHelp('Bu cihaz/tarayıcı pusula sensörünü desteklemiyor.');
+    }
+  };
+}
+
+/* Akıllı Zikirmatik (Sayaç + Genel Toplam 3 Tık / Butonla Sıfırlama) */
+var zikirCount=+(lsGet('hb-zikir-cnt')||0);
+var zikirTotal=+(lsGet('hb-zikir-tot')||0);
+var zikirTargets=[33,99,0],zikirTIdx=0;
+function renderZikir(){
+  var tgt=zikirTargets[zikirTIdx];
+  setTxt($('#zikirCount'),String(zikirCount));
+  setTxt($('#zikirTotLbl'),'Toplam: '+zikirTotal);
+  setTxt($('#btnZikirTarget'),'🎯 Hedef: '+(tgt?tgt:'Sonsuz'));
+  setTxt($('#zikirTargetTxt'),tgt?(zikirCount+'/'+tgt+' • Dokun'):'Sonsuz Mod • Dokun');
+}
+function resetZikirGrandTotal(){
+  zikirTotal=0;
+  lsSet('hb-zikir-tot','0');
+  renderZikir();
+  synthPop(320,240,.14,'triangle');
+  toast('Genel zikir toplamı sıfırlandı ↺');
+}
+if($('#btnZikirTap')){
+  $('#btnZikirTap').onclick=function(){
+    zikirCount++;zikirTotal++;
+    lsSet('hb-zikir-cnt',String(zikirCount));
+    lsSet('hb-zikir-tot',String(zikirTotal));
+    try{navigator.vibrate&&navigator.vibrate(18)}catch(e){}
+    var tgt=zikirTargets[zikirTIdx];
+    if(tgt&&zikirCount===tgt){
+      synthPop(523,784,.22,'sine');
+      showSpeech('Maşallah! '+tgt+' zikir tamamlandı 📿','✨');
+      try{navigator.vibrate&&navigator.vibrate([40,40,80])}catch(e){}
+    }else{
+      synthPop(660,720,.05,'sine');
+    }
+    renderZikir();
+  };
+}
+if($('#btnZikirTarget')){
+  $('#btnZikirTarget').onclick=function(){
+    zikirTIdx=(zikirTIdx+1)%zikirTargets.length;
+    renderZikir();
+  };
+}
+if($('#btnZikirReset')){
+  $('#btnZikirReset').onclick=function(){
+    zikirCount=0;lsSet('hb-zikir-cnt','0');renderZikir();toast('Tur sayacı sıfırlandı');
+  };
+}
+var zikirTotTapCnt=0,zikirTotTapTmr=null;
+if($('#zikirTotLbl')){
+  $('#zikirTotLbl').onclick=function(){
+    zikirTotTapCnt++;
+    clearTimeout(zikirTotTapTmr);
+    if(zikirTotTapCnt>=3){
+      zikirTotTapCnt=0;
+      resetZikirGrandTotal();
+      return;
+    }
+    toast('Toplamı sıfırlamak için '+(3-zikirTotTapCnt)+' kez daha dokunun');
+    zikirTotTapTmr=setTimeout(function(){zikirTotTapCnt=0},1600);
+  };
+}
+var zikirTotArm=false,zikirTotArmTmr=null;
+if($('#btnZikirTotReset')){
+  $('#btnZikirTotReset').onclick=function(){
+    if(!zikirTotArm){
+      zikirTotArm=true;
+      toast('Genel toplamı sıfırlamak için ↺ tuşuna tekrar basın');
+      clearTimeout(zikirTotArmTmr);
+      zikirTotArmTmr=setTimeout(function(){zikirTotArm=false},2500);
+      return;
+    }
+    zikirTotArm=false;
+    clearTimeout(zikirTotArmTmr);
+    resetZikirGrandTotal();
+  };
+}
+if($('#zikirPreset')){
+  $('#zikirPreset').onchange=function(){
+    var v=this.value;
+    if(v.indexOf('(99)')>=0)zikirTIdx=1;
+    else if(v.indexOf('(33)')>=0)zikirTIdx=0;
+    else zikirTIdx=2;
+    zikirCount=0;lsSet('hb-zikir-cnt','0');renderZikir();
+  };
+}
+
+/* Esmaül Hüsna & Günün Ayet/Hadis/Duası */
+var WISDOM_LIST=[
+  {ar:'يَا رَزَّاقُ',tr:'Er-Rezzâk (Rızık Veren)',d:'Bütün canlıların rızkını yaratan ve veren. "Şüphesiz rızık veren, güç ve kuvvet sahibi olan ancak Allah\'tır." (Zâriyât, 58)'},
+  {ar:'يَا فَتَّاحُ',tr:'El-Fettâh (Kapıları Açan)',d:'Her türlü müşkülü çözen, hayır ve bereket kapılarını açan. "Rabbimiz! Bizimle kavmimiz arasında hak ile hükmet, sen hükmedenlerin en hayırlısısın."'},
+  {ar:'يَا شَافِي',tr:'Eş-Şâfî (Şifa Veren)',d:'Maddi ve manevi bütün dertlere şifa veren. "Hastalandığım zaman bana şifa veren O\'dur." (Şuarâ, 80)'},
+  {ar:'يَا وَدُودُ',tr:'El-Vedûd (Çok Seven ve Sevilen)',d:'Kullarını çok seven ve sevilmeye en layık olan. "İman edip salih amel işleyenler için Rahmân gönüllerde bir sevgi yaratacaktır."'},
+  {ar:'يَا لَطِيفُ',tr:'El-Latîf (Lütuf ve İkram Sahibi)',d:'En ince işlerin bütün inceliklerini bilen, kullarına sezdirmeden lütuf ulaştıran. "Allah kullarına çok lütufkârdır." (Şûrâ, 19)'},
+  {ar:'يَا سَلَامُ',tr:'Es-Selâm (Esenlik Veren)',d:'Her türlü tehlikeden selamete çıkaran, cennetteki kullarına selam veren. "Allah esenlik yurduna çağırır." (Yûnus, 25)'},
+  {ar:'رَبِّ اشْرَحْ لِي صَدْرِي',tr:'Hz. Musa\'nın Duası',d:'"Rabbim! Göğsüme genişlik ver, işimi bana kolaylaştır." (Tâhâ, 25-26)'},
+  {ar:'فَإِنَّ مَعَ الْعُسْرِ يُسْرًا',tr:'İnşirah Suresi, 5. Ayet',d:'"Elbette zorluğun yanında bir kolaylık vardır. Gerçekten, zorlukla beraber bir kolaylık daha vardır."'},
+  {ar:'خَيْرُ النَّاسِ أَنْفَعُهُمْ لِلنَّاسِ',tr:'Hadis-i Şerif',d:'"İnsanların en hayırlısı, insanlara en faydalı olanıdır." (Taberânî)'}
+];
+var wisdomIdx=new Date().getDate()%WISDOM_LIST.length;
+function renderWisdom(){
+  var w=WISDOM_LIST[wisdomIdx];
+  setHtml($('#wisdomBox'),'<div class="esma-ar">'+w.ar+'</div><div class="esma-tr">'+w.tr+'</div><div class="esma-desc">'+w.d+'</div>');
+}
+if($('#btnNextWisdom')){
+  $('#btnNextWisdom').onclick=function(){
+    wisdomIdx=(wisdomIdx+1)%WISDOM_LIST.length;
+    renderWisdom();
+    synthPop(480,620,.1,'sine');
+  };
+}
+
+/* Huzur & Bilgi Köşesi: Geniş Havuzlu & Karışık Sıralı Popup Bilgi Yarışması + Tam Ekran Niyet & Şükür */
+var P_QUIZ=[
+  {q:'Kadir Gecesi hangi mübarek ayın içerisindedir?',o:['Recep','Şaban','Ramazan','Muharrem'],a:2},
+  {q:'Günde beş vakit namazın farz rekâtları toplamı kaçtır?',o:['15 rekât','17 rekât','20 rekât','40 rekât'],a:1},
+  {q:'Kur\'an-ı Kerim\'in ilk suresi hangisidir?',o:['Bakara','İhlas','Fâtiha','Alak'],a:2},
+  {q:'Sabah namazının sünneti ile farzı toplam kaç rekâttır?',o:['2 rekât','4 rekât','6 rekât','8 rekât'],a:1},
+  {q:'Peygamber Efendimiz (s.a.v.) hangi şehirde dünyaya gelmiştir?',o:['Medine','Mekke','Kudüs','Taif'],a:1},
+  {q:'Namazda rükûdan doğrulurken ne söylenir?',o:['Subhane Rabbiyel Azîm','Semiallahu limen hamideh','Allahu Ekber','Ettehiyyâtü'],a:1},
+  {q:'Zekât hangi ibadet türlerindendir?',o:['Bedeni ibadet','Mali ibadet','Sadece sözlü ibadet','Nafile ibadet'],a:1},
+  {q:'Kur\'an-ı Kerim\'in kalbi olarak nitelendirilen sure hangisidir?',o:['Yâsîn Suresi','Mülk Suresi','Kevser Suresi','Nas Suresi'],a:0},
+  {q:'Kur\'an-ı Kerim\'de toplam kaç sure vardır?',o:['99','110','114','120'],a:2},
+  {q:'Abdestin farzları kaç tanedir?',o:['3','4','5','6'],a:1},
+  {q:'Teyemmümün farzları kaç tanedir?',o:['2','3','4','5'],a:0},
+  {q:'Akşam namazının farzı kaç rekâttır?',o:['2 rekât','3 rekât','4 rekât','5 rekât'],a:1},
+  {q:'Peygamber Efendimiz\'in (s.a.v.) kabri şerifi hangi şehirdedir?',o:['Mekke','Medine','Şam','Kudüs'],a:1},
+  {q:'Kur\'an-ı Kerim\'in en uzun suresi hangisidir?',o:['Âl-i İmrân','Nisâ','Bakara','Mâide'],a:2},
+  {q:'Kur\'an-ı Kerim\'in en kısa suresi hangisidir?',o:['İhlas','Kevser','Asr','Fil'],a:1},
+  {q:'Oruç tutmanın farz kılındığı mübarek ay hangisidir?',o:['Muharrem','Şaban','Ramazan','Zilhicce'],a:2},
+  {q:'Hac ibadeti hangi ayda yerine getirilir?',o:['Ramazan','Şevval','Zilkade','Zilhicce'],a:3},
+  {q:'İslam\'ın şartları kaç tanedir?',o:['4','5','6','7'],a:1},
+  {q:'İmanın şartları kaç tanedir?',o:['5','6','7','8'],a:1},
+  {q:'Vitir namazı hangi vakitte kılınır?',o:['Sabah namazından sonra','Öğle namazından sonra','İkindi namazından sonra','Yatsı namazından sonra'],a:3},
+  {q:'Cuma namazının farzı kaç rekâttır?',o:['2 rekât','4 rekât','6 rekât','8 rekât'],a:0},
+  {q:'Bayram namazlarının hükmü nedir?',o:['Farz-ı Ayn','Vacip','Nafile','Müstehap'],a:1},
+  {q:'Kur\'an-ı Kerim hangi halife döneminde kitap (Mushaf) haline getirilmiştir?',o:['Hz. Ebubekir','Hz. Ömer','Hz. Osman','Hz. Ali'],a:0},
+  {q:'İlk vahiy hangi mağarada nazil olmuştur?',o:['Sevr Mağarası','Hira Mağarası','Ashab-ı Kehf','Uhud'],a:1},
+  {q:'İslam tarihinde ilk ezanı okuyan sahabe kimdir?',o:['Hz. Bilâl-i Habeşî','Hz. Zeyd bin Hârise','Hz. Mus\'ab bin Umeyr','Hz. Enes bin Mâlik'],a:0},
+  {q:'Namazda secdede en az üç defa hangi tesbih okunur?',o:['Subhane Rabbiyel Azîm','Subhane Rabbiyel A\'lâ','Sübhaneke','Rabbenâ âtinâ'],a:1},
+  {q:'Aşağıdakilerden hangisi guslün farzlarından biri değildir?',o:['Ağza su vermek','Burna su vermek','Bütün bedeni yıkamak','Niyet etmek'],a:3},
+  {q:'Seferi (yolcu) olan bir kimse 4 rekâtlı farz namazları kaç rekât kılar?',o:['1 rekât','2 rekât','3 rekât','4 rekât'],a:1},
+  {q:'Ramazan ayında yatsı namazından sonra kılınan sünnet namaz hangisidir?',o:['Teheccüd','Teravih','Evvabin','Duha'],a:1},
+  {q:'"El-Emîn" (Güvenilir) lakabı kime verilmiştir?',o:['Hz. İbrahim','Hz. Yusuf','Hz. Muhammed (s.a.v.)','Hz. Süleyman'],a:2}
+];
+var HIKMET_CARDS=[
+  '🌿 Bugünün Niyeti: İş arkadaşına içten bir tebessüm et ve gönlünü al; tebessüm sadakadır!',
+  '💧 Şükür Görevi: Şu an elindeki 3 nimeti içinden say ve "Elhamdülillah" de.',
+  '☕ Mola Bereketi: Bir bardak su içerken 3 yudumda, Besmele ile içmeyi dene.',
+  '🤲 Gönül Duası: Ailene ve sevdiklerine hayırlı, bereketli bir gün için kısa bir dua gönder.',
+  '🕌 Sofi Öğüdü: Bugün acele ettiğin bir işte derin bir nefes al; "Teenni Rahman\'dandır."',
+  '🌸 Şükür Notu: Sağlıklı aldığın her nefes, gördüğün her ışık ve duyduğun her ses için şükret.',
+  '💫 Günün Niyeti: Bugün kimsenin kalbini kırmadan, dilini güzel sözle süsleyerek günü tamamla.',
+  '🍞 Bereket Sırrı: Elindeki lokmayı veya çayını paylaş; paylaşılan her şeyde bereket vardır.',
+  '🕊️ Huzur Niyeti: Bugün geçmişin kaygısını ve yarının telaşını bırak; sadece şu anın şükrüne odaklan.',
+  '🌟 Sofi Hatırlatması: "Kim Allah\'a tevekkül ederse, O ona yeter." (Talâk, 3)'
+];
+var pQuizScore=+(lsGet('hb-pquiz-score')||0),pQuizDeck=[],pQuizPos=0,pQuizAnswered=false,lastHikmetIdx=-1;
+function syncPQuizScore(){
+  setTxt($('#pQuizScore'),'🏆 Puan: '+pQuizScore);
+  if($('#pqmScoreBadge'))setTxt($('#pqmScoreBadge'),'🏆 '+pQuizScore+' Puan');
+}
+function shuffleArr(arr){
+  var a=arr.slice();
+  for(var i=a.length-1;i>0;i--){
+    var j=Math.floor(Math.random()*(i+1));
+    var tmp=a[i];a[i]=a[j];a[j]=tmp;
+  }
+  return a;
+}
+function startNewPQuizDeck(){
+  var indices=P_QUIZ.map(function(_,i){return i});
+  var firstPrev=pQuizDeck.length?pQuizDeck[0]:-1;
+  do{
+    pQuizDeck=shuffleArr(indices);
+  }while(pQuizDeck.length>1&&pQuizDeck[0]===firstPrev);
+  pQuizPos=0;
+}
+function renderPQuizPopup(){
+  if(!pQuizDeck.length||pQuizPos>=pQuizDeck.length)startNewPQuizDeck();
+  var qObj=P_QUIZ[pQuizDeck[pQuizPos]];
+  // Seçenekleri de her soruda karıştır
+  var optPairs=qObj.o.map(function(txt,idx){return{txt:txt,ok:(idx===qObj.a)}});
+  optPairs=shuffleArr(optPairs);
+  pQuizAnswered=false;
+  syncPQuizScore();
+  var body=$('#pqmBody');
+  body.innerHTML='<div class="hikmet-card" style="margin-top:0;background:rgba(2,6,23,.82);border-color:rgba(16,185,129,.45)">'+
+    '<div style="display:flex;justify-content:space-between;align-items:center;font-size:11.5px;color:#6EE7B7;margin-bottom:6px">'+
+    '<span>🧠 Soru '+(pQuizPos+1)+' / '+pQuizDeck.length+'</span><span>Karışık Tur</span></div>'+
+    '<b style="display:block;font:800 16px/1.35 var(--f-display);color:#F1F5F9;margin-bottom:4px">'+qObj.q+'</b>'+
+    '<div class="quiz-opts">'+optPairs.map(function(op,i){
+      return '<button type="button" class="qopt" data-ok="'+(op.ok?'1':'0')+'">'+['A) ','B) ','C) ','D) '][i]+op.txt+'</button>';
+    }).join('')+'</div>'+
+    '<div id="pqFeed" style="margin-top:10px;font-size:13px;font-weight:700;min-height:20px"></div>'+
+    '<button type="button" class="btn pri" id="btnNextPQ" style="margin-top:10px;width:100%" hidden>Sonraki Soru →</button></div>';
+  body.querySelectorAll('.qopt').forEach(function(btn){
+    btn.onclick=function(){
+      if(pQuizAnswered)return;pQuizAnswered=true;
+      var isOk=btn.dataset.ok==='1';
+      var rightTxt='';
+      body.querySelectorAll('.qopt').forEach(function(b){
+        if(b.dataset.ok==='1'){b.classList.add('ok');rightTxt=b.textContent.slice(3)}
+        else if(b===btn)b.classList.add('no');
+      });
+      if(isOk){
+        pQuizScore+=10;lsSet('hb-pquiz-score',String(pQuizScore));syncPQuizScore();
+        setTxt($('#pqFeed'),'🎉 Maşallah! Doğru cevap (+10 Puan)');
+        showSpeech('Maşallah! Tam isabet 🎉','🕌');
+        synthPop(520,820,.2,'sine');
+      }else{
+        setTxt($('#pqFeed'),'🌿 Doğru cevap: '+rightTxt+' — Öğrenmek de bir ibadettir!');
+        synthPop(260,180,.2,'triangle');
+      }
+      $('#btnNextPQ').hidden=false;
+    };
+  });
+  $('#btnNextPQ').onclick=function(){
+    pQuizPos++;
+    if(pQuizPos>=pQuizDeck.length)startNewPQuizDeck();
+    renderPQuizPopup();
+  };
+}
+if($('#btnStartPQuiz')){
+  $('#btnStartPQuiz').onclick=function(){
+    startNewPQuizDeck();
+    renderPQuizPopup();
+    open('#pQuizModal');
+  };
+}
+if($('#pqmClose'))$('#pqmClose').onclick=function(){close('#pQuizModal')};
+
+if($('#btnDrawHikmet')){
+  $('#btnDrawHikmet').onclick=function(){
+    var idx;
+    do{idx=Math.floor(Math.random()*HIKMET_CARDS.length)}while(idx===lastHikmetIdx&&HIKMET_CARDS.length>1);
+    lastHikmetIdx=idx;
+    $('#bigSozT').textContent=HIKMET_CARDS[idx];
+    open('#bigSoz');
+    synthPop(440,680,.18,'sine');
+  };
+}
+
+/* İlk Giriş Açıklama Modalı Butonları */
+if($('#btnPrayerInfo'))$('#btnPrayerInfo').onclick=function(){open('#prayerIntroModal')};
+if($('#piOkBtn'))$('#piOkBtn').onclick=function(){
+  lsSet('hb-prayer-tour-done','1');
+  close('#prayerIntroModal');
+  toast('Hayırlı vakitler dileriz 🕌');
+};
+if($('#piDisableBtn'))$('#piDisableBtn').onclick=function(){
+  lsSet('hb-prayer-tour-done','1');
+  close('#prayerIntroModal');
+  S.settings.prayerTab=false;save();
+  if($('#setPrayerOn'))$('#setPrayerOn').checked=false;
+  syncPrayerTabVisibility();
+  toast('Namaz sekmesi kapatıldı. Ayarlar\'dan tekrar açabilirsiniz.');
+};
+
+function populateCitySelects(){
+  var cur=S.settings.prayerCity||'İstanbul';
+  var opts=TR_CITIES.map(function(c){return '<option value="'+c[0]+'"'+(c[0]===cur?' selected':'')+'>'+c[0]+'</option>'}).join('');
+  if($('#prayerCityQuick'))$('#prayerCityQuick').innerHTML=opts;
+  if($('#setPrayerCity'))$('#setPrayerCity').innerHTML=opts;
+}
+function syncPrayerTabVisibility(){
+  var enabled=(S.settings.prayerTab!==false);
+  var btn=$('#tabBtnPrayer');
+  if(btn)btn.hidden=!enabled;
+  if(!enabled && $('#tab-prayer') && !$('#tab-prayer').hidden){
+    switchTab('today');
+  }
+}
+function renderPrayerTab(){
+  var city=S.settings.prayerCity||'İstanbul';
+  if($('#prayerCityQuick')&&$('#prayerCityQuick').value!==city)$('#prayerCityQuick').value=city;
+  var sofiEl=$('#sofiSvg');
+  if(sofiEl&&!sofiEl._built){sofiEl.innerHTML=buildSofiSvg();sofiEl._built=true}
+  var now=new Date(),k=dk(now),curS=nowSec();
+  var tm=getTodayPrayerTimes(city);
+  setTxt($('#pDateHead'),'📅 '+longDate(k)+' · '+city);
+  setTxt($('#pSrcBadge'),tm.src||'Diyanet Uyumlu');
+  setTxt($('#pHijriDate'),getHijriDateStr(now));
+  if($('#pJumaBadge'))$('#pJumaBadge').hidden=(now.getDay()!==5);
+  var rows=[
+    ['Fajr','🌙','İmsak',tm.Fajr],
+    ['Sunrise','🌅','Güneş',tm.Sunrise],
+    ['Dhuhr','☀️','Öğle',tm.Dhuhr],
+    ['Asr','🌤️','İkindi',tm.Asr],
+    ['Maghrib','🌇','Akşam',tm.Maghrib],
+    ['Isha','🌃','Yatsı',tm.Isha]
+  ];
+  var nextIdx=-1,remSec=0,spanSec=3600;
+  for(var i=0;i<rows.length;i++){
+    var s=toSec(rows[i][3]);
+    if(s>curS){
+      nextIdx=i;remSec=s-curS;
+      var prevS=i>0?toSec(rows[i-1][3]):0;
+      spanSec=Math.max(60,s-prevS);
+      break;
+    }
+  }
+  var activeVakitKey=rows[nextIdx===-1?0:nextIdx][0];
+  if(nextIdx===-1){
+    var tom=new Date(now);tom.setDate(tom.getDate()+1);
+    var info=getCityCoords(city);
+    var tomTm=calcPrayerTimesOffline(tom,info[1],info[2]);
+    nextIdx=0;
+    remSec=(86400-curS)+toSec(tomTm.Fajr);
+    spanSec=(86400-toSec(rows[5][3]))+toSec(tomTm.Fajr);
+    setTxt($('#pNextLbl'),'Yarın İmsak Vaktine');
+    setTxt($('#pNextName'),'🌙 İmsak ('+tomTm.Fajr+')');
+  }else{
+    setTxt($('#pNextLbl'),'Sıradaki Vakit');
+    setTxt($('#pNextName'),rows[nextIdx][1]+' '+rows[nextIdx][2]+' ('+rows[nextIdx][3]+')');
+  }
+  // Her vakit değiştiğinde Sofi altındaki söz otomatik güncellenir
+  if(activeVakitKey!==lastAutoVakitKey && Date.now()>sofiManualOverrideUntil){
+    lastAutoVakitKey=activeVakitKey;
+    if(VAKIT_AUTO_QUOTES[activeVakitKey])setTxt($('#sofiQuote'),VAKIT_AUTO_QUOTES[activeVakitKey]);
+  }
+  setTxt($('#pCountdown'),hms(remSec));
+  var pct=Math.max(4,Math.min(100,Math.round((1-remSec/Math.max(1,spanSec))*100)));
+  if($('#pProgBar'))$('#pProgBar').style.width=pct+'%';
+  var listHtml=rows.map(function(r,idx){
+    var isNext=(idx===nextIdx);
+    return '<div class="vakit-row'+(isNext?' next':'')+'"><div class="vn"><span>'+r[1]+'</span>'+r[2]+'</div><div class="vt">'+r[3]+'</div></div>';
+  }).join('');
+  setHtml($('#vakitList'),listHtml);
+  updateQiblaUI(city);
+  renderZikir();
+  renderWisdom();
+  syncPQuizScore();
+}
+
+/* Sofi Böcek: Dokununca söz değiştirir + 5 kez art arda dokununca Gizli Manevi Hazine Odası açılır */
+var sofiTapCount=0,sofiTapTimer=null,lastSofiQuoteIdx=-1;
+if($('#sofiWrap')){
+  $('#sofiWrap').onclick=function(){
+    sofiTapCount++;
+    clearTimeout(sofiTapTimer);
+    if(sofiTapCount>=5){
+      sofiTapCount=0;
+      synthPop(523,1046,.28,'sine');
+      showSpeech('✨ Sofi Böcek Gizli Hazine Odası Açıldı!','🕌');
+      open('#prayerSecretModal');
+      return;
+    }
+    sofiTapTimer=setTimeout(function(){sofiTapCount=0},1400);
+    var idx;
+    do{idx=Math.floor(Math.random()*SOFI_QUOTES.length)}while(idx===lastSofiQuoteIdx&&SOFI_QUOTES.length>1);
+    lastSofiQuoteIdx=idx;
+    sofiManualOverrideUntil=Date.now()+45000;
+    setTxt($('#sofiQuote'),SOFI_QUOTES[idx]);
+    showSpeech('Selamün aleyküm! Hayırlı vakitler 🕌','📿');
+    synthPop(440,660,.18,'sine');
+  };
+}
+
+/* Namaz Sekmesi Gizli Özellikler Motoru */
+if($('#psmClose'))$('#psmClose').onclick=function(){close('#prayerSecretModal')};
+if($('#spNurMode')){
+  $('#spNurMode').onclick=function(){
+    var hero=$('#sofiHero');
+    if(!hero)return;
+    var on=hero.classList.toggle('nur-mode');
+    this.textContent=on?'🏮 Kandil & Nur (Açık)':'🏮 Kandil & Nur Modu';
+    toast(on?'Kandil & Nur modu yakıldı ✨':'Kandil & Nur modu kapatıldı');
+    synthPop(on?660:440,on?880:330,.2,'sine');
+  };
+}
+var ESMA_PAIRS=[
+  {ar:'Er-Rezzâk',tr:'Bütün canlıların rızkını veren'},
+  {ar:'Eş-Şâfî',tr:'Maddi ve manevi dertlere şifa veren'},
+  {ar:'El-Fettâh',tr:'Hayır ve bereket kapılarını açan'},
+  {ar:'El-Vedûd',tr:'Kullarını çok seven ve sevilmeye layık olan'},
+  {ar:'Es-Selâm',tr:'Her türlü tehlikeden esenliğe çıkaran'},
+  {ar:'El-Latîf',tr:'En ince işleri bilen ve lütuf ulaştıran'},
+  {ar:'El-Hafîz',tr:'Her şeyi koruyup gözeten'},
+  {ar:'El-Mucîb',tr:'Duaları kabul eden, icabet eden'}
+];
+function renderEsmaGame(){
+  var out=$('#spOut');out.hidden=false;
+  var pool=shuffleArr(ESMA_PAIRS);
+  var target=pool[0];
+  var opts=shuffleArr(pool.slice(0,4));
+  out.innerHTML='<div class="secret-prayer-card"><h4>🎯 Esmaül Hüsna Anlam Bulmaca<span>+15 Puan</span></h4>'+
+    '<p style="margin:4px 0 8px;font-size:13px;color:#A7F3D0"><b style="color:#FDE047;font-size:16px">'+target.ar+'</b> isminin anlamı hangisidir?</p>'+
+    '<div class="quiz-opts">'+opts.map(function(op){
+      return '<button type="button" class="qopt" data-ok="'+(op.ar===target.ar?'1':'0')+'">'+op.tr+'</button>';
+    }).join('')+'</div></div>';
+  out.querySelectorAll('.qopt').forEach(function(b){
+    b.onclick=function(){
+      var ok=b.dataset.ok==='1';
+      out.querySelectorAll('.qopt').forEach(function(x){
+        if(x.dataset.ok==='1')x.classList.add('ok');
+        else if(x===b)x.classList.add('no');
+      });
+      if(ok){
+        pQuizScore+=15;lsSet('hb-pquiz-score',String(pQuizScore));syncPQuizScore();
+        toast('Maşallah! +15 Puan kazandın 🌟');
+        synthPop(580,880,.2,'sine');
+      }else{
+        toast('Doğru anlam yeşil ile işaretlendi 🌿');
+      }
+      setTimeout(renderEsmaGame,1300);
+    };
+  });
+}
+if($('#spEsmaGame'))$('#spEsmaGame').onclick=renderEsmaGame;
+
+var salavatCnt=+(lsGet('hb-salavat-cnt')||0);
+if($('#spSalavat')){
+  $('#spSalavat').onclick=function(){
+    var out=$('#spOut');out.hidden=false;
+    out.innerHTML='<div class="secret-prayer-card" style="text-align:center"><h4>🌹 Özel Salavat Halkası<span>Kayıtlı</span></h4>'+
+      '<p style="margin:4px 0 8px;font-size:12.5px;color:#D1FAE5">"Allahümme salli alâ seyyidinâ Muhammedin ve alâ âli seyyidinâ Muhammed"</p>'+
+      '<button type="button" class="btn pri" id="btnSalavatTap" style="width:100%;font-size:16px;padding:12px">🌹 Salavat Çek (<b id="salavatVal">'+salavatCnt+'</b>)</button></div>';
+    $('#btnSalavatTap').onclick=function(){
+      salavatCnt++;zikirTotal++;
+      lsSet('hb-salavat-cnt',String(salavatCnt));
+      lsSet('hb-zikir-tot',String(zikirTotal));
+      renderZikir();
+      setTxt($('#salavatVal'),String(salavatCnt));
+      synthPop(600,760,.07,'sine');
+      try{navigator.vibrate&&navigator.vibrate(20)}catch(e){}
+      if(salavatCnt%10===0)toast('🌹 '+salavatCnt+' Salavat-ı Şerife tamamlandı!');
+    };
+  };
+}
+
+var GIZLI_AMELLER=[
+  '💧 Bugün bir sokak hayvanına veya kuşa bir kap temiz su bırak.',
+  '📞 Uzun zamandır aramadığın bir büyüğünü veya dostunu arayıp halini hatırını sor.',
+  '🤫 Bugün hiç kimse hakkında gıybet etmeme ve olumsuz konuşmama orucu tut.',
+  '🍞 Evdeki veya iş yerindeki bir ikramı en yakınındaki kişiyle bölüş.',
+  '🤲 Hiç tanımadığın ama sıkıntıda olan insanlar için içinden samimi bir dua et.',
+  '😊 Bugün karşılaştığın herkese ilk selamı sen ver ve güler yüz göster.'
+];
+if($('#spAmel')){
+  $('#spAmel').onclick=function(){
+    var out=$('#spOut');out.hidden=false;
+    var pick=GIZLI_AMELLER[Math.floor(Math.random()*GIZLI_AMELLER.length)];
+    out.innerHTML='<div class="secret-prayer-card"><h4>🌱 Günün Gizli İyilik Görevi<span>Sır Amel</span></h4>'+
+      '<p style="margin:6px 0 8px;font-size:13.5px;color:#FEF3C7;line-height:1.45">'+pick+'</p>'+
+      '<button type="button" class="btn" id="btnAmelDone" style="width:100%;border-color:#22C55E;color:#6EE7B7">✅ Niyet Ettim & Yapacağım</button></div>';
+    $('#btnAmelDone').onclick=function(){
+      pQuizScore+=20;lsSet('hb-pquiz-score',String(pQuizScore));syncPQuizScore();
+      toast('Rabbim kabul etsin! (+20 Bereket Puanı) 🌿');
+      synthPop(520,840,.22,'sine');
+      this.disabled=true;this.textContent='🌟 Niyet Kaydedildi!';
+    };
+  };
+}
+
+var breathTimer=null;
+if($('#spBreath')){
+  $('#spBreath').onclick=function(){
+    var out=$('#spOut');out.hidden=false;
+    clearInterval(breathTimer);
+    out.innerHTML='<div class="secret-prayer-card" style="text-align:center"><h4>🌬️ Tefekkür & Zikir Nefesi<span>4-4-4</span></h4>'+
+      '<p id="breathTxt" style="margin:8px 0;font:800 16px var(--f-display);color:#6EE7B7">🌬️ 4 saniye derin nefes al ("Subhanallah")</p>'+
+      '<small style="color:var(--muted)">Zihnini dünyadan sıyır, kalbini dinlendir.</small></div>';
+    var phases=[
+      '🌬️ 4 saniye derin nefes al ("Subhanallah")',
+      '⏸️ 4 saniye tut ve tefekkür et ("Elhamdülillah")',
+      '🍃 4 saniye yavaşça ver ("Allahu Ekber")'
+    ],pi=0;
+    breathTimer=setInterval(function(){
+      if($('#prayerSecretModal').hidden){clearInterval(breathTimer);return}
+      pi=(pi+1)%phases.length;
+      if($('#breathTxt'))setTxt($('#breathTxt'),phases[pi]);
+    },4000);
+  };
+}
+
+var ENDERUN_HIKMET=[
+  '📜 "Dilini tutan kurtulur; güzel söz söyleyen gönülleri fetheder."',
+  '📜 "İki günü eşit olan ziyandadır; her gün yeni bir iyilik ve ilim öğren."',
+  '📜 "Kızgınlık rüzgâr gibidir, bir süre sonra diner ama birçok dalı kırmış olur; sabırlı ol."',
+  '📜 "Dünya bir gölgeliktir; yolcu gölgelikte oyalanmaz, asıl yurduna azık hazırlar."',
+  '📜 "Kalp bir ayna gibidir; zikir ve şükürle cilalandıkça hakikati daha berrak gösterir."'
+];
+if($('#spHadis')){
+  $('#spHadis').onclick=function(){
+    var out=$('#spOut');out.hidden=false;
+    var pick=ENDERUN_HIKMET[Math.floor(Math.random()*ENDERUN_HIKMET.length)];
+    out.innerHTML='<div class="secret-prayer-card"><h4>📜 Enderun Hikmet Sandığı<span>Öğüt</span></h4>'+
+      '<p style="margin:6px 0 0;font-size:13.5px;color:#FDE68A;line-height:1.5">'+pick+'</p></div>';
+    synthPop(460,640,.14,'sine');
+  };
+}
+
+if($('#prayerCityQuick')){
+  $('#prayerCityQuick').onchange=function(){
+    S.settings.prayerCity=this.value;save();
+    if($('#setPrayerCity'))$('#setPrayerCity').value=this.value;
+    renderPrayerTab();toast(this.value+' namaz vakitleri yüklendi');
+  };
+}
 
 /* ---------- Tick ---------- */
-function tick(){setTxt($('#clock'),longDate(dk(new Date())).replace(/,.*/,'')+' · '+nowT());renderToday()}
+function tick(){setTxt($('#clock'),longDate(dk(new Date())).replace(/,.*/,'')+' · '+nowT());renderToday();if($('#tab-prayer')&&!$('#tab-prayer').hidden)renderPrayerTab()}
 /* telefonlarda konuşma, ilk dokunuşla açılır; sonra zamanlayıcıdan da çalışır */
 try{speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=function(){}}catch(e){}
 ['pointerdown','touchstart','click'].forEach(function(ev){document.addEventListener(ev,function(){unlockAudio();try{if(!window.__sp){window.__sp=1;var u=new SpeechSynthesisUtterance(' ');u.volume=0;speechSynthesis.speak(u)}}catch(e){}},{capture:true,passive:true})});
@@ -2618,7 +3749,8 @@ var TOUR=[
  ['✅','Mesaiye başlayalım!','Sabah gelince “İşe giriş”e basın, ben de “Aaaaaaa duktur yok mu duktur!” diye bağırırım. Çıkarken “İşten çıkış”a basınca “Lülülü!” diyerek uğurlarım.'],
  ['☕','Molaya çıkalım!','“Molaya çık”a basınca “lülülülü” diye öterim. Dönünce “İçeri gir”e basın, ben de hemen toparlanırım!'],
  ['🆘','Mola hakkınız var!','Hafta içi günlük mola hakkınız 1 saat 15 dakika, hafta sonu 1 saat. Toplamda bu süreyi aşarsanız ben ölürüm, cidden! Ertesi gün yeniden dirilirim.'],
- ['⚙️','Ayarlara bakın','Ayarlar sekmesinde başlıklara dokunarak açın: çalışma saatleri, sesler, yedek ve Excel burada.'],
+ ['🕌','Namaz Vakitleri & Sofi Böcek','Alt menüdeki “Namaz” sekmesinde 81 il için Diyanet uyumlu vakitleri, Zikirmatiği, Kıble pusulasını ve mini bilgi yarışmasını bulabilirsiniz. İsterseniz Ayarlar → Namaz Vakitleri Sekmesi bölümünden kapatıp açabilirsiniz.'],
+ ['⚙️','Ayarlara bakın','Ayarlar sekmesinde başlıklara dokunarak açın: çalışma saatleri, sesler, Namaz sekmesi ayarı, yedek ve Excel burada.'],
  ['🎉','Hazırsınız!','Kayıtlarınız telefonda saklanır ve her 3 günde bir yedek almanız hatırlatılır. Haydi başlayın!']
 ];
 var tStep=0;
@@ -2641,7 +3773,7 @@ if(!isStandaloneMode()&&lsGet('hb-install-guide-seen')!=='1'){
 }else{
   gateCheck();
 }
-autoBackup();applyTheme();applyRoachLook();renderAll();tick();setInterval(tick,1000);
+populateCitySelects();syncPrayerTabVisibility();autoBackup();applyTheme();applyRoachLook();renderAll();tick();setInterval(tick,1000);
 })();
 </script>
 
