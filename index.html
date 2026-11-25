@@ -888,7 +888,7 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
   </div>
 </div>
 
-<div class="tour" id="nameSheet" hidden role="dialog" aria-modal="true" aria-labelledby="nmT">
+<div class="tour" id="nameSheet" hidden role="dialog" aria-modal="true" aria-labelledby="nmT" style="z-index:95">
   <div class="tcard">
     <div class="tic">🪳</div>
     <h3 id="nmT">Kullanıcı adını seç</h3>
@@ -4482,12 +4482,26 @@ $('#setWaterDrop').onchange=function(){S.settings.waterDrop=this.checked;save();
 /* ===== Kullanıcı adı + sıralama tablosu (çevrimiçi: Supabase; ayarlanmadıysa bu cihazda) ===== */
 var LB_CFG={url:'https://eptutkvqfggsxzdxunbe.supabase.co',key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVwdHV0a3ZxZmdnc3h6ZHh1bmJlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTU2MDU2MDMsImV4cCI6MjExMTE4MTYwM30.feSgf4QOJXJwDTiVjqY6nkhZakfwXRctXp3l6PyEVyE'};   // Supabase proje adresi ve anon anahtarı buraya yazılacak
 var LB_GAMES={bug:'Böcek Öldürme / Aslan Yakalama',football:'Tek Kale Böcek Futbolu',cups:'Bardak Altı Saklamaca',skill:'Jandarmadan Kaçış',lingo:'Lingo (kazanılan kelime)',race:'Böcek Yarışı',memory:'Hafıza Yürüyüşü',snake:'Yılan',tetris:'Tetris',tower:'Zamanlama Kulesi',mines:'Mayın Tarlası'};
+
+/* Kullanıcı adı filtresi: küfür ve uygunsuz adlar kabul edilmez */
+var LB_BAD_PARTS=['amk','amq','aq','orospu','piç','yarrak','ibne','pezevenk','kahpe','sikik','sikerim','sikeyim','sokayım','fuck','shit','bitch','asshole','götveren','gotveren'];
+var LB_BAD_WORDS=['sik','göt','oç','ananı','ibne','hitler','admin','yönetici','moderator'];
+function lbNorm(t){return String(t).toLocaleLowerCase('tr-TR').replace(/[0]/g,'o').replace(/[1]/g,'i').replace(/[3]/g,'e').replace(/[4]/g,'a').replace(/[5]/g,'s').replace(/[@]/g,'a').replace(/[$]/g,'s')}
+function lbBadName(name){
+  var n=lbNorm(name),compact=n.replace(/[^a-zçğıöşü]/g,'');
+  if(LB_BAD_PARTS.some(function(b){return compact.indexOf(b)>=0}))return true;
+  var words=n.split(/[^a-zçğıöşü]+/).filter(Boolean);
+  return words.some(function(w){return LB_BAD_WORDS.indexOf(w)>=0});
+}
 function lbName(){return (S.settings&&S.settings.username)||''}
-function lbHeaders(){return {'apikey':LB_CFG.key,'Authorization':'Bearer '+LB_CFG.key,'Content-Type':'application/json'}}
+function lbUid(){if(!S.settings.uid){S.settings.uid=Math.random().toString(36).slice(2)+Date.now().toString(36);save()}return S.settings.uid}
+function lbHeaders(){return {'apikey':LB_CFG.key,'Authorization':'Bearer '+LB_CFG.key,'Content-Type':'application/json','x-uid':lbUid()}}
 function lbSubmit(g,score){
-  if(!LB_CFG.url||!lbName()||!(score>0))return;
+  if(!LB_CFG.url||!lbName()||!(score>0)||lbBadName(lbName()))return;
   try{fetch(LB_CFG.url+'/rest/v1/scores',{method:'POST',headers:Object.assign(lbHeaders(),{'Prefer':'return=minimal'}),
-    body:JSON.stringify({username:lbName(),game:g,score:Math.round(score)})}).catch(function(){})}catch(e){}}
+    body:JSON.stringify({username:lbName(),game:g,score:Math.round(score),uid:lbUid()})}).catch(function(){})}catch(e){}}
+function lbRenameRemote(oldName,newName){if(!LB_CFG.url||!oldName||oldName===newName)return;
+  try{fetch(LB_CFG.url+'/rest/v1/scores?uid=eq.'+encodeURIComponent(lbUid())+'&username=eq.'+encodeURIComponent(oldName),{method:'PATCH',headers:Object.assign(lbHeaders(),{'Prefer':'return=minimal'}),body:JSON.stringify({username:newName})}).catch(function(){})}catch(e){}}
 function lbLocalBest(g){
   if(g==='bug')return bugBest();if(g==='football')return +(lsGet('hb-foot-best')||0);
   if(g==='cups')return +(lsGet('hb-cup-best')||0);if(g==='skill')return +(lsGet('hb-skill-lvl')||1);
@@ -4497,7 +4511,10 @@ function nameAsk(){$('#nmIn').value=lbName();$('#nmErr').textContent='';if($('#n
 function nameSave(){var v=($('#nmIn').value||'').trim().replace(/\s+/g,' ');
   if(v.length<2){$('#nmErr').textContent='En az 2 karakter olmalı.';return}
   if(!/^[A-Za-zÇĞİÖŞÜçğıöşü0-9_ ]+$/.test(v)){$('#nmErr').textContent='Sadece harf, rakam, boşluk ve _ kullanabilirsin.';return}
-  S.settings.username=v;save();close('#nameSheet');toast('👋 Merhaba '+v+'!')}
+  if(lbBadName(v)){$('#nmErr').textContent='Bu ad uygun değil, başka bir ad seç.';return}
+  var old=lbName();S.settings.username=v;save();lbRenameRemote(old,v);$('#nmErr').textContent='';close('#nameSheet');
+  if(!$('#lbSheet').hidden){$('#lbMe').textContent='Adın: '+v;lbRender()}
+  toast(old&&old!==v?'✏️ Adın '+v+' oldu, skorların güncellendi':'👋 Merhaba '+v+'!')}
 $('#nmOk').onclick=nameSave;
 $('#nmIn').onkeydown=function(e){if(e.key==='Enter')nameSave()};
 function lbOpen(g){
@@ -4724,11 +4741,14 @@ document.querySelectorAll('#skinSheet .skin-opt').forEach(function(b){
 });
 
 
-var APP_VERSION='2026-11-25-v48';
-var APP_VER_NO=48;
+var APP_VERSION='2026-11-25-v51';
+var APP_VER_NO=51;
 var APP_CHANGES=[
+  'Sıralama ekranından "Adımı değiştir" artık çalışıyor (ad penceresi üstte açılıyor).',
   'Karakterin yanında 💧 su damlası: bugünkü bardak sayını gösterir, +1 ve geri al yapar.',
   'Su İçme Hatırlatıcı: aç/kapa, dakika ayarı, 5 mod (klasik, karakter sesi, aslan kükremesi, meydan okuma, sessiz).',
+  'Adını değiştirince eski skorların da yeni adla güncelleniyor (yeni skorlar için).',
+  'Kullanıcı adında uygunsuz kelimeler kabul edilmiyor. Sıralama tablosuna uygunsuz adla skor gönderilmiyor.',
   'Sıralama artık sadece oyunun içinden açılıyor (🏅 Bu oyunun sıralaması).',
   'Sıralama her oyunun kendi ekranında: oyun içinde 🏅 Bu oyunun sıralaması düğmesi var.',
   'Kullanıcı adı: uygulamaya girince bir ad seçiyorsun. Oyunların skorları 🏅 Sıralama tablosunda (çevrimiçi bağlanınca herkes için).',
