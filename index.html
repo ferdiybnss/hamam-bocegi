@@ -901,8 +901,8 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
 <div class="tour" id="lbSheet" hidden role="dialog" aria-modal="true" aria-labelledby="lbT">
   <div class="tcard" style="max-width:420px;max-height:90vh;overflow:auto">
     <div class="tic">🏅</div>
-    <h3 id="lbT">Sıralama</h3>
-    <select id="lbGame" style="width:100%;padding:8px;border-radius:10px;margin-bottom:6px"></select>
+    <h3 id="lbT"><span id="lbTitle">Sıralama</span></h3>
+    <select id="lbGame" hidden></select>
     <p id="lbInfo" class="sub" style="min-height:18px;margin:0 0 6px"></p>
     <ol id="lbList" style="text-align:left;padding-left:26px;margin:0 0 8px;max-height:44vh;overflow:auto"></ol>
     <p class="sub" style="margin:0 0 8px"><span id="lbMe"></span> <button class="btn" id="lbRename" style="padding:4px 10px;font-size:13px">Adımı değiştir</button></p>
@@ -915,7 +915,7 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
     <h3 id="gmT">Böcek Oyun Salonu</h3>
     <p style="margin-bottom:8px;font-size:13px;color:var(--muted)">Mola eğlencesi! Tüm oyunlarda bizim hamam böceği sesli eşlik eder.</p>
     <div class="glist" id="gamesList"></div>
-    <div class="trow"><button class="btn" id="gmLb">🏅 Sıralama</button><button class="btn pri" id="gmClose">Kapat</button></div>
+    <div class="trow"><button class="btn pri" id="gmClose">Kapat</button></div>
   </div>
 </div>
 
@@ -4503,6 +4503,7 @@ $('#nmIn').onkeydown=function(e){if(e.key==='Enter')nameSave()};
 function lbOpen(g){
   var sel=$('#lbGame');if(!sel.options.length)sel.innerHTML=Object.keys(LB_GAMES).map(function(k){return '<option value="'+k+'">'+LB_GAMES[k]+'</option>'}).join('');
   if(g&&LB_GAMES[g])sel.value=g;
+  $('#lbTitle').textContent='🏅 '+(LB_GAMES[sel.value]||'Sıralama');
   $('#lbMe').textContent=lbName()?'Adın: '+lbName():'Henüz adın yok.';
   lbRender();
   if($('#lbSheet').hidden)open('#lbSheet');
@@ -4526,7 +4527,6 @@ function lbRender(){
 $('#lbGame').onchange=lbRender;
 $('#lbClose').onclick=function(){close('#lbSheet')};
 $('#lbRename').onclick=function(){nameAsk()};
-$('#gmLb').onclick=function(){lbOpen()};
 setTimeout(function tryName(){
   if(lbName())return;
   var busy=($('#tour')&&!$('#tour').hidden)||($('#installGuide')&&!$('#installGuide').hidden);
@@ -4724,11 +4724,12 @@ document.querySelectorAll('#skinSheet .skin-opt').forEach(function(b){
 });
 
 
-var APP_VERSION='2026-11-25-v46';
-var APP_VER_NO=46;
+var APP_VERSION='2026-11-25-v47';
+var APP_VER_NO=47;
 var APP_CHANGES=[
   'Karakterin yanında 💧 su damlası: bugünkü bardak sayını gösterir, +1 ve geri al yapar.',
   'Su İçme Hatırlatıcı: aç/kapa, dakika ayarı, 5 mod (klasik, karakter sesi, aslan kükremesi, meydan okuma, sessiz).',
+  'Sıralama artık sadece oyunun içinden açılıyor (🏅 Bu oyunun sıralaması).',
   'Sıralama her oyunun kendi ekranında: oyun içinde 🏅 Bu oyunun sıralaması düğmesi var.',
   'Kullanıcı adı: uygulamaya girince bir ad seçiyorsun. Oyunların skorları 🏅 Sıralama tablosunda (çevrimiçi bağlanınca herkes için).',
   'Lingo: her konuda kolay, orta ve zor kelimeler var. Zorluk seviyesi kelime havuzunu da değiştiriyor. Konuyu da elle seçebilirsiniz.',
