@@ -325,6 +325,11 @@ body.vip-gold .roach-head{fill:#F59E0B!important;stroke:#FDE047!important}
 
 
 /* Kostüm Özelleştirici, Üst Bar & Oyun İçi Ses Butonu */
+.wdrop{position:absolute;right:10px;top:50%;transform:translateY(-50%);z-index:6;width:58px;height:58px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;border:2px solid #7DD3FC;background:radial-gradient(circle at 35% 30%,#E0F2FE,#38BDF8 55%,#0369A1);box-shadow:0 8px 20px rgba(14,165,233,.35);color:#fff;font-size:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0;cursor:pointer;touch-action:manipulation}
+.wdrop[hidden]{display:none!important}
+.wdrop .wdb{position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);font:800 11px/1 system-ui,sans-serif;background:#020617;color:#7DD3FC;border:1px solid #7DD3FC;border-radius:999px;padding:3px 7px;white-space:nowrap}
+.wbar{height:14px;border-radius:999px;background:rgba(127,127,127,.25);overflow:hidden;margin:10px 0}
+.wbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#38BDF8,#34D399);border-radius:999px;transition:width .3s}
 .mascot-top{position:relative;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;margin-bottom:6px}
 .mascot-top .badge{margin-bottom:0;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .cust-btn{position:relative;flex:none;border:1px solid rgba(251,191,36,.45);background:rgba(15,23,42,.9);color:var(--accent);border-radius:999px;padding:6px 12px;font:700 12px var(--f-display);display:inline-flex;align-items:center;gap:5px;box-shadow:0 4px 12px rgba(0,0,0,.3);white-space:nowrap}
@@ -598,6 +603,7 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
     <div class="roachwrap roach-idle" id="roachWrap" role="img" aria-label="Özelleştirilebilir hamam böceği">
       <svg id="roachSvg" class="rsvg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
     </div>
+    <button type="button" class="wdrop" id="waterDrop" aria-label="Su takibi: bardak menüsünü aç">💧<span class="wdb" id="waterDropBadge">0/8</span></button>
     <div class="timers">
       <div class="tbox"><small>Net mesai süresi</small><b id="tWork">00:00:00</b></div>
       <div class="tbox brk" id="bBox"><small id="bLabel">Toplam mola</small><b id="tBrk">00:00:00</b></div>
@@ -748,6 +754,25 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
   <button role="tab" data-tab="settings" aria-selected="false"><i>⚙️</i>Ayarlar</button>
 </nav>
 
+<div class="tour" id="waterMenu" hidden role="dialog" aria-modal="true" aria-labelledby="wmT">
+  <div class="tcard">
+    <div class="tic">💧</div>
+    <h3 id="wmT">Su takibi</h3>
+    <p id="wmBig" style="font:800 30px/1.1 system-ui,sans-serif;margin:4px 0"></p>
+    <div class="wbar"><i id="wmBar"></i></div>
+    <p id="wmTxt" class="sub" style="margin:0 0 6px"></p>
+    <div class="trow"><button class="btn" id="wmUndo">−1 geri al</button><button class="btn pri" id="wmAdd">💧 +1 bardak</button></div>
+    <div class="trow" style="margin-top:8px"><button class="btn" id="wmClose">Kapat</button></div>
+  </div>
+</div>
+<div class="tour" id="waterSheet" hidden role="dialog" aria-modal="true" aria-labelledby="wtT">
+  <div class="tcard">
+    <div class="tic" id="wtIc">💧</div>
+    <h3 id="wtT">Su zamanı!</h3>
+    <p id="wtP"></p>
+    <div class="trow"><button class="btn" id="wtSnooze">⏰ 10 dk sonra</button><button class="btn pri" id="wtDrink">💧 İçtim</button></div>
+  </div>
+</div>
 <div class="tour" id="confirmSheet" hidden role="dialog" aria-modal="true" aria-labelledby="cfT">
   <div class="tcard">
     <div class="tic" id="cfIc">🚪</div>
@@ -996,6 +1021,32 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
   <label class="ck"><input type="checkbox" id="setToolsAuto"> Uygulama güncellenince Araçlar sekmesini otomatik aç</label>
   <label class="ck"><input type="checkbox" id="setSteps"> 🚶 Adım sayarı aç (uygulama açıkken sayar)</label>
   <label class="ck"><input type="checkbox" id="setStepsNotif"> Adım sayısını namaz bildiriminde göster</label>
+</div></details>
+<details class="sec"><summary>💧 Su İçme Hatırlatıcı</summary><div class="secbody">
+  <label class="ck"><input type="checkbox" id="setWaterOn"> Su hatırlatıcısını aç</label>
+  <div class="row" style="align-items:center;gap:8px">
+    <label style="flex:1">Hatırlatma aralığı (dakika)<input type="number" id="setWaterMin" min="5" max="240" step="5" style="width:100%"></label>
+  </div>
+  <div class="row" style="align-items:center;gap:8px">
+    <label style="flex:1">Mod
+      <select id="setWaterMode" style="width:100%">
+        <option value="classic">📳 Klasik: bildirim ve titreşim</option>
+        <option value="karakter">🪳 Karakter sesi: böcek/aslan konuşur</option>
+        <option value="aslan">🦁 Aslan kükremesi: kükrer ve su ister</option>
+        <option value="meydan">🎯 Meydan okuma: her bardakta işaretle</option>
+        <option value="sessiz">🤫 Sessiz: sadece küçük bildirim</option>
+      </select>
+    </label>
+  </div>
+  <p id="setWaterModeTxt" class="sub" style="margin:4px 0 8px"></p>
+  <label class="ck"><input type="checkbox" id="setWaterInside"> Sadece mesaideyken hatırlat</label>
+  <div class="row" style="align-items:center;gap:8px;flex-wrap:wrap">
+    <span>Bugün <b id="setWaterCount">0</b> / <b id="setWaterGoalTxt">8</b> bardak</span>
+    <label>Hedef <input type="number" id="setWaterGoal" min="1" max="20" style="width:64px"></label>
+    <button type="button" class="btn" id="btnWaterAdd">💧 +1 bardak</button>
+  </div>
+  <div class="row"><button type="button" class="btn" id="btnWaterTest">🔔 Şimdi dene</button></div>
+  <label class="ck"><input type="checkbox" id="setWaterDrop"> Karakterin yanında 💧 su damlası butonunu göster</label>
 </div></details>
 <details class="sec"><summary>🔔 Bildirim</summary><div class="secbody">
   <p style="margin:0">Bildirimleri buradan açıp kapatabilirsiniz. Bildirim izni gerekir.</p>
@@ -2046,12 +2097,14 @@ $('#gamesList').onclick=function(e){
 /* ---------- Rakipli Ligler: Refleks, Böcek Yarışı, Hafıza Yürüyüşü (seviye + rakip, kazandıkça lig yükselir) ---------- */
 var RANKS=['🐜 Karınca','🪰 Sinek','🕷️ Örümcek','🦂 Akrep','🐍 Yılan','🦖 Dinozor','🐉 Ejderha','👑 Kraliçe','🌋 Efsane'];
 var RV_TGT={memory:[4,5,6,7,8,9,10,11,12],snake:[10,12,14,16,18,20,22,25,30],tetris:[3,4,5,6,7,8,9,10,12],tower:[8,10,12,14,16,18,20,22,25],mines:[90,80,75,70,65,60,55,50,45]};
+var RC_LEN=260;
 var RACE_SPD=[6,7.5,9,10.5,12,13.5,15,16.5,18];
 function rvGet(g){var x=null;try{x=JSON.parse(lsGet('hb-rv-'+g)||'null')}catch(e){x=null}
   if(!x||typeof x!=='object')x={tier:0,w:0,l:0,best:0};return x}
 function rvSave(g,x){lsSet('hb-rv-'+g,JSON.stringify(x))}
 function rvTxt(g){var x=rvGet(g);return 'Rakip: '+RANKS[x.tier]+' · '+(x.tier===RANKS.length-1?'Lig: Son rakip':'Lig '+(x.tier+1)+'/'+RANKS.length)}
 function rvTarget(g){return RV_TGT[g][rvGet(g).tier]}
+function rvBest(g,score){var x=rvGet(g);x.best=Math.max(x.best||0,score);rvSave(g,x)}
 function rvResult(g,won,score){var x=rvGet(g);x.best=Math.max(x.best||0,score);
   if(won){x.w++;if(x.tier<RANKS.length-1)x.tier++}else x.l++;rvSave(g,x);return x}
 
@@ -2074,13 +2127,13 @@ function raceStart(){raceStop();var rv=rvGet('race');var spd=RACE_SPD[rv.tier];
   RC.p=0;RC.rv=[0,0,0];RC.sp=[spd*0.95,spd*0.8,spd*0.65];RC.on=true;
   $('#raceGo').hidden=true;$('#raceMsg').textContent='Başla! Hızlı dokun!';raceRender();
   RC.t=setInterval(raceTick,100)}
-function raceTap(){if(!RC.on)return;RC.p=Math.min(100,RC.p+1.4);synthPop(520+RC.p*4,700,.03,'square');raceRender()}
+function raceTap(){if(!RC.on)return;RC.p=Math.min(RC_LEN,RC.p+1.4);synthPop(520+RC.p*4,700,.03,'square');raceRender()}
 function raceTick(){if(!RC.on)return;
-  for(var i=0;i<3;i++)RC.rv[i]=Math.min(100,RC.rv[i]+RC.sp[i]/10*(0.85+Math.random()*0.3));
+  for(var i=0;i<3;i++)RC.rv[i]=Math.min(RC_LEN,RC.rv[i]+RC.sp[i]/10*(0.85+Math.random()*0.3));
   raceRender();
-  var won=RC.p>=100,lost=RC.rv.some(function(v){return v>=100});
+  var won=RC.p>=RC_LEN,lost=RC.rv.some(function(v){return v>=RC_LEN});
   if(won||lost)raceEnd(won)}
-function raceRender(){var b=$('#rb0');if(!b)return;b.style.width=RC.p+'%';RC.rv.forEach(function(v,i){var e=$('#rb'+(i+1));if(e)e.style.width=v+'%'})}
+function raceRender(){var b=$('#rb0');if(!b)return;b.style.width=(RC.p/RC_LEN*100)+'%';RC.rv.forEach(function(v,i){var e=$('#rb'+(i+1));if(e)e.style.width=(v/RC_LEN*100)+'%'})}
 function raceEnd(won){raceStop();
   var x=rvResult('race',won,Math.round(RC.p));
   $('#raceMsg').innerHTML='<b>'+(won?'🏆 Kazandın! Yeni rakip: '+RANKS[x.tier]:'😵 Rakip önce bitirdi.')+'</b>';
@@ -2103,7 +2156,7 @@ function memStop(){clearTimeout(M.t);M.on=false;M.show=false}
 function memFlash(i,ms,cb){var b=document.querySelector('[data-p="'+i+'"]'),P=memPads();
   if(b)b.classList.add('lit');synthPop(P[i].f,P[i].f*1.01,.18,'triangle');
   M.t=setTimeout(function(){if(b)b.classList.remove('lit');if(cb)M.t=setTimeout(cb,200)},ms)}
-function memStart(){memStop();M.seq=[];M.done=0;M.on=true;$('#mGo').hidden=true;$('#mR').textContent=0;$('#mMsg').textContent='';memNext()}
+function memStart(){memStop();M.seq=[];M.done=0;M.won=false;M.on=true;$('#mGo').hidden=true;$('#mR').textContent=0;$('#mMsg').textContent='';memNext()}
 function memNext(){M.seq.push(Math.floor(Math.random()*4));M.k=0;memPlay(0)}
 function memPlay(i){if(!M.on)return;
   if(i>=M.seq.length){M.show=false;$('#mMsg').textContent='Sıra sende!';return}
@@ -2112,13 +2165,13 @@ function memPlay(i){if(!M.on)return;
 function memPress(p){
   var P=memPads();if(p===M.seq[M.k]){ // doğru
     synthPop(P[p].f,P[p].f*1.01,.1,'sine');M.k++;
-    if(M.k===M.seq.length){M.done=M.seq.length;$('#mR').textContent=M.done;$('#mMsg').textContent='Harika! Yeni adım geliyor…';M.on=false;M.show=true;M.t=setTimeout(function(){M.on=true;M.show=false;memNext()},700)}
+    if(M.k===M.seq.length){M.done=M.seq.length;if(!M.won&&M.done>=rvTarget('memory'))memWin();$('#mR').textContent=M.done;$('#mMsg').textContent='Harika! Yeni adım geliyor…';M.on=false;M.show=true;M.t=setTimeout(function(){M.on=true;M.show=false;memNext()},700)}
   } else memEnd()}
-function memEnd(){memStop();
-  var tg=rvTarget('memory'),won=M.done>=tg,x=rvResult('memory',won,M.done);
-  $('#mMsg').innerHTML='<b>'+(won?'🏆 Kazandın! Yeni rakip: '+RANKS[x.tier]:'😵 Yanlış bastın. '+M.done+' tur yaptın, hedef '+tg)+'</b>';
-  $('#mGo').hidden=false;$('#mGo').textContent='Tekrar oyna';
-  gameVoice(won?'lululu':'aaaaa',won?'Lig atladın!':'Olmadı!',won?'🏆':'😵')}
+function memWin(){M.won=true;var x=rvResult('memory',true,M.done);
+  $('#mMsg').innerHTML='<b>🏆 Lig atladın! Yeni rakip: '+RANKS[x.tier]+' · Devam!</b>';gameVoice('lululu','Lig atladın, devam!','🏆')}
+function memEnd(){memStop();if(M.won)rvBest('memory',M.done);else rvResult('memory',false,M.done);
+  $('#mMsg').innerHTML='<b>😵 Yanlış bastın. '+M.done+' tur'+(M.won?'':' (hedef '+rvTarget('memory')+')')+'</b>';
+  $('#mGo').hidden=false;$('#mGo').textContent='Tekrar oyna';gameVoice('aaaaa','Olmadı!','😵')}
 
 
 /* ---------- Ortak: yön tuşları ---------- */
@@ -2144,7 +2197,7 @@ function snakeOpen(){
 }
 function snakeStop(){clearTimeout(SN.t);SN.on=false}
 function snakeFree(){var f;do{f={x:Math.floor(Math.random()*SN.N),y:Math.floor(Math.random()*SN.N),g:Math.random()<0.2}}while(SN.snake.some(function(c){return c.x===f.x&&c.y===f.y}));return f}
-function snakeStart(){snakeStop();SN.snake=[{x:8,y:8},{x:7,y:8},{x:6,y:8}];SN.dir=DIRS.right;SN.nd=null;SN.score=0;SN.on=true;SN.food=snakeFree();
+function snakeStart(){snakeStop();SN.snake=[{x:8,y:8},{x:7,y:8},{x:6,y:8}];SN.dir=DIRS.right;SN.nd=null;SN.score=0;SN.won=false;SN.on=true;SN.food=snakeFree();
   $('#sGo').hidden=true;$('#sMsg').textContent='';$('#sS').textContent=0;$('#sV').textContent=1;snakeDraw();SN.t=setTimeout(snakeTick,160)}
 function snakeTurn(d){var v=DIRS[d];if(!v||!SN.on)return;var cur=SN.nd||SN.dir;if(v.x===-cur.x&&v.y===-cur.y)return;SN.nd=v}
 function snakeTick(){if(!SN.on)return;
@@ -2156,7 +2209,7 @@ function snakeTick(){if(!SN.on)return;
     SN.score+=SN.food.g?2:1;if($('#sS'))$('#sS').textContent=SN.score;
     synthPop(SN.food.g?900:600+SN.score*20,1100,.07,'triangle');
     SN.food=snakeFree();
-    if(SN.score>=rvTarget('snake')){snakeDraw();snakeEnd(true);return}
+    if(!SN.won&&SN.score>=rvTarget('snake')){snakeWin()}
   } else SN.snake.pop();
   snakeDraw();
   var lv=1+Math.floor(SN.score/4);if($('#sV'))$('#sV').textContent=lv;
@@ -2167,10 +2220,11 @@ function snakeDraw(){var c=SN.ctx;if(!c)return;var cs=SN.CS;c.fillStyle='#0b1f16
   if(!SN.food)return;
   c.fillStyle=SN.food.g?'#facc15':'#ef4444';c.beginPath();c.arc(SN.food.x*cs+cs/2,SN.food.y*cs+cs/2,cs*(SN.food.g?0.42:0.34),0,7);c.fill();
   SN.snake.forEach(function(p,i){c.fillStyle=i===0?'#fde047':'#22c55e';c.beginPath();c.roundRect?c.roundRect(p.x*cs+1,p.y*cs+1,cs-2,cs-2,i===0?6:4):c.rect(p.x*cs+1,p.y*cs+1,cs-2,cs-2);c.fill()})}
-function snakeEnd(won){snakeStop();var x=rvResult('snake',won,SN.score);
-  $('#sMsg').innerHTML='<b>'+(won?'🏆 Kazandın! Yeni rakip: '+RANKS[x.tier]:'😵 Çarptın! '+SN.score+' puan, hedef '+rvTarget('snake'))+'</b>';
-  $('#sGo').hidden=false;$('#sGo').textContent='Tekrar oyna';
-  gameVoice(won?'lululu':'aaaaa',won?'Lig atladın!':'Olmadı, tekrar dene!',won?'🏆':'🐍')}
+function snakeWin(){SN.won=true;var x=rvResult('snake',true,SN.score);
+  $('#sMsg').innerHTML='<b>🏆 Lig atladın! Yeni rakip: '+RANKS[x.tier]+' · Oyun devam ediyor!</b>';gameVoice('lululu','Lig atladın, devam!','🏆')}
+function snakeEnd(){snakeStop();if(SN.won)rvBest('snake',SN.score);else rvResult('snake',false,SN.score);
+  $('#sMsg').innerHTML='<b>😵 Çarptın! '+SN.score+' puan'+(SN.won?'':' · hedef '+rvTarget('snake'))+'</b>';
+  $('#sGo').hidden=false;$('#sGo').textContent='Tekrar oyna';gameVoice('aaaaa','Oyun bitti!','🐍')}
 
 /* ---------- Tetris (rakipli lig): sıradaki parça, gölge, sert düşürme, hız artışı ---------- */
 var TT={b:null,cur:null,next:null,lines:0,t:null,on:false,W:10,H:20,CS:20,ctx:null,nctx:null};
@@ -2195,7 +2249,7 @@ function tetrisStop(){clearTimeout(TT.t);TT.on=false}
 function tetrisRand(){var p=TP[Math.floor(Math.random()*TP.length)];return {m:p.m.map(function(r){return r.slice()}),c:p.c,x:0,y:0}}
 function tetrisSpawn(){TT.cur=TT.next;TT.next=tetrisRand();TT.cur.x=Math.floor((TT.W-TT.cur.m[0].length)/2);TT.cur.y=0}
 function tetrisStart(){tetrisStop();TT.b=[];for(var r=0;r<TT.H;r++)TT.b.push(new Array(TT.W).fill(null));
-  TT.lines=0;TT.on=true;TT.next=tetrisRand();tetrisSpawn();
+  TT.lines=0;TT.won=false;TT.on=true;TT.next=tetrisRand();tetrisSpawn();
   $('#tGo').hidden=true;$('#tMsg').textContent='';$('#tL').textContent=0;$('#tV').textContent=1;tetrisDraw();tetrisSched()}
 function tetrisSched(){clearTimeout(TT.t);if(TT.on)TT.t=setTimeout(tetrisTick,Math.max(90,520-TT.lines*30))}
 function tetrisColl(m,x,y){for(var r=0;r<m.length;r++)for(var c=0;c<m[r].length;c++){if(!m[r][c])continue;var nx=x+c,ny=y+r;
@@ -2215,7 +2269,7 @@ function tetrisLock(){var P=TT.cur;
   P.m.forEach(function(row,r){row.forEach(function(v,c){if(v&&P.y+r>=0)TT.b[P.y+r][P.x+c]=P.c})});
   var cleared=0;for(var r2=TT.H-1;r2>=0;r2--){if(TT.b[r2].every(function(v){return v})){TT.b.splice(r2,1);TT.b.unshift(new Array(TT.W).fill(null));cleared++;r2++}}
   if(cleared){TT.lines+=cleared;if($('#tL'))$('#tL').textContent=TT.lines;if($('#tV'))$('#tV').textContent=1+Math.floor(TT.lines/3);synthPop(700,1000,.12,'square')}
-  if(TT.lines>=rvTarget('tetris')){tetrisDraw();tetrisEnd(true);return}
+  if(!TT.won&&TT.lines>=rvTarget('tetris')){tetrisWin()}
   tetrisSpawn();
   if(tetrisColl(TT.cur.m,TT.cur.x,TT.cur.y)){tetrisDraw();tetrisEnd(false);return}
   tetrisDraw();tetrisSched()}
@@ -2225,10 +2279,11 @@ function tetrisDraw(){var c=TT.ctx;if(!c||!TT.b)return;var cs=TT.CS;c.fillStyle=
   if(TT.cur){tetrisCells(c,TT.cur.m,TT.cur.x,tetrisLand(),TT.cur.c,0.22,cs);tetrisCells(c,TT.cur.m,TT.cur.x,TT.cur.y,TT.cur.c,1,cs)}
   var n=TT.nctx;if(n&&TT.next){n.fillStyle='#0b1f16';n.fillRect(0,0,90,90);var mm=TT.next.m,w=mm[0].length,h=mm.length,z=18;
     tetrisCells(n,mm,Math.floor((5-w)/2),Math.floor((5-h)/2),TT.next.c,1,z)}}
-function tetrisEnd(won){tetrisStop();var x=rvResult('tetris',won,TT.lines);
-  $('#tMsg').innerHTML='<b>'+(won?'🏆 Kazandın! Yeni rakip: '+RANKS[x.tier]:'😵 Bloklar yukarı çıktı. '+TT.lines+' satır, hedef '+rvTarget('tetris'))+'</b>';
-  $('#tGo').hidden=false;$('#tGo').textContent='Tekrar oyna';
-  gameVoice(won?'lululu':'aaaaa',won?'Lig atladın!':'Olmadı!',won?'🏆':'🧱')}
+function tetrisWin(){TT.won=true;var x=rvResult('tetris',true,TT.lines);
+  $('#tMsg').innerHTML='<b>🏆 Lig atladın! Yeni rakip: '+RANKS[x.tier]+' · Devam et!</b>';gameVoice('lululu','Lig atladın, devam!','🏆')}
+function tetrisEnd(){tetrisStop();if(TT.won)rvBest('tetris',TT.lines);else rvResult('tetris',false,TT.lines);
+  $('#tMsg').innerHTML='<b>😵 Bloklar yukarı çıktı. '+TT.lines+' satır'+(TT.won?'':' · hedef '+rvTarget('tetris'))+'</b>';
+  $('#tGo').hidden=false;$('#tGo').textContent='Tekrar oyna';gameVoice('aaaaa','Olmadı!','🧱')}
 
 /* ---------- Zamanlama Kulesi (rakipli lig) ---------- */
 var TW={W:300,H:400,bh:20,bl:[],cur:null,dir:1,sp:2.5,t:null,on:false,ctx:null};
@@ -2245,7 +2300,7 @@ function towerOpen(){
   towerDraw();
 }
 function towerStop(){clearInterval(TW.t);TW.on=false}
-function towerStart(){towerStop();var W=TW.W;TW.bl=[{x:50,w:200,c:'hsl(0,0%,60%)'}];TW.cur={x:0,w:200};TW.dir=1;TW.sp=2.5;TW.on=true;
+function towerStart(){towerStop();var W=TW.W;TW.bl=[{x:50,w:200,c:'hsl(0,0%,60%)'}];TW.cur={x:0,w:200};TW.dir=1;TW.sp=2.5;TW.won=false;TW.on=true;
   $('#twGo').hidden=true;$('#twMsg').textContent='';$('#twS').textContent=0;towerDraw();TW.t=setInterval(towerTick,20)}
 function towerTick(){if(!TW.on)return;var C=TW.cur;C.x+=TW.dir*TW.sp;
   if(C.x<0){C.x=0;TW.dir=1}if(C.x+C.w>TW.W){C.x=TW.W-C.w;TW.dir=-1}towerDraw()}
@@ -2256,7 +2311,7 @@ function towerDrop(){if(!TW.on)return;var prev=TW.bl[TW.bl.length-1],C=TW.cur;
   var n=TW.bl.length;TW.bl.push({x:l,w:w,c:'hsl('+((n*23)%360)+',70%,60%)'});
   $('#twS').textContent=TW.bl.length-1;
   synthPop(perfect?880:520+n*8,perfect?1320:700,.1,perfect?'triangle':'sine');
-  if(TW.bl.length-1>=rvTarget('tower')){towerDraw();towerEnd(true);return}
+  if(!TW.won&&TW.bl.length-1>=rvTarget('tower')){towerWin()}
   TW.sp=Math.min(9,2.5+n*0.25);
   TW.cur={x:(n%2)?0:TW.W-w,w:w};TW.dir=(n%2)?1:-1;
   towerDraw()}
@@ -2265,13 +2320,14 @@ function towerDraw(){var c=TW.ctx;if(!c)return;var W=TW.W,H=TW.H,bh=TW.bh;c.fill
   TW.bl.forEach(function(b,i){var y=H-bh*(i+1)+cam;if(y>H)return;c.fillStyle=b.c;c.fillRect(b.x,y,b.w,bh-2)});
   if(TW.cur&&TW.on){var y2=H-bh*(n+1)+cam;c.fillStyle=TW.bl.length?'hsl('+((n*23)%360)+',70%,60%)':'#fff';c.fillRect(TW.cur.x,y2,TW.cur.w,bh-2)}
 }
-function towerEnd(won){towerStop();var score=TW.bl.length-1,x=rvResult('tower',won,score);
-  $('#twMsg').innerHTML='<b>'+(won?'🏆 Kazandın! Yeni rakip: '+RANKS[x.tier]:'😵 Blok kaydı! '+score+' kat, hedef '+rvTarget('tower'))+'</b>';
-  $('#twGo').hidden=false;$('#twGo').textContent='Tekrar oyna';
-  gameVoice(won?'lululu':'aaaaa',won?'Lig atladın!':'Kule çöktü!',won?'🏆':'🏗️')}
+function towerWin(){TW.won=true;var x=rvResult('tower',true,TW.bl.length-1);
+  $('#twMsg').innerHTML='<b>🏆 Lig atladın! Yeni rakip: '+RANKS[x.tier]+' · Kule büyümeye devam!</b>';gameVoice('lululu','Lig atladın, devam!','🏆')}
+function towerEnd(){towerStop();var score=TW.bl.length-1;if(TW.won)rvBest('tower',score);else rvResult('tower',false,score);
+  $('#twMsg').innerHTML='<b>😵 Blok kaydı! '+score+' kat'+(TW.won?'':' · hedef '+rvTarget('tower'))+'</b>';
+  $('#twGo').hidden=false;$('#twGo').textContent='Tekrar oyna';gameVoice('aaaaa','Kule çöktü!','🏗️')}
 
 /* ---------- Mayın Tarlası (rakipli lig, süre hedefi) ---------- */
-var MN={N:6,K:0,m:[],o:[],f:[],flag:false,first:true,on:false,over:false,time:0,ti:null};
+var MN={N:6,K:0,m:[],o:[],f:[],flag:false,first:true,on:false,over:false,time:0,ti:null,nt:null};
 var MN_NUM=['','#60a5fa','#22c55e','#ef4444','#a855f7','#f97316','#06b6d4','#e2e8f0','#94a3b8'];
 function minesOpen(){
   var tg=rvTarget('mines'),rv=rvGet('mines');
@@ -2284,7 +2340,7 @@ function minesOpen(){
   $('#mnGrid').onpointerdown=function(e){var b=e.target.closest('[data-i]');if(!b)return;e.preventDefault();minesTap(+b.dataset.i)};
   minesNew();
 }
-function minesStop(){clearInterval(MN.ti);MN.on=false}
+function minesStop(){clearInterval(MN.ti);clearTimeout(MN.nt);MN.on=false}
 function minesSize(t){return 6+Math.floor(t/2)}
 function minesNb(i){var N=MN.N,x=i%N,y=Math.floor(i/N),r=[];for(var dy=-1;dy<=1;dy++)for(var dx=-1;dx<=1;dx++){if(!dx&&!dy)continue;var nx=x+dx,ny=y+dy;if(nx>=0&&ny>=0&&nx<N&&ny<N)r.push(ny*N+nx)}return r}
 function minesNew(){minesStop();var rv=rvGet('mines');var N=minesSize(rv.tier);
@@ -2319,7 +2375,8 @@ function minesEnd(won,msg){minesStop();MN.over=!won;
   minesRender();
   var x=rvResult('mines',won,won?rvTarget('mines')-MN.time:0);
   $('#mnMsg').innerHTML='<b>'+(won?'🏆 Kazandın! '+MN.time+' sn. Yeni rakip: '+RANKS[x.tier]:(msg||'')+' Hedef '+rvTarget('mines')+' sn')+'</b>';
-  gameVoice(won?'lululu':'aaaaa',won?'Lig atladın!':'Patladın!',won?'🏆':'💣')}
+  gameVoice(won?'lululu':'aaaaa',won?'Lig atladın, sıradaki tarla!':'Patladın!',won?'🏆':'💣')
+  if(won){MN.nt=setTimeout(minesNew,1800)}}
 
 window.addEventListener('keydown',function(e){
   var m={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right'};
@@ -2826,6 +2883,32 @@ var LW_POOL={'kolay':['EKMEK','KAHVE','ARABA','ANNEM','BABAM','DENİZ','GÜNEŞ'
  'zor':['ASKER','KIRPI','KAYIK','DOLAP','KEMER','MARUL','HELVA','HAKEM','ATLET','KASIM','KARGA','KAZAK','KEMAN','KİBAR','BUZUL','MANTI','MEKAN','MAYIS','AYLIK','BAKLA','LOKUM','KAPAK','KUMRU','ÇAKAL','MERAK','SAVAŞ','SUSAM','DÜĞÜN','ÇATAL','KAŞIK']};
 ['kolay','orta','zor'].forEach(function(k){LW_POOL[k].forEach(function(w){LW_SET.add(w)})});
 
+
+/* Günlük konu: her gün başka bir konunun kelimeleri (yerel saate göre) */
+var LW_TOPICS=[
+  {n:"Denizcilik",ic:"⚓",w:["LİMAN","DALGA","DEMİR","FENER","SEYİR","TEKNE","DENİZ","BORDA","MAVNA","KAYIK","TAYFA","DÜMEN","MAYIN"]},
+  {n:"Havacılık",ic:"✈️",w:["PİLOT","KANAT","MOTOR","RADAR","PİSTE","BULUT","ROKET","GÖVDE","YAKIT","KUYRU","TURBO","ZEMİN","ALÇAK"]},
+  {n:"Tarım",ic:"🌾",w:["TOHUM","HASAT","BAHÇE","GÜBRE","SAMAN","TARLA","ÇAYIR","FİDAN","SULAK","BİBER","KAVAK","TOPAK","ÇİÇEK","YONCA"]},
+  {n:"Günlük eşyalar",ic:"🧺",w:["KAŞIK","TABAK","BAVUL","KAPAK","ÇANTA","KİTAP","TARAK","SABUN","TEPSİ","SAATİ","KAZAN","SEPET","PERDE","FIRÇA","KİLİT","ÇEKİÇ","KUMAŞ"]},
+  {n:"Bilişim",ic:"💻",w:["MODEM","DOSYA","ŞİFRE","ROBOT","İMLEÇ","EKRAN","KABLO","BİLGİ","VİRÜS","DİZİN","GÖREV","YEDEK"]},
+  {n:"Elektrik",ic:"⚡",w:["DEVRE","BOBİN","DİYOT","AMPER","KABLO","TRAFO","BAKIR","LAMBA","BAĞLA","KAPAT","AÇMAK"]},
+  {n:"Geometri",ic:"📐",w:["ÜÇGEN","DAİRE","KONİK","KENAR","ÇİZGİ","EKSEN","DİKEY","DOĞRU","TEĞET","KESİT","ÖLÇEK","HACİM","ÇEVRE","KESİR"]},
+  {n:"Tarih",ic:"📜",w:["FETİH","SAVAŞ","MİLAT","ZAFER","BARIŞ","TARİH","OSMAN","ANTİK","HAKAN","DEVİR","YAZIT","SEFER","KUŞAK"]},
+  {n:"Mutfak",ic:"🍳",w:["TUZLU","TATLI","ÇORBA","KAVUN","SALÇA","TURŞU","FIRIN","MANTI","TAVUK","MARUL","SOĞAN","KEKİK","KIYMA","BÖREK","HAMUR","SARMA","KÖFTE"]},
+  {n:"Uzay",ic:"🚀",w:["GÜNEŞ","KOMET","ORBİT","EVREN","KÜTLE","EKLİP","TİTAN"]},
+  {n:"Spor",ic:"⚽",w:["FORMA","HAKEM","KULÜP","DRİBL","TAKIM","RAKİP","KRAMP","MEVKİ"]},
+  {n:"Müzik",ic:"🎵",w:["MÜZİK","ÇALGI","DAVUL","KEMAN","TELLİ","ŞARKI","BESTE","TEMPO","AKORT","GİTAR","RİTİM","OPERA"]},
+  {n:"Doğa",ic:"🌿",w:["ORMAN","NEHİR","KAYIN","PINAR","YILAN","DİKEN","GÖLET"]},
+  {n:"Hayvanlar",ic:"🐾",w:["TİLKİ","KIRPI","KARGA","ÖRDEK","SİNEK","YUNUS","GEYİK","BÖCEK"]},
+  {n:"Sağlık",ic:"🩺",w:["ÖKSÜR","NABIZ","DİŞÇİ","SERUM","KIRIK","HASTA"]},
+  {n:"Hava durumu",ic:"☁️",w:["KARLI","SİSLİ","NEMLİ","KURAK","SERİN","BULUT"]},
+  {n:"Şehir",ic:"🏙️",w:["ŞEHİR","KÖPRÜ","PAZAR","ÇARŞI","SOKAK","CADDE"]},
+  {n:"Edebiyat",ic:"📚",w:["ROMAN","YAZAR","SATIR","NESİR","MİSRA","MASAL"]}
+];
+LW_TOPICS.forEach(function(t){t.w.forEach(function(w){LW_SET.add(w)})});
+function lingoTopic(){var d=new Date();var day=Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000);
+  return LW_TOPICS[((day%LW_TOPICS.length)+LW_TOPICS.length)%LW_TOPICS.length]}
+
 function lingoDiffUI(){
   $('#gameOv').classList.toggle('lk8',LG.maxRows===8);
   $('#lDiff').innerHTML=Object.keys(LDIFF).map(function(k){
@@ -2833,7 +2916,7 @@ function lingoDiffUI(){
   }).join('');
 }
 function lstat(){try{return JSON.parse(lsGet('hb-lingo'))||{p:0,w:0,s:0}}catch(e){return{p:0,w:0,s:0}}}
-function lingoPool(){return LW_POOL[LG.diff]||LW_POOL.orta}
+function lingoPool(){return lingoTopic().w}
 function pickRandomWord(){
   var P=lingoPool();var w;do{w=P[Math.floor(Math.random()*P.length)]}while(w===LG.lastWord&&P.length>1);
   LG.lastWord=w;return w;
@@ -2842,6 +2925,7 @@ function evalG(g,t){var r=['n','n','n','n','n'],cnt={},i,j;for(i=0;i<5;i++){if(g
   for(j=0;j<5;j++){if(r[j]!=='g'&&cnt[g[j]]>0){r[j]='y';cnt[g[j]]--}}return r}
 function lingoOpen(){
   openGame('🔤 Lingo',
+    '<div class="ltopic" id="lTopic" style="text-align:center;font:800 16px/1.3 system-ui,sans-serif;padding:8px 10px;margin:0 0 8px;border-radius:12px;background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.4)"></div>'+
     '<p class="lsub" id="lSub"></p>'+
     '<div class="lgrid" id="lGrid"></div>'+
     '<div class="lmsg" id="lMsg"></div>'+
@@ -2886,7 +2970,8 @@ function lingoRender(){
   document.querySelectorAll('#lKb [data-k]').forEach(function(btn){
     var k=btn.dataset.k;btn.classList.remove('g','y','n');if(kState[k])btn.classList.add(kState[k]);
   });
-  $('#lSub').textContent=lingoPool().length+' kelimelik '+LDIFF[LG.diff].n.toLowerCase()+' havuz · '+LG.maxRows+' hak';
+  var tp=lingoTopic();if($('#lTopic'))$('#lTopic').textContent='📅 Bugünün konusu: '+tp.ic+' '+tp.n;
+  $('#lSub').textContent=tp.w.length+' kelimelik konu havuzu · '+LDIFF[LG.diff].n+' · '+LG.maxRows+' hak';
   lingoDiffUI();
   var msgEl=$('#lMsg');
   if(LG.over){
@@ -4276,6 +4361,88 @@ function initNotifs(){
 }
 
 
+
+/* ===== Su İçme Hatırlatıcı (modlu, açılıp kapanabilir, süre kullanıcı ayarlı) ===== */
+var WATER_MODES={
+  classic:['📳 Klasik','Bildirim ve titreşim gelir. Uygulama ses çalmaz.'],
+  karakter:['🪳 Karakter sesi','Hamam böceği ya da aslan sesiyle hatırlatır ve banner açar.'],
+  aslan:['🦁 Aslan kükremesi','Her hatırlatmada aslan kükrer, su içmenizi ister.'],
+  meydan:['🎯 Meydan okuma','Her hatırlatmada "İçtim" ile bardağı işaretlersiniz. Günlük hedef takibi yapılır.'],
+  sessiz:['🤫 Sessiz','Sadece küçük bildirim gelir, ses ve banner yoktur.']};
+function waterCfg(){var w=(S.settings&&S.settings.water)||{};
+  return {on:!!w.on,min:Math.min(240,Math.max(5,+w.min||45)),mode:WATER_MODES[w.mode]?w.mode:'classic',inside:!!w.inside,goal:Math.min(20,Math.max(1,+w.goal||8))}}
+function waterSave(patch){S.settings.water=Object.assign({},(S.settings&&S.settings.water)||{},patch);save()}
+function waterDay(){var today=dk(new Date());try{var o=JSON.parse(localStorage.getItem('hb-water')||'null');if(o&&o.d===today)return o}catch(e){}return {d:today,n:0}}
+function waterSaveDay(o){try{localStorage.setItem('hb-water',JSON.stringify(o))}catch(e){}}
+function waterNextAt(){try{return +(localStorage.getItem('hb-water-next')||0)}catch(e){return 0}}
+function waterSetNext(t){try{localStorage.setItem('hb-water-next',String(t))}catch(e){}}
+function waterArm(){var c=waterCfg();waterSetNext(c.on?Date.now()+c.min*60000:0)}
+function waterTick(){var c=waterCfg();if(!c.on)return;var nx=waterNextAt();
+  if(!nx){waterArm();return}
+  if(Date.now()<nx)return;
+  if(c.inside&&!calc(dk(new Date())).inside){waterSetNext(Date.now()+5*60000);return}
+  waterSetNext(Date.now()+c.min*60000);
+  waterFire(c)}
+function waterNotify(title,body,silent){try{
+  if(!('Notification' in window)||Notification.permission!=='granted'||!navigator.serviceWorker)return;
+  navigator.serviceWorker.ready.then(function(reg){reg.showNotification(title,{body:body,tag:'hb-water',icon:'icon-192.png',badge:'icon-192.png',silent:!!silent,renotify:true,requireInteraction:false})}).catch(function(){})
+}catch(e){}}
+function waterFire(c){
+  var d=waterDay(),body='Bir bardak su iç! Bugün '+d.n+'/'+c.goal;
+  waterNotify('💧 Su zamanı',body,c.mode!=='classic');
+  try{if(navigator.vibrate&&c.mode!=='sessiz')navigator.vibrate([200,120,200])}catch(e){}
+  if(c.mode==='classic'||c.mode==='sessiz'){toast('💧 '+body);return}
+  if(c.mode==='aslan'){try{unlockAudio();playLionRoar()}catch(e){}}
+  else if(c.mode==='karakter'){gameVoice('lululu','Su iç! 💧',isAslan()?'🦁':'🪳')}
+  waterSheetOpen()}
+function waterSheetOpen(){var d=waterDay(),c=waterCfg();
+  $('#wtIc').textContent=isAslan()?'🦁':'🪳';
+  $('#wtT').textContent=isAslan()?'Aslan susadı!':'Su zamanı!';
+  $('#wtP').textContent='Bugün '+d.n+' / '+c.goal+' bardak. Bir bardak içtiyseniz işaretleyin.';
+  if($('#waterSheet').hidden)open('#waterSheet')}
+function waterAdd(){var d=waterDay(),c=waterCfg();d.n++;waterSaveDay(d);syncWaterSettings();
+  if(d.n===c.goal)gameVoice('lululu','Günlük su hedefine ulaştın! 💧','🏆');else toast('💧 Bir bardak daha! '+d.n+'/'+c.goal)}
+function syncWaterSettings(){var c=waterCfg(),d=waterDay();if(typeof syncWaterDrop==='function')setTimeout(syncWaterDrop,0);
+  if($('#setWaterOn'))$('#setWaterOn').checked=c.on;
+  if($('#setWaterMin'))$('#setWaterMin').value=c.min;
+  if($('#setWaterMode'))$('#setWaterMode').value=c.mode;
+  if($('#setWaterModeTxt'))$('#setWaterModeTxt').textContent=WATER_MODES[c.mode][1];
+  if($('#setWaterInside'))$('#setWaterInside').checked=c.inside;
+  if($('#setWaterGoal'))$('#setWaterGoal').value=c.goal;
+  if($('#setWaterGoalTxt'))$('#setWaterGoalTxt').textContent=c.goal;
+  if($('#setWaterCount'))$('#setWaterCount').textContent=d.n}
+$('#setWaterOn').onchange=function(){waterSave({on:this.checked});waterArm();
+  if(this.checked&&'Notification' in window&&Notification.permission==='default')Notification.requestPermission().catch(function(){});
+  toast(this.checked?'💧 Su hatırlatıcısı açıldı':'Su hatırlatıcısı kapatıldı');syncWaterSettings()};
+$('#setWaterMin').onchange=function(){var v=Math.min(240,Math.max(5,Math.round((+this.value||45)/5)*5));waterSave({min:v});this.value=v;waterArm();toast('⏱ Her '+v+' dakikada bir hatırlatılacak')};
+$('#setWaterMode').onchange=function(){waterSave({mode:this.value});syncWaterSettings()};
+$('#setWaterInside').onchange=function(){waterSave({inside:this.checked})};
+$('#setWaterGoal').onchange=function(){var v=Math.min(20,Math.max(1,+this.value||8));waterSave({goal:v});syncWaterSettings()};
+$('#btnWaterAdd').onclick=waterAdd;
+$('#btnWaterTest').onclick=function(){unlockAudio();waterFire(waterCfg())};
+$('#wtDrink').onclick=function(){waterAdd();close('#waterSheet')};
+$('#wtSnooze').onclick=function(){waterSetNext(Date.now()+10*60000);toast('⏰ 10 dakika sonra tekrar hatırlatacağım');close('#waterSheet')};
+
+
+/* ===== Su damlası: karakterin yanında, her zaman görünen takip menüsü ===== */
+function wdropOn(){return !S.settings||S.settings.waterDrop!==false}
+function syncWaterDrop(){var d=waterDay(),c=waterCfg(),b=$('#waterDrop');if(!b)return;
+  b.hidden=!wdropOn();
+  if($('#waterDropBadge'))$('#waterDropBadge').textContent=d.n+'/'+c.goal;
+  if($('#setWaterDrop'))$('#setWaterDrop').checked=wdropOn()}
+function renderWaterMenu(){var d=waterDay(),c=waterCfg(),left=Math.max(0,c.goal-d.n),pct=Math.min(100,Math.round(d.n/c.goal*100));
+  $('#wmBig').textContent=d.n+' / '+c.goal+' bardak';
+  $('#wmBar').style.width=pct+'%';
+  $('#wmTxt').textContent=left>0?'Hedefe '+left+' bardak kaldı. Harika gidiyorsun!':'Günlük hedef tamam! 🎉 Yine de içmeye devam et.';
+  $('#wmUndo').disabled=d.n<=0;
+  if($('#waterDropBadge'))$('#waterDropBadge').textContent=d.n+'/'+c.goal}
+function waterMenuOpen(){renderWaterMenu();if($('#waterMenu').hidden)open('#waterMenu')}
+$('#waterDrop').onclick=function(){unlockAudio();waterMenuOpen()};
+$('#wmAdd').onclick=function(){waterAdd();renderWaterMenu()};
+$('#wmUndo').onclick=function(){var d=waterDay();if(d.n>0){d.n--;waterSaveDay(d);syncWaterSettings();toast('↩️ Bir bardak geri alındı');renderWaterMenu()}};
+$('#wmClose').onclick=function(){close('#waterMenu')};
+$('#setWaterDrop').onchange=function(){S.settings.waterDrop=this.checked;save();syncWaterDrop()};
+
 /* ===== Adım sayar (hareket sensörü, tahmini; uygulama açıkken) ===== */
 function stepsData(){
   var today=dk(new Date());
@@ -4466,9 +4633,15 @@ document.querySelectorAll('#skinSheet .skin-opt').forEach(function(b){
 });
 
 
-var APP_VERSION='2026-11-25-v38';
+var APP_VERSION='2026-11-25-v42';
+var APP_VER_NO=42;
 var APP_CHANGES=[
-  'Geri tuşu artık önce açık pencereyi, sonra önceki sekmeyi kapatıyor. İşten çıkışta onay soruluyor. Hamam Böceği 2 patenle geliyor.'
+  'Karakterin yanında 💧 su damlası: bugünkü bardak sayını gösterir, +1 ve geri al yapar.',
+  'Su İçme Hatırlatıcı: aç/kapa, dakika ayarı, 5 mod (klasik, karakter sesi, aslan kükremesi, meydan okuma, sessiz).',
+  'Lingo: 18 konu ve 190 kelime. Her gün başka bir konu geliyor (denizcilik, havacılık, tarım, müzik, tıp, tarih…), bugünün konusu en üstte yazıyor.',
+  'Oyunlar uzadı: rakibi geçtikten sonra da oyun devam ediyor. Mayın Tarlası kazanınca bir sonraki tarla açılıyor.',
+  'Yeni oyunlar: Zamanlama Kulesi ve Mayın Tarlası. Yılan ve Tetris geliştirildi.',
+  'Rakipli lig sistemi: Böcek Yarışı, Hafıza Yürüyüşü, Yılan, Tetris.'
 ];
 function syncToolsTabVisibility(){
   var on=!!(S.settings&&S.settings.toolsTab===true);
@@ -4500,10 +4673,12 @@ function checkAppUpdate(){
     '<h3 style="margin:0 0 8px;color:#fbbf24">🆕 Uygulama güncellendi</h3><ul style="padding-left:18px;margin:0 0 10px">'+
     APP_CHANGES.map(function(c){return '<li style="margin-bottom:4px">'+c+'</li>'}).join('')+
     '</ul><p style="font-size:12px;opacity:.8;margin:0 0 12px">Kayıtlarınız silinmedi.</p>'+
-    '<button type="button" id="updOk" style="background:#fbbf24;color:#1E1B00;border:0;border-radius:10px;padding:9px 16px;font-weight:700;width:100%">Tamam</button></div></div>';
+    '<button type="button" id="updOk" style="background:#fbbf24;color:#1E1B00;border:0;border-radius:10px;padding:9px 16px;font-weight:700;width:100%;margin-bottom:10px">Tamam</button>'+
+    '<p style="font-size:12px;opacity:.7;margin:0;text-align:center">Sürüm v'+APP_VER_NO+'</p>'+
+    '</div></div>';
   document.body.insertAdjacentHTML('beforeend',html);
   document.getElementById('updOk').onclick=function(){document.getElementById('updSheet').remove()};
-  try{if('Notification' in window&&Notification.permission==='granted')new Notification(skinCfg().name+' güncellendi',{body:APP_CHANGES[0]})}catch(e){}
+  try{if('Notification' in window&&Notification.permission==='granted')new Notification(skinCfg().name+' güncellendi (v'+APP_VER_NO+')',{body:APP_CHANGES[0]})}catch(e){}
 }
 function syncPrayerTabVisibility(){
   var enabled=(S.settings.prayerTab!==false);
@@ -4854,7 +5029,7 @@ if(!isStandaloneMode()&&lsGet('hb-install-guide-seen')!=='1'){
 }else{
   gateCheck();
 }
-navInit();populateCitySelects();syncPrayerTabVisibility();syncToolsTabVisibility();checkAppUpdate();syncNotifSettings();initNotifs();syncStepsSettings();applySkin();loadLion();autoBackup();applyTheme();applyRoachLook();renderAll();tick();setInterval(tick,1000);
+navInit();populateCitySelects();syncPrayerTabVisibility();syncToolsTabVisibility();checkAppUpdate();syncNotifSettings();syncWaterSettings();setInterval(waterTick,15000);initNotifs();syncStepsSettings();applySkin();loadLion();autoBackup();applyTheme();applyRoachLook();renderAll();tick();setInterval(tick,1000);
 })();
 </script>
 
