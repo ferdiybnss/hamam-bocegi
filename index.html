@@ -888,13 +888,34 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
   </div>
 </div>
 
+<div class="tour" id="nameSheet" hidden role="dialog" aria-modal="true" aria-labelledby="nmT">
+  <div class="tcard">
+    <div class="tic">🪳</div>
+    <h3 id="nmT">Kullanıcı adını seç</h3>
+    <p class="sub" style="margin:0 0 8px">Sıralama tablolarında bu adla görüneceksin. 2 ila 14 karakter.</p>
+    <input id="nmIn" maxlength="14" placeholder="Örn: Ayşe_07" style="width:100%;padding:10px;border-radius:10px;font-size:16px;text-align:center">
+    <p id="nmErr" class="sub" style="min-height:18px;color:var(--danger);margin:6px 0"></p>
+    <div class="trow"><button class="btn pri" id="nmOk">Kaydet</button></div>
+  </div>
+</div>
+<div class="tour" id="lbSheet" hidden role="dialog" aria-modal="true" aria-labelledby="lbT">
+  <div class="tcard" style="max-width:420px;max-height:90vh;overflow:auto">
+    <div class="tic">🏅</div>
+    <h3 id="lbT">Sıralama</h3>
+    <select id="lbGame" style="width:100%;padding:8px;border-radius:10px;margin-bottom:6px"></select>
+    <p id="lbInfo" class="sub" style="min-height:18px;margin:0 0 6px"></p>
+    <ol id="lbList" style="text-align:left;padding-left:26px;margin:0 0 8px;max-height:44vh;overflow:auto"></ol>
+    <p class="sub" style="margin:0 0 8px"><span id="lbMe"></span> <button class="btn" id="lbRename" style="padding:4px 10px;font-size:13px">Adımı değiştir</button></p>
+    <div class="trow"><button class="btn pri" id="lbClose">Kapat</button></div>
+  </div>
+</div>
 <div class="tour" id="gamesModal" hidden role="dialog" aria-modal="true" aria-labelledby="gmT">
   <div class="tcard" style="max-width:420px;max-height:90vh;overflow:auto">
     <div class="tic">🎮</div>
     <h3 id="gmT">Böcek Oyun Salonu</h3>
     <p style="margin-bottom:8px;font-size:13px;color:var(--muted)">Mola eğlencesi! Tüm oyunlarda bizim hamam böceği sesli eşlik eder.</p>
     <div class="glist" id="gamesList"></div>
-    <div class="trow"><button class="btn pri" id="gmClose">Kapat</button></div>
+    <div class="trow"><button class="btn" id="gmLb">🏅 Sıralama</button><button class="btn pri" id="gmClose">Kapat</button></div>
   </div>
 </div>
 
@@ -2104,8 +2125,8 @@ function rvGet(g){var x=null;try{x=JSON.parse(lsGet('hb-rv-'+g)||'null')}catch(e
 function rvSave(g,x){lsSet('hb-rv-'+g,JSON.stringify(x))}
 function rvTxt(g){var x=rvGet(g);return 'Rakip: '+RANKS[x.tier]+' · '+(x.tier===RANKS.length-1?'Lig: Son rakip':'Lig '+(x.tier+1)+'/'+RANKS.length)}
 function rvTarget(g){return RV_TGT[g][rvGet(g).tier]}
-function rvBest(g,score){var x=rvGet(g);x.best=Math.max(x.best||0,score);rvSave(g,x)}
-function rvResult(g,won,score){var x=rvGet(g);x.best=Math.max(x.best||0,score);
+function rvBest(g,score){var x=rvGet(g);x.best=Math.max(x.best||0,score);rvSave(g,x);lbSubmit(g,score)}
+function rvResult(g,won,score){var x=rvGet(g);x.best=Math.max(x.best||0,score);lbSubmit(g,score);
   if(won){x.w++;if(x.tier<RANKS.length-1)x.tier++}else x.l++;rvSave(g,x);return x}
 
 /* Böcek Yarışı */
@@ -2886,28 +2907,34 @@ var LW_POOL={'kolay':['EKMEK','KAHVE','ARABA','ANNEM','BABAM','DENİZ','GÜNEŞ'
 
 /* Günlük konu: her gün başka bir konunun kelimeleri (yerel saate göre) */
 var LW_TOPICS=[
-  {n:"Denizcilik",ic:"⚓",w:["LİMAN","DALGA","DEMİR","FENER","SEYİR","TEKNE","DENİZ","BORDA","MAVNA","KAYIK","TAYFA","DÜMEN","MAYIN"]},
-  {n:"Havacılık",ic:"✈️",w:["PİLOT","KANAT","MOTOR","RADAR","PİSTE","BULUT","ROKET","GÖVDE","YAKIT","KUYRU","TURBO","ZEMİN","ALÇAK"]},
-  {n:"Tarım",ic:"🌾",w:["TOHUM","HASAT","BAHÇE","GÜBRE","SAMAN","TARLA","ÇAYIR","FİDAN","SULAK","BİBER","KAVAK","TOPAK","ÇİÇEK","YONCA"]},
-  {n:"Günlük eşyalar",ic:"🧺",w:["KAŞIK","TABAK","BAVUL","KAPAK","ÇANTA","KİTAP","TARAK","SABUN","TEPSİ","SAATİ","KAZAN","SEPET","PERDE","FIRÇA","KİLİT","ÇEKİÇ","KUMAŞ"]},
-  {n:"Bilişim",ic:"💻",w:["MODEM","DOSYA","ŞİFRE","ROBOT","İMLEÇ","EKRAN","KABLO","BİLGİ","VİRÜS","DİZİN","GÖREV","YEDEK"]},
-  {n:"Elektrik",ic:"⚡",w:["DEVRE","BOBİN","DİYOT","AMPER","KABLO","TRAFO","BAKIR","LAMBA","BAĞLA","KAPAT","AÇMAK"]},
-  {n:"Geometri",ic:"📐",w:["ÜÇGEN","DAİRE","KONİK","KENAR","ÇİZGİ","EKSEN","DİKEY","DOĞRU","TEĞET","KESİT","ÖLÇEK","HACİM","ÇEVRE","KESİR"]},
-  {n:"Tarih",ic:"📜",w:["FETİH","SAVAŞ","MİLAT","ZAFER","BARIŞ","TARİH","OSMAN","ANTİK","HAKAN","DEVİR","YAZIT","SEFER","KUŞAK"]},
-  {n:"Mutfak",ic:"🍳",w:["TUZLU","TATLI","ÇORBA","KAVUN","SALÇA","TURŞU","FIRIN","MANTI","TAVUK","MARUL","SOĞAN","KEKİK","KIYMA","BÖREK","HAMUR","SARMA","KÖFTE"]},
-  {n:"Uzay",ic:"🚀",w:["GÜNEŞ","KOMET","ORBİT","EVREN","KÜTLE","EKLİP","TİTAN"]},
-  {n:"Spor",ic:"⚽",w:["FORMA","HAKEM","KULÜP","DRİBL","TAKIM","RAKİP","KRAMP","MEVKİ"]},
-  {n:"Müzik",ic:"🎵",w:["MÜZİK","ÇALGI","DAVUL","KEMAN","TELLİ","ŞARKI","BESTE","TEMPO","AKORT","GİTAR","RİTİM","OPERA"]},
-  {n:"Doğa",ic:"🌿",w:["ORMAN","NEHİR","KAYIN","PINAR","YILAN","DİKEN","GÖLET"]},
-  {n:"Hayvanlar",ic:"🐾",w:["TİLKİ","KIRPI","KARGA","ÖRDEK","SİNEK","YUNUS","GEYİK","BÖCEK"]},
-  {n:"Sağlık",ic:"🩺",w:["ÖKSÜR","NABIZ","DİŞÇİ","SERUM","KIRIK","HASTA"]},
-  {n:"Hava durumu",ic:"☁️",w:["KARLI","SİSLİ","NEMLİ","KURAK","SERİN","BULUT"]},
-  {n:"Şehir",ic:"🏙️",w:["ŞEHİR","KÖPRÜ","PAZAR","ÇARŞI","SOKAK","CADDE"]},
-  {n:"Edebiyat",ic:"📚",w:["ROMAN","YAZAR","SATIR","NESİR","MİSRA","MASAL"]}
+  {n:"Denizcilik",ic:"⚓",k:["LİMAN","DALGA","DENİZ","TEKNE","KAYIK","FENER"],o:["SEYİR","BORDA","MAVNA","TAYFA","DÜMEN","DEMİR","KANAL","MAYIN"],z:["BOĞAZ","KARGO","ÇAPAK"]},
+  {n:"Havacılık",ic:"✈️",k:["PİLOT","KANAT","MOTOR","RADAR","BULUT","KUYRU"],o:["PİSTE","ROKET","GÖVDE","YAKIT","TURBO","ZEMİN","ALÇAK"],z:["SİREN"]},
+  {n:"Tarım",ic:"🌾",k:["TOHUM","TARLA","BAHÇE","SAMAN","ÇİÇEK","BİBER","ÇAYIR","KAVAK"],o:["HASAT","GÜBRE","SULAK","TOPAK","YONCA","FİDAN"],z:["KAZIK","DİKİM","KÖKLÜ"]},
+  {n:"Günlük eşyalar",ic:"🧺",k:["KAŞIK","TABAK","ÇANTA","KİTAP","SABUN","TEPSİ","KAPAK","BAVUL"],o:["TARAK","SAATİ","KAZAN","SEPET","PERDE","FIRÇA","KİLİT","ÇEKİÇ","KUMAŞ"],z:["KAZAK","BOHÇA","ÇEYİZ","SEHPA"]},
+  {n:"Bilişim",ic:"💻",k:["MODEM","DOSYA","EKRAN","KABLO","ROBOT","BİLGİ"],o:["ŞİFRE","İMLEÇ","VİRÜS","DİZİN","GÖREV","YEDEK","ARAMA"],z:["KODLA","ŞABLO","KAYIT"]},
+  {n:"Elektrik",ic:"⚡",k:["DEVRE","KABLO","LAMBA","KAPAT","AÇMAK","BAĞLA"],o:["BOBİN","DİYOT","AMPER","TRAFO","BAKIR"],z:["ENDÜK"]},
+  {n:"Geometri",ic:"📐",k:["ÜÇGEN","DAİRE","KENAR","ÇİZGİ","EKSEN","DİKEY"],o:["KONİK","DOĞRU","TEĞET","KESİT","ÖLÇEK","KESİR"],z:["HACİM","ÇEVRE","BİRİM"]},
+  {n:"Tarih",ic:"📜",k:["SAVAŞ","ZAFER","BARIŞ","TARİH","OSMAN"],o:["FETİH","MİLAT","ANTİK","HAKAN","DEVİR","KUŞAK","SEFER"],z:["YAZIT","MİRAS","KALİF"]},
+  {n:"Mutfak",ic:"🍳",k:["ÇORBA","TATLI","TUZLU","TAVUK","KÖFTE","BÖREK","SARMA"],o:["KAVUN","SALÇA","TURŞU","FIRIN","MANTI","MARUL","SOĞAN","KEKİK","KIYMA","HAMUR"],z:["HAŞLA","KAVRU","KIZAR"]},
+  {n:"Uzay",ic:"🚀",k:["GÜNEŞ","KOMET","EVREN"],o:["ORBİT","KÜTLE","EKLİP","TİTAN"],z:["VENÜS","ÇEKİM"]},
+  {n:"Spor",ic:"⚽",k:["FORMA","HAKEM","TAKIM","KULÜP","RAKİP"],o:["DRİBL","KRAMP","MEVKİ","OFSAJ"],z:["ÇELME","ATLET"]},
+  {n:"Müzik",ic:"🎵",k:["MÜZİK","ŞARKI","DAVUL","GİTAR","KEMAN"],o:["ÇALGI","TELLİ","BESTE","TEMPO","AKORT","RİTİM","OPERA"],z:["PERDE","MAKAM","AKORD"]},
+  {n:"Doğa",ic:"🌿",k:["ORMAN","NEHİR","PINAR","YILAN","DİKEN"],o:["KAYIN","GÖLET","YAMAÇ","VAHŞİ"],z:["ÇAKIL","BATAK","KUMUL"]},
+  {n:"Hayvanlar",ic:"🐾",k:["KARGA","ÖRDEK","SİNEK","YUNUS","BÖCEK","TİLKİ"],o:["GEYİK","KIRPI","ÇAKAL"],z:["KUMRU","SERÇE"]},
+  {n:"Sağlık",ic:"🩺",k:["HASTA","ÖKSÜR","KIRIK","SERUM"],o:["NABIZ","DİŞÇİ","BOYUN","BURUN"],z:["SARGI","KALÇA"]},
+  {n:"Hava durumu",ic:"☁️",k:["KARLI","SİSLİ","BULUT","SICAK","SOĞUK"],o:["NEMLİ","KURAK","SERİN","BORAN"],z:["ÇİSEL","LODOS"]},
+  {n:"Şehir",ic:"🏙️",k:["ŞEHİR","PAZAR","SOKAK","CADDE","KÖPRÜ"],o:["ÇARŞI","BAHÇE"],z:["SAHİL","ÇEŞME","BELDE"]},
+  {n:"Edebiyat",ic:"📚",k:["ROMAN","MASAL","YAZAR","KİTAP","SAYFA"],o:["SATIR","NESİR","MİSRA"],z:["LİRİK","DRAMA","METİN"]}
 ];
-LW_TOPICS.forEach(function(t){t.w.forEach(function(w){LW_SET.add(w)})});
-function lingoTopic(){var d=new Date();var day=Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000);
+LW_TOPICS.forEach(function(t){[t.k,t.o,t.z].forEach(function(l){l.forEach(function(w){LW_SET.add(w)})})});
+function lingoTopicIdx(){var n=parseInt(lsGet('hb-lingo-topic'),10);return (isNaN(n)||n<0||n>=LW_TOPICS.length)?-1:n}
+function lingoDailyTopic(){var d=new Date();var day=Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000);
   return LW_TOPICS[((day%LW_TOPICS.length)+LW_TOPICS.length)%LW_TOPICS.length]}
+function lingoTopic(){var i=lingoTopicIdx();return i>=0?LW_TOPICS[i]:lingoDailyTopic()}
+function lingoTopicUI(){var sel=$('#lTopicSel');if(!sel)return;var i=lingoTopicIdx(),dt=lingoDailyTopic();
+  sel.innerHTML='<option value="-1">📅 Her gün değişen (bugün: '+dt.ic+' '+dt.n+')</option>'+
+    LW_TOPICS.map(function(t,k){return '<option value="'+k+'">'+t.ic+' '+t.n+'</option>'}).join('');
+  sel.value=String(i)}
 
 function lingoDiffUI(){
   $('#gameOv').classList.toggle('lk8',LG.maxRows===8);
@@ -2916,7 +2943,9 @@ function lingoDiffUI(){
   }).join('');
 }
 function lstat(){try{return JSON.parse(lsGet('hb-lingo'))||{p:0,w:0,s:0}}catch(e){return{p:0,w:0,s:0}}}
-function lingoPool(){return lingoTopic().w}
+function lingoPool(){var t=lingoTopic();var P=(LG.diff==='kolay'?t.k:LG.diff==='zor'?t.z:t.o)||[];
+  if(P.length<5){P=P.concat(t.k,t.o,t.z).filter(function(w,i,a){return a.indexOf(w)===i})}
+  return P}
 function pickRandomWord(){
   var P=lingoPool();var w;do{w=P[Math.floor(Math.random()*P.length)]}while(w===LG.lastWord&&P.length>1);
   LG.lastWord=w;return w;
@@ -2926,6 +2955,7 @@ function evalG(g,t){var r=['n','n','n','n','n'],cnt={},i,j;for(i=0;i<5;i++){if(g
 function lingoOpen(){
   openGame('🔤 Lingo',
     '<div class="ltopic" id="lTopic" style="text-align:center;font:800 16px/1.3 system-ui,sans-serif;padding:8px 10px;margin:0 0 8px;border-radius:12px;background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.4)"></div>'+
+    '<div style="text-align:center;margin:-2px 0 8px"><select id="lTopicSel" aria-label="Konu seç" style="max-width:100%;padding:6px 10px;border-radius:10px"></select></div>'+
     '<p class="lsub" id="lSub"></p>'+
     '<div class="lgrid" id="lGrid"></div>'+
     '<div class="lmsg" id="lMsg"></div>'+
@@ -2933,9 +2963,11 @@ function lingoOpen(){
     '<div class="lfoot"><div id="lEnd"></div><div class="ldiff" id="lDiff"></div><p class="lsub" id="lSt"></p></div>'
   );
   $('#gameOv').classList.add('lingo-mode');
+  lingoTopicUI();
+  $('#lTopicSel').onchange=function(){lsSet('hb-lingo-topic',this.value);lingoNew();lingoTopicUI()};
   $('#gBody').onpointerdown=function(e){if(e.target.closest('[data-k],#lNew,[data-diff]')){e.preventDefault();lingoClick(e)}};
   var onKey=function(e){
-    if($('#gameOv').hidden||!$('#lGrid'))return;
+    if($('#gameOv').hidden||!$('#lGrid')||(e.target&&e.target.tagName==='SELECT'))return;
     if(e.key==='Backspace'){lingoInput('SİL');return}
     if(e.key==='Enter'){lingoInput('GİR');return}
     var ch=e.key.toLocaleUpperCase('tr-TR');
@@ -2970,8 +3002,8 @@ function lingoRender(){
   document.querySelectorAll('#lKb [data-k]').forEach(function(btn){
     var k=btn.dataset.k;btn.classList.remove('g','y','n');if(kState[k])btn.classList.add(kState[k]);
   });
-  var tp=lingoTopic();if($('#lTopic'))$('#lTopic').textContent='📅 Bugünün konusu: '+tp.ic+' '+tp.n;
-  $('#lSub').textContent=tp.w.length+' kelimelik konu havuzu · '+LDIFF[LG.diff].n+' · '+LG.maxRows+' hak';
+  var tp=lingoTopic();if($('#lTopic'))$('#lTopic').textContent=(lingoTopicIdx()<0?'📅 Bugünün konusu: ':'🎯 Seçilen konu: ')+tp.ic+' '+tp.n;
+  $('#lSub').textContent=lingoPool().length+' kelimelik havuz · '+LDIFF[LG.diff].n+' · '+LG.maxRows+' hak';
   lingoDiffUI();
   var msgEl=$('#lMsg');
   if(LG.over){
@@ -3003,7 +3035,7 @@ function lingoInput(key){
     if(last===LG.t||LG.rows.length===LG.maxRows){LG.over=true;LG.won=last===LG.t;var x=lstat();x.p++;
       if(LG.won){x.w++;x.s++;gameVoice('lululu','Lülülü! Kelimeyi bildin! 🎉','🥳')}
       else{x.s=0;gameVoice('aaaaa','Aaaaa! Kelime: '+LG.t,'😱')}
-      lsSet('hb-lingo',JSON.stringify(x))}
+      lsSet('hb-lingo',JSON.stringify(x));lbSubmit('lingo',x.w)}
     else{synthPop(480,620,.08,'triangle')}
     lingoRender();return}
   if(LG.cur.length<5){LG.cur+=key;LG.popRow=LG.rows.length;synthPop(520,680,.05,'sine');lingoRender()}
@@ -3068,7 +3100,7 @@ function bugSpawn(){
 function bugStop(ended){
   clearInterval(BUG.tI);clearTimeout(BUG.sT);var was=BUG.on;BUG.on=false;
   if(ended&&was&&$('#bF')){
-    var best=Math.max(bugBest(),BUG.score);lsSet('hb-bug-best',best);$('#bT').textContent=0;$('#bB').textContent=best;
+    var best=Math.max(bugBest(),BUG.score);lsSet('hb-bug-best',best);lbSubmit('bug',best);$('#bT').textContent=0;$('#bB').textContent=best;
     $('#bGo').hidden=false;$('#bGo').textContent='Tekrar oyna';
     gameVoice('aaaaa','Süre doldu! Skor: '+BUG.score,'🏆');
   }
@@ -3303,7 +3335,7 @@ function footShootAt(targetX,targetBottom,kmh){
       FOOT.angryUntil=performance.now()+1450;
       var mult=(footPatrolSpeed()/48).toFixed(1)+'x';
       if($('#fSp'))$('#fSp').textContent=mult;
-      var best=Math.max(+(lsGet('hb-foot-best')||0),FOOT.goals);lsSet('hb-foot-best',best);$('#fB').textContent=best;
+      var best=Math.max(+(lsGet('hb-foot-best')||0),FOOT.goals);lsSet('hb-foot-best',best);lbSubmit('football',best);$('#fB').textContent=best;
       var isCorner=(targetX<=22 || targetX>=78);
       var isTopBin=(isCorner && targetBottom>=80);
       var gTitle=isTopBin?'🚀 90\'A TAKTI! GOOOOOL!':(isCorner?'🔥 TAM KÖŞEYE! GOOOOOL!':'⚽ GOOOOOL! ('+kmh+' km/s)');
@@ -3398,7 +3430,7 @@ function cupGuess(idx){
   if(real)real.classList.add('lifted');
   if(idx===CUP.roachIdx){
     CUP.score+=CUP.level*10;CUP.level++;
-    var best=Math.max(+(lsGet('hb-cup-best')||0),CUP.score);lsSet('hb-cup-best',best);
+    var best=Math.max(+(lsGet('hb-cup-best')||0),CUP.score);lsSet('hb-cup-best',best);lbSubmit('cups',best);
     $('#cSc').textContent=CUP.score;$('#cLv').textContent=CUP.level;$('#cBs').textContent=best;
     $('#cMsg').textContent='😱 AAAAAAA! Böceği buldun! Sonraki seviye...';
     gameVoice('aaaaa','Aaaaaaaaa! Buldun beni! 😱','🪳');
@@ -3492,7 +3524,7 @@ function skillLoop(ts){
         if(SK.got>=SK.need){
           SK.on=false;
           var next=SK.lvl+1;
-          var bestLv=Math.max(+(lsGet('hb-skill-lvl')||1),next);lsSet('hb-skill-lvl',bestLv);
+          var bestLv=Math.max(+(lsGet('hb-skill-lvl')||1),next);lsSet('hb-skill-lvl',bestLv);lbSubmit('skill',bestLv);
           gameVoice('aaaaa','Seviye '+SK.lvl+' geçildi! Sıradaki Seviye '+next+' 🎉','🏆');
           setTimeout(function(){if($('#sArena'))skillStartLevel(next)},1050);
           return;
@@ -4443,6 +4475,61 @@ $('#wmUndo').onclick=function(){var d=waterDay();if(d.n>0){d.n--;waterSaveDay(d)
 $('#wmClose').onclick=function(){close('#waterMenu')};
 $('#setWaterDrop').onchange=function(){S.settings.waterDrop=this.checked;save();syncWaterDrop()};
 
+
+/* ===== Kullanıcı adı + sıralama tablosu (çevrimiçi: Supabase; ayarlanmadıysa bu cihazda) ===== */
+var LB_CFG={url:'https://eptutkvqfggsxzdxunbe.supabase.co',key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVwdHV0a3ZxZmdnc3h6ZHh1bmJlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTU2MDU2MDMsImV4cCI6MjExMTE4MTYwM30.feSgf4QOJXJwDTiVjqY6nkhZakfwXRctXp3l6PyEVyE'};   // Supabase proje adresi ve anon anahtarı buraya yazılacak
+var LB_GAMES={bug:'Böcek Öldürme / Aslan Yakalama',football:'Tek Kale Böcek Futbolu',cups:'Bardak Altı Saklamaca',skill:'Jandarmadan Kaçış',lingo:'Lingo (kazanılan kelime)',race:'Böcek Yarışı',memory:'Hafıza Yürüyüşü',snake:'Yılan',tetris:'Tetris',tower:'Zamanlama Kulesi',mines:'Mayın Tarlası'};
+function lbName(){return (S.settings&&S.settings.username)||''}
+function lbHeaders(){return {'apikey':LB_CFG.key,'Authorization':'Bearer '+LB_CFG.key,'Content-Type':'application/json'}}
+function lbSubmit(g,score){
+  if(!LB_CFG.url||!lbName()||!(score>0))return;
+  try{fetch(LB_CFG.url+'/rest/v1/scores',{method:'POST',headers:Object.assign(lbHeaders(),{'Prefer':'return=minimal'}),
+    body:JSON.stringify({username:lbName(),game:g,score:Math.round(score)})}).catch(function(){})}catch(e){}}
+function lbLocalBest(g){
+  if(g==='bug')return bugBest();if(g==='football')return +(lsGet('hb-foot-best')||0);
+  if(g==='cups')return +(lsGet('hb-cup-best')||0);if(g==='skill')return +(lsGet('hb-skill-lvl')||1);
+  if(g==='lingo')return lstat().w||0;return rvGet(g).best||0}
+function escapeHtml(t){return String(t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function nameAsk(){$('#nmIn').value=lbName();$('#nmErr').textContent='';if($('#nameSheet').hidden)open('#nameSheet');setTimeout(function(){$('#nmIn').focus()},150)}
+function nameSave(){var v=($('#nmIn').value||'').trim().replace(/\s+/g,' ');
+  if(v.length<2){$('#nmErr').textContent='En az 2 karakter olmalı.';return}
+  if(!/^[A-Za-zÇĞİÖŞÜçğıöşü0-9_ ]+$/.test(v)){$('#nmErr').textContent='Sadece harf, rakam, boşluk ve _ kullanabilirsin.';return}
+  S.settings.username=v;save();close('#nameSheet');toast('👋 Merhaba '+v+'!')}
+$('#nmOk').onclick=nameSave;
+$('#nmIn').onkeydown=function(e){if(e.key==='Enter')nameSave()};
+function lbOpen(){
+  var sel=$('#lbGame');if(!sel.options.length)sel.innerHTML=Object.keys(LB_GAMES).map(function(k){return '<option value="'+k+'">'+LB_GAMES[k]+'</option>'}).join('');
+  $('#lbMe').textContent=lbName()?'Adın: '+lbName():'Henüz adın yok.';
+  lbRender();
+  if($('#lbSheet').hidden)open('#lbSheet');
+}
+function lbRender(){
+  var g=$('#lbGame').value,list=$('#lbList'),me=lbName();
+  if(!LB_CFG.url){
+    $('#lbInfo').textContent='Çevrimiçi sıralama henüz bağlı değil. Şimdilik sadece bu cihazdaki en iyi skor görünüyor.';
+    list.innerHTML='<li>'+escapeHtml(me||'Sen')+' — '+lbLocalBest(g)+' (bu cihaz)</li>';return}
+  $('#lbInfo').textContent='Yükleniyor…';list.innerHTML='';
+  fetch(LB_CFG.url+'/rest/v1/scores?game=eq.'+encodeURIComponent(g)+'&select=username,score&order=score.desc&limit=500',{headers:lbHeaders()})
+    .then(function(r){if(!r.ok)throw new Error('http');return r.json()})
+    .then(function(rows){
+      var best={};rows.forEach(function(r){if(!best[r.username]||r.score>best[r.username])best[r.username]=r.score});
+      var top=Object.keys(best).map(function(u){return {u:u,s:best[u]}}).sort(function(a,b){return b.s-a.s}).slice(0,20);
+      $('#lbInfo').textContent=top.length?'En iyi 20 oyuncu':'Bu oyunda henüz skor yok. İlk sen ol!';
+      list.innerHTML=top.map(function(r){return '<li'+(r.u===me?' style="font-weight:800;color:var(--accent)"':'')+'>'+escapeHtml(r.u)+' — '+r.s+'</li>'}).join('');
+    })
+    .catch(function(){$('#lbInfo').textContent='Sıralama yüklenemedi. İnternet bağlantını kontrol et.'});
+}
+$('#lbGame').onchange=lbRender;
+$('#lbClose').onclick=function(){close('#lbSheet')};
+$('#lbRename').onclick=function(){nameAsk()};
+$('#gmLb').onclick=lbOpen;
+setTimeout(function tryName(){
+  if(lbName())return;
+  var busy=($('#tour')&&!$('#tour').hidden)||($('#installGuide')&&!$('#installGuide').hidden);
+  if(busy){setTimeout(tryName,2000);return}
+  nameAsk();
+},1500);
+
 /* ===== Adım sayar (hareket sensörü, tahmini; uygulama açıkken) ===== */
 function stepsData(){
   var today=dk(new Date());
@@ -4633,12 +4720,14 @@ document.querySelectorAll('#skinSheet .skin-opt').forEach(function(b){
 });
 
 
-var APP_VERSION='2026-11-25-v42';
-var APP_VER_NO=42;
+var APP_VERSION='2026-11-25-v45';
+var APP_VER_NO=45;
 var APP_CHANGES=[
   'Karakterin yanında 💧 su damlası: bugünkü bardak sayını gösterir, +1 ve geri al yapar.',
   'Su İçme Hatırlatıcı: aç/kapa, dakika ayarı, 5 mod (klasik, karakter sesi, aslan kükremesi, meydan okuma, sessiz).',
-  'Lingo: 18 konu ve 190 kelime. Her gün başka bir konu geliyor (denizcilik, havacılık, tarım, müzik, tıp, tarih…), bugünün konusu en üstte yazıyor.',
+  'Kullanıcı adı: uygulamaya girince bir ad seçiyorsun. Oyunların skorları 🏅 Sıralama tablosunda (çevrimiçi bağlanınca herkes için).',
+  'Lingo: her konuda kolay, orta ve zor kelimeler var. Zorluk seviyesi kelime havuzunu da değiştiriyor. Konuyu da elle seçebilirsiniz.',
+  'Lingo: konu artık her gün otomatik değişiyor ya da listeden kendiniz seçebilirsiniz. 18 konu, 190 kelime. Her gün başka bir konu geliyor (denizcilik, havacılık, tarım, müzik, tıp, tarih…), bugünün konusu en üstte yazıyor.',
   'Oyunlar uzadı: rakibi geçtikten sonra da oyun devam ediyor. Mayın Tarlası kazanınca bir sonraki tarla açılıyor.',
   'Yeni oyunlar: Zamanlama Kulesi ve Mayın Tarlası. Yılan ve Tetris geliştirildi.',
   'Rakipli lig sistemi: Böcek Yarışı, Hafıza Yürüyüşü, Yılan, Tetris.'
