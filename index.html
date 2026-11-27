@@ -266,14 +266,14 @@ body.party #roachWrap{animation:breakDance .5s ease-in-out infinite!important}
 /* Oyunlar ve VIP Ekstralar */
 .games-btn{width:auto!important;padding:0 13px!important;display:inline-flex;align-items:center;gap:6px;font:800 14px var(--f-display)!important;color:var(--accent)!important;border-color:rgba(251,191,36,.45)!important;background:linear-gradient(135deg,rgba(251,191,36,.16),rgba(15,23,42,.95))!important;box-shadow:0 4px 12px rgba(0,0,0,.25)}
 .games-btn:active{transform:scale(.96)}
-.glist{display:grid;gap:10px;text-align:left;margin:12px 0}
-.gcard{display:flex;align-items:center;gap:12px;background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:12px 14px;width:100%;text-align:left;transition:border-color .15s,transform .1s}
-.gcard:hover,.gcard:active{border-color:var(--accent);transform:translateY(-1px)}
-.gcard .gic{font-size:32px;line-height:1;flex:none}
-.gcard .ginf{flex:1;min-width:0}
-.gcard .ginf b{display:block;font:800 16px var(--f-display);color:var(--fg)}
-.gcard .ginf small{display:block;color:var(--muted);font-size:12px;line-height:1.35}
-.gcard .gbest{font:700 11px var(--f-body);color:var(--accent);background:rgba(251,191,36,.12);padding:3px 8px;border-radius:999px;white-space:nowrap}
+.glist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;text-align:center;margin:12px 0}
+.gcard{display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:6px;aspect-ratio:1/1;background:linear-gradient(160deg,rgba(255,255,255,.04),rgba(0,0,0,.22)),var(--bg);border:1.5px solid var(--line);border-radius:18px;padding:12px 8px;width:100%;text-align:center;position:relative;overflow:hidden;transition:border-color .15s,transform .12s,box-shadow .15s;box-shadow:0 4px 12px rgba(0,0,0,.22)}
+.gcard:hover,.gcard:active{border-color:var(--accent);transform:translateY(-2px) scale(.98);box-shadow:0 8px 18px rgba(251,191,36,.18)}
+.gcard .gic{font-size:36px;line-height:1.05;flex:none;margin-top:2px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.35))}
+.gcard .ginf{flex:1;display:flex;flex-direction:column;justify-content:center;min-width:0;width:100%}
+.gcard .ginf b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font:800 13.5px/1.2 var(--f-display);color:var(--fg);margin-bottom:2px}
+.gcard .ginf small{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:var(--muted);font-size:10.5px;line-height:1.25}
+.gcard .gbest{font:700 10.5px var(--f-body);color:var(--accent);background:rgba(251,191,36,.14);border:1px solid rgba(251,191,36,.28);padding:3px 8px;border-radius:999px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .lk.g{background:#16A34A!important;border-color:#16A34A!important;color:#fff!important}
 .lk.y{background:#EAB308!important;border-color:#EAB308!important;color:#111!important}
 .lk.n{background:#1E293B!important;border-color:#1E293B!important;color:#64748B!important}
@@ -902,7 +902,7 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
   <div class="tcard" style="max-width:420px;max-height:90vh;overflow:auto">
     <div class="tic">🏅</div>
     <h3 id="lbT"><span id="lbTitle">Sıralama</span></h3>
-    <select id="lbGame" hidden></select>
+    <select id="lbGame" style="width:100%;margin:4px 0 8px;padding:7px 10px;border-radius:10px;font-size:13px"></select>
     <p id="lbInfo" class="sub" style="min-height:18px;margin:0 0 6px"></p>
     <ol id="lbList" style="text-align:left;padding-left:26px;margin:0 0 8px;max-height:44vh;overflow:auto"></ol>
     <p class="sub" style="margin:0 0 8px"><span id="lbMe"></span> <button class="btn" id="lbRename" style="padding:4px 10px;font-size:13px">Adımı değiştir</button></p>
@@ -910,12 +910,77 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
   </div>
 </div>
 <div class="tour" id="gamesModal" hidden role="dialog" aria-modal="true" aria-labelledby="gmT">
-  <div class="tcard" style="max-width:420px;max-height:90vh;overflow:auto">
-    <div class="tic">🎮</div>
-    <h3 id="gmT">Böcek Oyun Salonu</h3>
-    <p style="margin-bottom:8px;font-size:13px;color:var(--muted)">Mola eğlencesi! Tüm oyunlarda bizim hamam böceği sesli eşlik eder.</p>
+  <div class="tcard" style="max-width:430px;max-height:90vh;overflow:auto">
+    <div class="tic" id="gmSecretIcon" style="cursor:pointer;user-select:none">🎮</div>
+    <h3 id="gmT" style="cursor:pointer;user-select:none">Böcek Oyun Salonu</h3>
+    <p style="margin-bottom:8px;font-size:12.5px;color:var(--muted)">Mola eğlencesi! Kare kutulara dokunup oyuna dal.</p>
     <div class="glist" id="gamesList"></div>
-    <div class="trow"><button class="btn pri" id="gmClose">Kapat</button></div>
+    <div class="trow" style="margin-top:8px">
+      <button type="button" class="btn" id="gmLbAllBtn">🏅 Genel Sıralama</button>
+      <button type="button" class="btn pri" id="gmClose">Kapat</button>
+    </div>
+  </div>
+</div>
+
+<!-- Yönetici Parola Doğrulama Penceresi -->
+<div class="tour" id="adminAuthSheet" hidden role="dialog" aria-modal="true" style="z-index:110">
+  <div class="tcard" style="max-width:360px">
+    <div class="tic">🔐</div>
+    <h3>Yönetici Doğrulama</h3>
+    <p class="sub" style="margin:0 0 10px">Çevrimiçi oyuncu hesapları ve skorlarına müdahale etmek için yönetici parolasını girin.</p>
+    <input type="password" id="admPassIn" placeholder="Yönetici parolası" style="width:100%;padding:10px;border-radius:10px;font-size:16px;text-align:center;margin-bottom:8px">
+    <p id="admAuthErr" class="sub" style="color:var(--danger);min-height:18px;margin:0 0 8px"></p>
+    <div class="trow">
+      <button type="button" class="btn" id="admAuthCancel">Vazgeç</button>
+      <button type="button" class="btn pri" id="admAuthOk">Giriş Yap</button>
+    </div>
+  </div>
+</div>
+
+<!-- Gizli Süper Yönetici Kontrol Merkezi -->
+<div class="tour" id="adminPanelSheet" hidden role="dialog" aria-modal="true" style="z-index:115">
+  <div class="tcard" style="max-width:460px;max-height:92vh;overflow:auto;text-align:left">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px">
+      <span class="vip-badge">🛡️ SÜPER YÖNETİCİ PANELİ</span>
+      <button type="button" class="btn" id="admPassChange" style="padding:4px 9px;font-size:11px">🔑 Parola Değiştir</button>
+    </div>
+    <h3 style="margin:0 0 4px">Oyuncu & Skor Yönetimi</h3>
+    <p class="sub" style="margin:0 0 10px;font-size:12px">Supabase üzerindeki canlı oyuncu adlarını ve skorlarını düzenleyebilir, yeni skor ekleyebilir veya hesapları silebilirsiniz.</p>
+
+    <div class="two" style="margin-bottom:10px">
+      <label style="font-size:12px">Oyun Seçimi
+        <select id="admGameSel" style="width:100%;margin-top:4px"></select>
+      </label>
+      <label style="font-size:12px">Oyuncu Ara
+        <input type="text" id="admSearch" placeholder="İsim veya UID..." style="width:100%;margin-top:4px">
+      </label>
+    </div>
+
+    <details class="sec" style="margin-bottom:10px">
+      <summary style="font-size:13.5px;padding:8px 0">➕ Yeni Oyuncu / Manuel Skor Ekle</summary>
+      <div class="secbody" style="gap:8px;padding-top:6px">
+        <div class="two">
+          <input type="text" id="admNewName" maxlength="14" placeholder="Kullanıcı adı">
+          <input type="number" id="admNewScore" placeholder="Skor (Örn: 500)">
+        </div>
+        <button type="button" class="btn pri" id="admAddBtn">Buluta Ekle / Kaydet</button>
+      </div>
+    </details>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:6px;flex-wrap:wrap">
+      <b style="font-size:12.5px;color:var(--accent)" id="admCountLbl">Oyuncular Yükleniyor...</b>
+      <div style="display:flex;gap:5px">
+        <button type="button" class="btn" id="admRefreshBtn" style="padding:4px 8px;font-size:11px">🔄 Yenile</button>
+        <button type="button" class="btn dng" id="admClearGame" style="padding:4px 8px;font-size:11px">🗑️ Oyunu Sıfırla</button>
+      </div>
+    </div>
+
+    <ul class="list" id="admPlayerList" style="max-height:42vh;overflow:auto;margin-bottom:12px"></ul>
+
+    <div class="trow">
+      <button type="button" class="btn" id="admBanListBtn">🚫 Engelli Hesaplar (<span id="admBanCnt">0</span>)</button>
+      <button type="button" class="btn pri" id="admClose">Paneli Kapat</button>
+    </div>
   </div>
 </div>
 
@@ -2075,21 +2140,87 @@ function gameVoice(kind,bannerTxt,icon){
 }
 
 /* ---------- Oyunlar Menüsü (Header'daki Oyunlar Tuşu) ---------- */
+/* ---------- Rekabet & Canlı Kapışma Yardımcısı (Tüm Oyunlar) ---------- */
+var CMP_CACHE={};
+function cmpFetchRival(g,localBest,cb){
+  var fallback=[
+    {u:'🐜 Acemi Böcek',s:Math.max(1,Math.round(localBest*0.5))},
+    {u:'🦂 Usta Akrep',s:Math.max(3,Math.round(localBest*1.15)+2)},
+    {u:'🐉 Şampiyon Ejderha',s:Math.max(8,Math.round(localBest*1.5)+5)}
+  ];
+  if(!LB_CFG.url){if(cb)cb(fallback);return;}
+  if(CMP_CACHE[g]&&Date.now()-CMP_CACHE[g].ts<45000){if(cb)cb(CMP_CACHE[g].list);return;}
+  fetch(LB_CFG.url+'/rest/v1/scores?select=username,score,uid&game=eq.'+encodeURIComponent(g)+'&order=score.desc&limit=80',{headers:lbHeaders()})
+    .then(function(r){return r.ok?r.json():[];})
+    .then(function(rows){
+      var bestByUser={};
+      (rows||[]).forEach(function(r){
+        if(!r||!r.username||lbIsBanned(r.username,r.uid))return;
+        var k=r.username;
+        if(!bestByUser[k]||r.score>bestByUser[k].s)bestByUser[k]={u:r.username,s:+r.score||0};
+      });
+      var list=Object.keys(bestByUser).map(function(k){return bestByUser[k];}).sort(function(a,b){return a.s-b.s;});
+      if(!list.length)list=fallback;
+      CMP_CACHE[g]={ts:Date.now(),list:list};
+      if(cb)cb(list);
+    }).catch(function(){if(cb)cb(fallback);});
+}
+function cmpPickTarget(list,curScore){
+  var me=lbName();
+  for(var i=0;i<list.length;i++){
+    if(list[i].u!==me && list[i].s>curScore)return {rival:list[i],rank:list.length-i,total:list.length};
+  }
+  var top=list[list.length-1];
+  return {rival:top||{u:'Zirve',s:curScore+1},rank:1,total:Math.max(1,list.length),isTop:true};
+}
+function cmpHudHtml(g){
+  return '<div id="cmpBar_'+g+'" style="display:flex;align-items:center;justify-content:space-between;gap:6px;padding:6px 10px;margin:0 0 8px;border-radius:11px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);font-size:12px">'+
+    '<span id="cmpTxt_'+g+'">⚔️ Kapışma hedefi yükleniyor...</span>'+
+    '<span id="cmpMult_'+g+'" style="font-weight:800;color:var(--accent);white-space:nowrap">x1.0</span>'+
+  '</div>';
+}
+function cmpUpdateHud(g,curScore,mult,passedSet){
+  var bar=$('#cmpTxt_'+g),mEl=$('#cmpMult_'+g);
+  if(mEl)mEl.textContent='x'+(mult||1).toFixed(2).replace(/\.00$/,'');
+  if(!bar)return;
+  var cache=CMP_CACHE[g];
+  if(!cache){
+    cmpFetchRival(g,curScore,function(){cmpUpdateHud(g,curScore,mult,passedSet);});
+    return;
+  }
+  var info=cmpPickTarget(cache.list,curScore);
+  if(info.isTop){
+    bar.innerHTML='👑 <b>Liderlik Koltuğu!</b> Rekorunu büyüt ('+curScore+')';
+  }else{
+    var diff=Math.max(1,info.rival.s-curScore);
+    bar.innerHTML='⚔️ Hedef: <b>'+escapeHtml(info.rival.u)+'</b> ('+info.rival.s+') · <b>+'+diff+'</b> kaldı';
+  }
+  if(passedSet){
+    cache.list.forEach(function(item){
+      if(item.u!==lbName() && curScore>item.s && !passedSet[item.u]){
+        passedSet[item.u]=true;
+        toast('🚀 Sıralamada '+item.u+' ('+item.s+') geçildi!');
+        synthPop(780,1240,.14,'triangle');
+      }
+    });
+  }
+}
+
 function renderGamesHub(){
   var ls=lstat(),bb=bugBest(),fb=+(lsGet('hb-foot-best')||0),cb=+(lsGet('hb-cup-best')||0),sb=+(lsGet('hb-skill-lvl')||1);
   $('#gmT').textContent=isAslan()?'Aslan Oyun Salonu':'Böcek Oyun Salonu';
   var items=[
-    {id:'lingo',ic:'🔤',t:'1. Lingo (Sınırsız Kelime)',d:'Yüzlerce 5 harfli Türkçe kelime! Her açılışta yepyeni rastgele kelime.',b:'Seri: '+ls.s},
-    {id:'squash',ic:isAslan()?'🪢':'🩴',t:isAslan()?'2. Aslan Yakalama':'2. Böcek Öldürme',d:isAslan()?'30 saniyede koşan aslanlara ip at, yakala! Kombo yap, rekor kır.':'30 saniyede kaçışan böcekleri yakalayıp ez! Kombo yap, rekor kır.',b:'Rekor: '+bb},
-    {id:'football',ic:'⚽',t:'3. Tek Kale Böcek Futbolu',d:'Kaleci sürekli git-gel yapar, gol attıkça hızlanır! Bakalım kaç gol atacaksın?',b:'Rekor: '+fb},
-    {id:'cups',ic:'🥤',t:'4. Bardak Altı Saklamaca',d:'Böcek hangi bardağın altında? Bulunca "Aaaaa!" diye bağırır!',b:'Rekor: '+cb},
-    {id:'race',ic:'🏁',t:'6. Böcek Yarışı (Rakipli)',d:'Hızlıca dokunarak koş! Rakip böceklere karşı bitiş çizgisine ilk sen ulaş.',b:rvTxt('race')},
-    {id:'memory',ic:'🧠',t:'7. Hafıza Yürüyüşü (Rakipli)',d:'Dizi her turda bir adım uzar. Sırayı unutma, rakibini geç!',b:rvTxt('memory')},
-    {id:'snake',ic:'🐍',t:'8. Yılan (Rakipli)',d:'Altın yem +2 puan! Kaydır ya da ok tuşlarıyla yönlen, duvara çarpma.',b:rvTxt('snake')},
-    {id:'tetris',ic:'🧱',t:'9. Tetris (Rakipli)',d:'Sıradaki parçayı gör, gölgeye bak, sert düşür. Rakibin satır hedefini geç!',b:rvTxt('tetris')},
-    {id:'tower',ic:'🏗️',t:'10. Zamanlama Kulesi (Rakipli)',d:'Kayan bloğu tam zamanında bırak. Kaymalar bloğu küçültür, kulen yükselsin!',b:rvTxt('tower')},
-    {id:'mines',ic:'💣',t:'11. Mayın Tarlası (Rakipli)',d:'Mayınsız kareleri aç, süre dolmadan tarlayı temizle. Ligde tarla büyür.',b:rvTxt('mines')},
-    {id:'skill',ic:isAslan()?'🪖':'🏆',t:isAslan()?'5. Jandarmadan Kaçış (Seviyeli)':'5. Terlikten Kaçış (Seviyeli)',d:isAslan()?'Koşan aslanı yakalamaya çalışan askerlerden kaç! Et ve yem topla.':'Seviye seviye beceri oyunu! Kahveleri topla, terlik ve ilaçtan kaç.',b:'Seviye: '+sb}
+    {id:'lingo',ic:'🔤',t:'Lingo Kelime',d:'Sınırsız 5 harfli kelime tahmini',b:'Seri: '+ls.s},
+    {id:'squash',ic:isAslan()?'🪢':'🩴',t:isAslan()?'Aslan Yakalama':'Böcek Ezmece',d:isAslan()?'Seviyeli dalgalar, kombo ve canlı kapışma':'Seviyeli dalgalar, altın böcek & kapışma',b:'Rekor: '+bb},
+    {id:'football',ic:'⚽',t:'Tek Kale Futbol',d:'Seviyeli kaleci, kombo çarpanı & kapışma',b:'Rekor: '+fb},
+    {id:'cups',ic:'🥤',t:'Bardak Altı',d:'Seri çarpanı, bonus tur & sıralama kapışması',b:'Rekor: '+cb},
+    {id:'skill',ic:isAslan()?'🪖':'🏆',t:isAslan()?'Jandarmadan Kaçış':'Terlikten Kaçış',d:isAslan()?'Seviye + kombo yıldızları & lig yarışı':'Seviye + altın ödül kombosu & lig yarışı',b:'Seviye: '+sb},
+    {id:'race',ic:'🏁',t:'Böcek Yarışı',d:'Turbo ritim, 9 lig ve boss kapışması',b:rvTxt('race').split('·')[0].trim()},
+    {id:'memory',ic:'🧠',t:'Hafıza Yürüyüşü',d:'Hızlanan dizi, seri çarpanı & lig',b:rvTxt('memory').split('·')[0].trim()},
+    {id:'snake',ic:'🐍',t:'Yılan Oyunu',d:'Seviye çarpanı, kombo yem & kapışma',b:rvTxt('snake').split('·')[0].trim()},
+    {id:'tetris',ic:'🧱',t:'Tetris Blok',d:'Kombo satır çarpanı, seviye & kapışma',b:rvTxt('tetris').split('·')[0].trim()},
+    {id:'tower',ic:'🏗️',t:'Zamanlama Kulesi',d:'Tam hiza kombosu, seviye & kapışma',b:rvTxt('tower').split('·')[0].trim()},
+    {id:'mines',ic:'💣',t:'Mayın Tarlası',d:'Hız bonusu, seri çarpanı & lig yarışı',b:rvTxt('mines').split('·')[0].trim()}
   ];
   $('#gamesList').innerHTML=items.map(function(x){
     return '<button class="gcard" data-game="'+x.id+'"><span class="gic">'+x.ic+'</span><div class="ginf"><b>'+gT(x.t)+'</b><small>'+gT(x.d)+'</small></div><span class="gbest">'+x.b+'</span></button>';
@@ -2115,96 +2246,133 @@ $('#gamesList').onclick=function(e){
 };
 
 
-/* ---------- Rakipli Ligler: Refleks, Böcek Yarışı, Hafıza Yürüyüşü (seviye + rakip, kazandıkça lig yükselir) ---------- */
+/* ---------- Rakipli Ligler: Seviye, Çarpan ve Canlı Kapışma ---------- */
 var RANKS=['🐜 Karınca','🪰 Sinek','🕷️ Örümcek','🦂 Akrep','🐍 Yılan','🦖 Dinozor','🐉 Ejderha','👑 Kraliçe','🌋 Efsane'];
-var RV_TGT={memory:[4,5,6,7,8,9,10,11,12],snake:[10,12,14,16,18,20,22,25,30],tetris:[3,4,5,6,7,8,9,10,12],tower:[8,10,12,14,16,18,20,22,25],mines:[90,80,75,70,65,60,55,50,45]};
+var RV_TGT={memory:[4,5,6,7,8,9,10,11,12],snake:[10,13,16,20,24,28,33,38,45],tetris:[3,4,5,6,8,10,12,15,18],tower:[8,10,12,15,18,21,24,28,32],mines:[90,80,75,70,65,60,55,50,45]};
 var RC_LEN=260;
 var RACE_SPD=[6,7.5,9,10.5,12,13.5,15,16.5,18];
 function rvGet(g){var x=null;try{x=JSON.parse(lsGet('hb-rv-'+g)||'null')}catch(e){x=null}
   if(!x||typeof x!=='object')x={tier:0,w:0,l:0,best:0};return x}
 function rvSave(g,x){lsSet('hb-rv-'+g,JSON.stringify(x))}
-function rvTxt(g){var x=rvGet(g);return 'Rakip: '+RANKS[x.tier]+' · '+(x.tier===RANKS.length-1?'Lig: Son rakip':'Lig '+(x.tier+1)+'/'+RANKS.length)}
+function rvTxt(g){var x=rvGet(g);return 'Lig '+(x.tier+1)+': '+RANKS[x.tier]+' · '+(x.tier===RANKS.length-1?'Son Boss':'Lig '+(x.tier+1)+'/'+RANKS.length)}
 function rvTarget(g){return RV_TGT[g][rvGet(g).tier]}
 function rvBest(g,score){var x=rvGet(g);x.best=Math.max(x.best||0,score);rvSave(g,x);lbSubmit(g,score)}
 function rvResult(g,won,score){var x=rvGet(g);x.best=Math.max(x.best||0,score);lbSubmit(g,score);
   if(won){x.w++;if(x.tier<RANKS.length-1)x.tier++}else x.l++;rvSave(g,x);return x}
 
-/* Böcek Yarışı */
-var RC={p:0,rv:[0,0,0],sp:[],on:false,t:null};
+/* Böcek Yarışı (Turbo Kombo + Lig Yükseltme + Kapışma Skoru) */
+var RC={p:0,rv:[0,0,0],sp:[],on:false,t:null,taps:0,lastTap:0,streak:0,passed:{}};
 function raceOpen(){
-  var rv=rvGet('race');
-  openGame('🏁 Böcek Yarışı','<p class="lsub">Dokun, dokun, koş! Rakip: <b>'+RANKS[rv.tier]+'</b> · Hız '+RACE_SPD[rv.tier]+'</p>'+
-    '<div id="raceLanes"></div><p id="raceMsg" class="lsub" style="min-height:20px"></p>'+
-    '<div class="row" style="justify-content:center;margin-top:8px"><button class="btn pri" id="raceGo">Başla</button><button class="btn" id="raceTap" style="font-size:20px;min-width:140px;touch-action:manipulation">Dokun! 🏃</button></div>');
+  var rv=rvGet('race'),mult=1+rv.tier*0.2;
+  openGame('🏁 Böcek Yarışı',
+    cmpHudHtml('race')+
+    '<p class="lsub">Hızlı ritimle dokun, <b>TURBO</b> doldur! Rakip: <b>'+RANKS[rv.tier]+'</b> · Lig '+(rv.tier+1)+'/'+RANKS.length+'</p>'+
+    '<div class="bstat">Lig <b>'+(rv.tier+1)+'</b> · Çarpan <b>x'+mult.toFixed(1)+'</b> · Turbo Seri <b id="rcSt">0</b> · Rekor <b>'+rv.best+'</b></div>'+
+    '<div id="raceLanes"></div><p id="raceMsg" class="lsub" style="min-height:22px"></p>'+
+    '<div class="row" style="justify-content:center;margin-top:8px"><button class="btn pri" id="raceGo">Başla</button><button class="btn" id="raceTap" style="font-size:20px;min-width:155px;touch-action:manipulation">Dokun! 🏃</button></div>');
   var names=[rvGet('race').tier,Math.max(0,rv.tier-2),Math.max(0,rv.tier-4)];
   $('#raceLanes').innerHTML='<div class="rl"><span class="rn">🫵 Sen</span><div class="rtrack"><div class="rbar" id="rb0"></div></div></div>'+
     names.map(function(t,i){return '<div class="rl"><span class="rn">'+RANKS[t]+'</span><div class="rtrack"><div class="rbar" id="rb'+(i+1)+'"></div></div></div>'}).join('');
   activeGameStop=function(){raceStop()};
   $('#raceGo').onclick=raceStart;
   $('#raceTap').onpointerdown=function(e){e.preventDefault();raceTap()};
+  cmpUpdateHud('race',rv.best,mult,null);
 }
 function raceStop(){clearInterval(RC.t);RC.on=false}
 function raceStart(){raceStop();var rv=rvGet('race');var spd=RACE_SPD[rv.tier];
-  RC.p=0;RC.rv=[0,0,0];RC.sp=[spd*0.95,spd*0.8,spd*0.65];RC.on=true;
-  $('#raceGo').hidden=true;$('#raceMsg').textContent='Başla! Hızlı dokun!';raceRender();
+  RC.p=0;RC.rv=[0,0,0];RC.sp=[spd*0.96,spd*0.82,spd*0.68];RC.on=true;RC.taps=0;RC.lastTap=0;RC.streak=0;RC.passed={};
+  $('#raceGo').hidden=true;$('#raceMsg').textContent='Başla! Ritimli bas, Turbo aç!';raceRender();
   RC.t=setInterval(raceTick,100)}
-function raceTap(){if(!RC.on)return;RC.p=Math.min(RC_LEN,RC.p+1.4);synthPop(520+RC.p*4,700,.03,'square');raceRender()}
+function raceTap(){if(!RC.on)return;
+  var now=Date.now();
+  if(now-RC.lastTap<260)RC.streak++;else RC.streak=1;
+  RC.lastTap=now;RC.taps++;
+  var turbo=RC.streak>=8?1.85:(RC.streak>=4?1.6:1.4);
+  RC.p=Math.min(RC_LEN,RC.p+turbo);
+  if($('#rcSt'))$('#rcSt').textContent=RC.streak+(RC.streak>=8?' 🔥':'');
+  synthPop(520+RC.p*4+RC.streak*12,720,.03,'square');raceRender()}
 function raceTick(){if(!RC.on)return;
-  for(var i=0;i<3;i++)RC.rv[i]=Math.min(RC_LEN,RC.rv[i]+RC.sp[i]/10*(0.85+Math.random()*0.3));
+  for(var i=0;i<3;i++){
+    var surge=(RC.p>RC_LEN*0.65&&i===0)?1.12:1;
+    RC.rv[i]=Math.min(RC_LEN,RC.rv[i]+RC.sp[i]/10*(0.85+Math.random()*0.3)*surge);
+  }
   raceRender();
   var won=RC.p>=RC_LEN,lost=RC.rv.some(function(v){return v>=RC_LEN});
   if(won||lost)raceEnd(won)}
 function raceRender(){var b=$('#rb0');if(!b)return;b.style.width=(RC.p/RC_LEN*100)+'%';RC.rv.forEach(function(v,i){var e=$('#rb'+(i+1));if(e)e.style.width=(v/RC_LEN*100)+'%'})}
 function raceEnd(won){raceStop();
-  var x=rvResult('race',won,Math.round(RC.p));
-  $('#raceMsg').innerHTML='<b>'+(won?'🏆 Kazandın! Yeni rakip: '+RANKS[x.tier]:'😵 Rakip önce bitirdi.')+'</b>';
+  var rv=rvGet('race'),mult=1+rv.tier*0.2;
+  var leadBonus=won?Math.max(10,Math.round((RC_LEN-Math.max.apply(null,RC.rv))*1.5)):0;
+  var finalScore=Math.round((RC.p+leadBonus)*mult);
+  var x=rvResult('race',won,finalScore);
+  cmpUpdateHud('race',finalScore,1+x.tier*0.2,RC.passed);
+  $('#raceMsg').innerHTML='<b>'+(won?'🏆 Kazandın! Skor: '+finalScore+' (x'+mult.toFixed(1)+') · Yeni rakip: '+RANKS[x.tier]:'😵 Rakip önce bitirdi. Skor: '+finalScore)+'</b>';
   $('#raceGo').hidden=false;$('#raceGo').textContent='Tekrar yarış';
-  gameVoice(won?'lululu':'aaaaa',won?'Birinci oldun!':'Kaybettin, tekrar dene!',won?'🏆':'🏁')}
+  gameVoice(won?'lululu':'aaaaa',won?'Birinci oldun! Lig atladın!':'Kaybettin, tekrar dene!',won?'🏆':'🏁')}
 
-/* Hafıza Yürüyüşü */
-var M={seq:[],k:0,done:0,on:false,show:false,t:null};
+/* Hafıza Yürüyüşü (Seviye Çarpanı + Hızlanan Ritim + Canlı Kapışma) */
+var M={seq:[],k:0,done:0,score:0,on:false,show:false,t:null,passed:{}};
 function memPads(){var L=isAslan();return [{ic:L?'🦁':'🪳',c:'#22c55e',f:330},{ic:L?'🐪':'🩴',c:'#f59e0b',f:392},{ic:L?'🦒':'☕',c:'#ef4444',f:523},{ic:L?'🐘':'🏆',c:'#3b82f6',f:659}]}
 function memOpen(){
-  var tg=rvTarget('memory'),rv=rvGet('memory'),P=memPads();
-  openGame('🧠 Hafıza Yürüyüşü','<p class="lsub">Rakip: <b>'+RANKS[rv.tier]+'</b> · Hedef: <b>'+tg+'</b> tur. Diziyi aynen tekrarla!</p><div class="bstat">Tur <b id="mR">0</b> · Hedef <b>'+tg+'</b></div>'+
+  var tg=rvTarget('memory'),rv=rvGet('memory'),P=memPads(),mult=1+rv.tier*0.25;
+  openGame('🧠 Hafıza Yürüyüşü',
+    cmpHudHtml('memory')+
+    '<p class="lsub">Rakip: <b>'+RANKS[rv.tier]+'</b> · Hedef: <b>'+tg+'</b> tur. Tur arttıkça çarpan katlanır!</p>'+
+    '<div class="bstat">Tur <b id="mR">0</b>/'+tg+' · Puan <b id="mSc">0</b> · Rekor <b>'+rv.best+'</b></div>'+
     '<div class="mgrid" id="mGrid">'+P.map(function(p,i){return '<button class="mpad" data-p="'+i+'" style="background:'+p.c+'">'+p.ic+'</button>'}).join('')+'</div>'+
     '<p id="mMsg" class="lsub" style="min-height:22px"></p><div class="row" style="justify-content:center"><button class="btn pri" id="mGo">Başla</button></div>');
   activeGameStop=function(){memStop()};
   $('#mGo').onclick=memStart;
   $('#mGrid').onpointerdown=function(e){var b=e.target.closest('[data-p]');if(!b||!M.on||M.show)return;e.preventDefault();memPress(+b.dataset.p)};
+  cmpUpdateHud('memory',rv.best,mult,null);
 }
 function memStop(){clearTimeout(M.t);M.on=false;M.show=false}
 function memFlash(i,ms,cb){var b=document.querySelector('[data-p="'+i+'"]'),P=memPads();
-  if(b)b.classList.add('lit');synthPop(P[i].f,P[i].f*1.01,.18,'triangle');
-  M.t=setTimeout(function(){if(b)b.classList.remove('lit');if(cb)M.t=setTimeout(cb,200)},ms)}
-function memStart(){memStop();M.seq=[];M.done=0;M.won=false;M.on=true;$('#mGo').hidden=true;$('#mR').textContent=0;$('#mMsg').textContent='';memNext()}
+  if(b)b.classList.add('lit');synthPop(P[i].f,P[i].f*1.01,.16,'triangle');
+  M.t=setTimeout(function(){if(b)b.classList.remove('lit');if(cb)M.t=setTimeout(cb,Math.max(110,190-M.done*8))},ms)}
+function memStart(){memStop();M.seq=[];M.done=0;M.score=0;M.won=false;M.on=true;M.passed={};
+  $('#mGo').hidden=true;$('#mR').textContent=0;$('#mSc').textContent=0;$('#mMsg').textContent='';memNext()}
 function memNext(){M.seq.push(Math.floor(Math.random()*4));M.k=0;memPlay(0)}
 function memPlay(i){if(!M.on)return;
   if(i>=M.seq.length){M.show=false;$('#mMsg').textContent='Sıra sende!';return}
   M.show=true;$('#mMsg').textContent='İzle… ('+M.seq.length+'. adım)';
-  memFlash(M.seq[i],380,function(){memPlay(i+1)})}
+  var spd=Math.max(210,380-M.done*14);
+  memFlash(M.seq[i],spd,function(){memPlay(i+1)})}
 function memPress(p){
-  var P=memPads();if(p===M.seq[M.k]){ // doğru
+  var P=memPads();if(p===M.seq[M.k]){
     synthPop(P[p].f,P[p].f*1.01,.1,'sine');M.k++;
-    if(M.k===M.seq.length){M.done=M.seq.length;if(!M.won&&M.done>=rvTarget('memory'))memWin();$('#mR').textContent=M.done;$('#mMsg').textContent='Harika! Yeni adım geliyor…';M.on=false;M.show=true;M.t=setTimeout(function(){M.on=true;M.show=false;memNext()},700)}
+    if(M.k===M.seq.length){
+      M.done=M.seq.length;
+      var rv=rvGet('memory'),mult=1+rv.tier*0.25+M.done*0.1;
+      M.score+=Math.round(10*mult);
+      if($('#mR'))$('#mR').textContent=M.done;
+      if($('#mSc'))$('#mSc').textContent=M.score;
+      cmpUpdateHud('memory',M.score,mult,M.passed);
+      if(!M.won&&M.done>=rvTarget('memory'))memWin();
+      $('#mMsg').textContent='🔥 Harika! Çarpan x'+mult.toFixed(1)+' · Yeni adım…';
+      M.on=false;M.show=true;M.t=setTimeout(function(){M.on=true;M.show=false;memNext()},620)
+    }
   } else memEnd()}
-function memWin(){M.won=true;var x=rvResult('memory',true,M.done);
-  $('#mMsg').innerHTML='<b>🏆 Lig atladın! Yeni rakip: '+RANKS[x.tier]+' · Devam!</b>';gameVoice('lululu','Lig atladın, devam!','🏆')}
-function memEnd(){memStop();if(M.won)rvBest('memory',M.done);else rvResult('memory',false,M.done);
-  $('#mMsg').innerHTML='<b>😵 Yanlış bastın. '+M.done+' tur'+(M.won?'':' (hedef '+rvTarget('memory')+')')+'</b>';
+function memWin(){M.won=true;var x=rvResult('memory',true,M.score);
+  $('#mMsg').innerHTML='<b>🏆 Lig atladın! Yeni rakip: '+RANKS[x.tier]+' · Rekor için devam!</b>';gameVoice('lululu','Lig atladın, devam!','🏆')}
+function memEnd(){memStop();if(M.won)rvBest('memory',M.score);else rvResult('memory',false,M.score);
+  $('#mMsg').innerHTML='<b>😵 Yanlış bastın! '+M.done+' tur · Skor: '+M.score+(M.won?'':' (hedef '+rvTarget('memory')+' tur)')+'</b>';
   $('#mGo').hidden=false;$('#mGo').textContent='Tekrar oyna';gameVoice('aaaaa','Olmadı!','😵')}
 
 
 /* ---------- Ortak: yön tuşları ---------- */
 function dpadHtml(id,btns){return '<div id="'+id+'" style="display:grid;grid-template-columns:repeat(3,72px);gap:6px;justify-content:center;margin-top:10px">'+btns.map(function(b){return b?'<button class="btn" data-d="'+b[0]+'" style="height:52px;font-size:20px;touch-action:manipulation">'+b[1]+'</button>':'<span></span>'}).join('')+'</div>'}
 
-/* ---------- Yılan (rakipli lig): altın yem, hız artışı, kaydırma ---------- */
-var SN={ctx:null,snake:[],dir:{x:1,y:0},nd:null,food:null,score:0,t:null,on:false,N:16,CS:20,sx:0,sy:0};
+/* ---------- Yılan (Rakipli Lig + Seviye Çarpanı + Kombo Yem + Canlı Kapışma) ---------- */
+var SN={ctx:null,snake:[],dir:{x:1,y:0},nd:null,food:null,score:0,eaten:0,combo:0,lastEat:0,t:null,on:false,N:16,CS:20,sx:0,sy:0,passed:{}};
 var DIRS={up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}};
 var SN_BTNS=[null,['up','▲'],null,['left','◀'],null,['right','▶'],null,['down','▼'],null];
 function snakeOpen(){
-  var tg=rvTarget('snake'),rv=rvGet('snake');
-  openGame('🐍 Yılan','<p class="lsub">Rakip: <b>'+RANKS[rv.tier]+'</b> · En az <b>'+tg+'</b> puan topla! <span style="opacity:.8">🟡 altın yem = +2</span></p><div class="bstat">Puan <b id="sS">0</b> · Hedef <b>'+tg+'</b> · Hız <b id="sV">1</b></div>'+
+  var tg=rvTarget('snake'),rv=rvGet('snake'),mult=1+rv.tier*0.2;
+  openGame('🐍 Yılan',
+    cmpHudHtml('snake')+
+    '<p class="lsub">Rakip: <b>'+RANKS[rv.tier]+'</b> · En az <b>'+tg+'</b> puan topla! <span style="opacity:.85">🟡 altın yem + seri kombo!</span></p>'+
+    '<div class="bstat">Puan <b id="sS">0</b>/'+tg+' · Sv <b id="sV">1</b> · Seri <b id="sCb">0</b> · Rekor <b>'+rv.best+'</b></div>'+
     '<canvas id="sC" width="320" height="320" style="display:block;width:100%;max-width:320px;aspect-ratio:1;margin:0 auto;border-radius:14px;background:#0b1f16;touch-action:none"></canvas>'+
     '<p id="sMsg" class="lsub" style="min-height:20px"></p><div class="row" style="justify-content:center"><button class="btn pri" id="sGo">Başla</button></div>'+dpadHtml('sDp',SN_BTNS));
   SN.ctx=$('#sC').getContext('2d');
@@ -2214,48 +2382,62 @@ function snakeOpen(){
   $('#sC').onpointerdown=function(e){SN.sx=e.clientX;SN.sy=e.clientY};
   $('#sC').onpointerup=function(e){var dx=e.clientX-SN.sx,dy=e.clientY-SN.sy;if(Math.max(Math.abs(dx),Math.abs(dy))<18)return;
     snakeTurn(Math.abs(dx)>Math.abs(dy)?(dx>0?'right':'left'):(dy>0?'down':'up'))};
+  cmpUpdateHud('snake',rv.best,mult,null);
   snakeDraw();
 }
 function snakeStop(){clearTimeout(SN.t);SN.on=false}
-function snakeFree(){var f;do{f={x:Math.floor(Math.random()*SN.N),y:Math.floor(Math.random()*SN.N),g:Math.random()<0.2}}while(SN.snake.some(function(c){return c.x===f.x&&c.y===f.y}));return f}
-function snakeStart(){snakeStop();SN.snake=[{x:8,y:8},{x:7,y:8},{x:6,y:8}];SN.dir=DIRS.right;SN.nd=null;SN.score=0;SN.won=false;SN.on=true;SN.food=snakeFree();
-  $('#sGo').hidden=true;$('#sMsg').textContent='';$('#sS').textContent=0;$('#sV').textContent=1;snakeDraw();SN.t=setTimeout(snakeTick,160)}
+function snakeFree(){var f;do{f={x:Math.floor(Math.random()*SN.N),y:Math.floor(Math.random()*SN.N),g:Math.random()<0.25}}while(SN.snake.some(function(c){return c.x===f.x&&c.y===f.y}));return f}
+function snakeStart(){snakeStop();SN.snake=[{x:8,y:8},{x:7,y:8},{x:6,y:8}];SN.dir=DIRS.right;SN.nd=null;SN.score=0;SN.eaten=0;SN.combo=0;SN.lastEat=0;SN.won=false;SN.on=true;SN.passed={};SN.food=snakeFree();
+  $('#sGo').hidden=true;$('#sMsg').textContent='';$('#sS').textContent=0;$('#sV').textContent=1;if($('#sCb'))$('#sCb').textContent=0;snakeDraw();SN.t=setTimeout(snakeTick,155)}
 function snakeTurn(d){var v=DIRS[d];if(!v||!SN.on)return;var cur=SN.nd||SN.dir;if(v.x===-cur.x&&v.y===-cur.y)return;SN.nd=v}
 function snakeTick(){if(!SN.on)return;
   if(SN.nd){SN.dir=SN.nd;SN.nd=null}
   var h={x:SN.snake[0].x+SN.dir.x,y:SN.snake[0].y+SN.dir.y};
   if(h.x<0||h.y<0||h.x>=SN.N||h.y>=SN.N||SN.snake.some(function(c){return c.x===h.x&&c.y===h.y})){snakeEnd(false);return}
   SN.snake.unshift(h);
+  var lv=1+Math.floor(SN.eaten/4);
   if(h.x===SN.food.x&&h.y===SN.food.y){
-    SN.score+=SN.food.g?2:1;if($('#sS'))$('#sS').textContent=SN.score;
-    synthPop(SN.food.g?900:600+SN.score*20,1100,.07,'triangle');
+    var now=Date.now();
+    SN.combo=(now-SN.lastEat<2600)?SN.combo+1:1;
+    SN.lastEat=now;SN.eaten++;
+    lv=1+Math.floor(SN.eaten/4);
+    var mult=1+rvGet('snake').tier*0.2+(lv-1)*0.15+(SN.combo>=3?0.25:0);
+    var base=SN.food.g?3:1;
+    SN.score+=Math.max(1,Math.round(base*mult));
+    if($('#sS'))$('#sS').textContent=SN.score;
+    if($('#sCb'))$('#sCb').textContent=SN.combo+(SN.combo>=3?' 🔥':'');
+    cmpUpdateHud('snake',SN.score,mult,SN.passed);
+    synthPop(SN.food.g?920:600+SN.combo*35,1150,.07,'triangle');
     SN.food=snakeFree();
     if(!SN.won&&SN.score>=rvTarget('snake')){snakeWin()}
   } else SN.snake.pop();
   snakeDraw();
-  var lv=1+Math.floor(SN.score/4);if($('#sV'))$('#sV').textContent=lv;
-  SN.t=setTimeout(snakeTick,Math.max(60,160-SN.score*5));
+  if($('#sV'))$('#sV').textContent=lv;
+  SN.t=setTimeout(snakeTick,Math.max(58,155-lv*11));
 }
 function snakeDraw(){var c=SN.ctx;if(!c)return;var cs=SN.CS;c.fillStyle='#0b1f16';c.fillRect(0,0,320,320);
   c.strokeStyle='rgba(255,255,255,.04)';for(var g=0;g<=320;g+=cs){c.beginPath();c.moveTo(g,0);c.lineTo(g,320);c.moveTo(0,g);c.lineTo(320,g);c.stroke()}
   if(!SN.food)return;
-  c.fillStyle=SN.food.g?'#facc15':'#ef4444';c.beginPath();c.arc(SN.food.x*cs+cs/2,SN.food.y*cs+cs/2,cs*(SN.food.g?0.42:0.34),0,7);c.fill();
+  c.fillStyle=SN.food.g?'#facc15':'#ef4444';c.beginPath();c.arc(SN.food.x*cs+cs/2,SN.food.y*cs+cs/2,cs*(SN.food.g?0.44:0.34),0,7);c.fill();
   SN.snake.forEach(function(p,i){c.fillStyle=i===0?'#fde047':'#22c55e';c.beginPath();c.roundRect?c.roundRect(p.x*cs+1,p.y*cs+1,cs-2,cs-2,i===0?6:4):c.rect(p.x*cs+1,p.y*cs+1,cs-2,cs-2);c.fill()})}
 function snakeWin(){SN.won=true;var x=rvResult('snake',true,SN.score);
-  $('#sMsg').innerHTML='<b>🏆 Lig atladın! Yeni rakip: '+RANKS[x.tier]+' · Oyun devam ediyor!</b>';gameVoice('lululu','Lig atladın, devam!','🏆')}
+  $('#sMsg').innerHTML='<b>🏆 Lig atladın! Yeni rakip: '+RANKS[x.tier]+' · Rekor için devam et!</b>';gameVoice('lululu','Lig atladın, devam!','🏆')}
 function snakeEnd(){snakeStop();if(SN.won)rvBest('snake',SN.score);else rvResult('snake',false,SN.score);
   $('#sMsg').innerHTML='<b>😵 Çarptın! '+SN.score+' puan'+(SN.won?'':' · hedef '+rvTarget('snake'))+'</b>';
   $('#sGo').hidden=false;$('#sGo').textContent='Tekrar oyna';gameVoice('aaaaa','Oyun bitti!','🐍')}
 
-/* ---------- Tetris (rakipli lig): sıradaki parça, gölge, sert düşürme, hız artışı ---------- */
-var TT={b:null,cur:null,next:null,lines:0,t:null,on:false,W:10,H:20,CS:20,ctx:null,nctx:null};
+/* ---------- Tetris (Rakipli Lig + Çoklu Satır Kombo + Seviye Çarpanı + Kapışma) ---------- */
+var TT={b:null,cur:null,next:null,lines:0,score:0,combo:0,t:null,on:false,W:10,H:20,CS:20,ctx:null,nctx:null,passed:{}};
 var TP=[
  {m:[[1,1,1,1]],c:'#06b6d4'},{m:[[1,1],[1,1]],c:'#eab308'},{m:[[0,1,0],[1,1,1]],c:'#a855f7'},
  {m:[[0,1,1],[1,1,0]],c:'#22c55e'},{m:[[1,1,0],[0,1,1]],c:'#ef4444'},{m:[[1,0,0],[1,1,1]],c:'#3b82f6'},{m:[[0,0,1],[1,1,1]],c:'#f97316'}];
 var TT_BTNS=[null,['rot','⟳'],null,['left','◀'],['down','▼'],['right','▶'],null,['drop','⤓'],null];
 function tetrisOpen(){
-  var tg=rvTarget('tetris'),rv=rvGet('tetris');
-  openGame('🧱 Tetris','<p class="lsub">Rakip: <b>'+RANKS[rv.tier]+'</b> · En az <b>'+tg+'</b> satır temizle!</p><div class="bstat">Satır <b id="tL">0</b> · Hedef <b>'+tg+'</b> · Hız <b id="tV">1</b></div>'+
+  var tg=rvTarget('tetris'),rv=rvGet('tetris'),mult=1+rv.tier*0.2;
+  openGame('🧱 Tetris',
+    cmpHudHtml('tetris')+
+    '<p class="lsub">Rakip: <b>'+RANKS[rv.tier]+'</b> · En az <b>'+tg+'</b> satır temizle! Çoklu satırda kombo çarpanı!</p>'+
+    '<div class="bstat">Satır <b id="tL">0</b>/'+tg+' · Puan <b id="tSc">0</b> · Sv <b id="tV">1</b> · Rekor <b>'+rv.best+'</b></div>'+
     '<div style="display:flex;gap:12px;justify-content:center;align-items:flex-start">'+
     '<canvas id="tC" width="200" height="400" style="height:min(52vh,400px);aspect-ratio:1/2;max-width:62%;border-radius:12px;background:#0b1f16"></canvas>'+
     '<div style="text-align:center"><div class="lsub" style="margin:0 0 4px">Sıradaki</div><canvas id="tN" width="90" height="90" style="width:90px;height:90px;border-radius:10px;background:#0b1f16"></canvas></div></div>'+
@@ -2264,15 +2446,16 @@ function tetrisOpen(){
   activeGameStop=tetrisStop;
   $('#tGo').onclick=tetrisStart;
   $('#tDp').onpointerdown=function(e){var b=e.target.closest('[data-d]');if(!b)return;e.preventDefault();tetrisAct(b.dataset.d)};
+  cmpUpdateHud('tetris',rv.best,mult,null);
   tetrisDraw();
 }
 function tetrisStop(){clearTimeout(TT.t);TT.on=false}
 function tetrisRand(){var p=TP[Math.floor(Math.random()*TP.length)];return {m:p.m.map(function(r){return r.slice()}),c:p.c,x:0,y:0}}
 function tetrisSpawn(){TT.cur=TT.next;TT.next=tetrisRand();TT.cur.x=Math.floor((TT.W-TT.cur.m[0].length)/2);TT.cur.y=0}
 function tetrisStart(){tetrisStop();TT.b=[];for(var r=0;r<TT.H;r++)TT.b.push(new Array(TT.W).fill(null));
-  TT.lines=0;TT.won=false;TT.on=true;TT.next=tetrisRand();tetrisSpawn();
-  $('#tGo').hidden=true;$('#tMsg').textContent='';$('#tL').textContent=0;$('#tV').textContent=1;tetrisDraw();tetrisSched()}
-function tetrisSched(){clearTimeout(TT.t);if(TT.on)TT.t=setTimeout(tetrisTick,Math.max(90,520-TT.lines*30))}
+  TT.lines=0;TT.score=0;TT.combo=0;TT.won=false;TT.on=true;TT.passed={};TT.next=tetrisRand();tetrisSpawn();
+  $('#tGo').hidden=true;$('#tMsg').textContent='';$('#tL').textContent=0;if($('#tSc'))$('#tSc').textContent=0;$('#tV').textContent=1;tetrisDraw();tetrisSched()}
+function tetrisSched(){clearTimeout(TT.t);if(TT.on)TT.t=setTimeout(tetrisTick,Math.max(85,510-TT.lines*28))}
 function tetrisColl(m,x,y){for(var r=0;r<m.length;r++)for(var c=0;c<m[r].length;c++){if(!m[r][c])continue;var nx=x+c,ny=y+r;
   if(nx<0||nx>=TT.W||ny>=TT.H)return true;if(ny>=0&&TT.b[ny][nx])return true}return false}
 function tetrisLand(){var y=TT.cur.y;while(!tetrisColl(TT.cur.m,TT.cur.x,y+1))y++;return y}
@@ -2289,7 +2472,20 @@ function tetrisTick(){if(!TT.on)return;
 function tetrisLock(){var P=TT.cur;
   P.m.forEach(function(row,r){row.forEach(function(v,c){if(v&&P.y+r>=0)TT.b[P.y+r][P.x+c]=P.c})});
   var cleared=0;for(var r2=TT.H-1;r2>=0;r2--){if(TT.b[r2].every(function(v){return v})){TT.b.splice(r2,1);TT.b.unshift(new Array(TT.W).fill(null));cleared++;r2++}}
-  if(cleared){TT.lines+=cleared;if($('#tL'))$('#tL').textContent=TT.lines;if($('#tV'))$('#tV').textContent=1+Math.floor(TT.lines/3);synthPop(700,1000,.12,'square')}
+  if(cleared){
+    TT.lines+=cleared;TT.combo++;
+    var lv=1+Math.floor(TT.lines/3);
+    var mult=1+rvGet('tetris').tier*0.2+(lv-1)*0.15+(TT.combo>1?0.2*TT.combo:0);
+    var linePts=[0,10,25,45,80][cleared]||cleared*20;
+    TT.score+=Math.round(linePts*mult);
+    if($('#tL'))$('#tL').textContent=TT.lines;
+    if($('#tSc'))$('#tSc').textContent=TT.score;
+    if($('#tV'))$('#tV').textContent=lv;
+    cmpUpdateHud('tetris',TT.score,mult,TT.passed);
+    synthPop(700+cleared*90,1050,.12,'square');
+  } else {
+    TT.combo=0;
+  }
   if(!TT.won&&TT.lines>=rvTarget('tetris')){tetrisWin()}
   tetrisSpawn();
   if(tetrisColl(TT.cur.m,TT.cur.x,TT.cur.y)){tetrisDraw();tetrisEnd(false);return}
@@ -2300,17 +2496,20 @@ function tetrisDraw(){var c=TT.ctx;if(!c||!TT.b)return;var cs=TT.CS;c.fillStyle=
   if(TT.cur){tetrisCells(c,TT.cur.m,TT.cur.x,tetrisLand(),TT.cur.c,0.22,cs);tetrisCells(c,TT.cur.m,TT.cur.x,TT.cur.y,TT.cur.c,1,cs)}
   var n=TT.nctx;if(n&&TT.next){n.fillStyle='#0b1f16';n.fillRect(0,0,90,90);var mm=TT.next.m,w=mm[0].length,h=mm.length,z=18;
     tetrisCells(n,mm,Math.floor((5-w)/2),Math.floor((5-h)/2),TT.next.c,1,z)}}
-function tetrisWin(){TT.won=true;var x=rvResult('tetris',true,TT.lines);
-  $('#tMsg').innerHTML='<b>🏆 Lig atladın! Yeni rakip: '+RANKS[x.tier]+' · Devam et!</b>';gameVoice('lululu','Lig atladın, devam!','🏆')}
-function tetrisEnd(){tetrisStop();if(TT.won)rvBest('tetris',TT.lines);else rvResult('tetris',false,TT.lines);
-  $('#tMsg').innerHTML='<b>😵 Bloklar yukarı çıktı. '+TT.lines+' satır'+(TT.won?'':' · hedef '+rvTarget('tetris'))+'</b>';
+function tetrisWin(){TT.won=true;var x=rvResult('tetris',true,TT.score);
+  $('#tMsg').innerHTML='<b>🏆 Lig atladın! Yeni rakip: '+RANKS[x.tier]+' · Rekor için devam!</b>';gameVoice('lululu','Lig atladın, devam!','🏆')}
+function tetrisEnd(){tetrisStop();if(TT.won)rvBest('tetris',TT.score);else rvResult('tetris',false,TT.score);
+  $('#tMsg').innerHTML='<b>😵 Bloklar tepeye ulaştı! '+TT.lines+' satır · Skor: '+TT.score+(TT.won?'':' · hedef '+rvTarget('tetris')+' satır')+'</b>';
   $('#tGo').hidden=false;$('#tGo').textContent='Tekrar oyna';gameVoice('aaaaa','Olmadı!','🧱')}
 
-/* ---------- Zamanlama Kulesi (rakipli lig) ---------- */
-var TW={W:300,H:400,bh:20,bl:[],cur:null,dir:1,sp:2.5,t:null,on:false,ctx:null};
+/* ---------- Zamanlama Kulesi (Rakipli Lig + Tam Hiza Kombo + Seviye Çarpanı) ---------- */
+var TW={W:300,H:400,bh:20,bl:[],cur:null,dir:1,sp:2.5,score:0,perfectStreak:0,t:null,on:false,ctx:null,passed:{}};
 function towerOpen(){
-  var tg=rvTarget('tower'),rv=rvGet('tower');
-  openGame('🏗️ Zamanlama Kulesi','<p class="lsub">Rakip: <b>'+RANKS[rv.tier]+'</b> · En az <b>'+tg+'</b> kat yap!</p><div class="bstat">Kat <b id="twS">0</b> · Hedef <b>'+tg+'</b></div>'+
+  var tg=rvTarget('tower'),rv=rvGet('tower'),mult=1+rv.tier*0.2;
+  openGame('🏗️ Zamanlama Kulesi',
+    cmpHudHtml('tower')+
+    '<p class="lsub">Rakip: <b>'+RANKS[rv.tier]+'</b> · En az <b>'+tg+'</b> kat yap! Tam hizalama kombo bonusu verir!</p>'+
+    '<div class="bstat">Kat <b id="twS">0</b>/'+tg+' · Puan <b id="twSc">0</b> · Seri <b id="twCb">0</b> · Rekor <b>'+rv.best+'</b></div>'+
     '<canvas id="twC" width="300" height="400" style="display:block;width:100%;max-width:300px;aspect-ratio:3/4;margin:0 auto;border-radius:14px;background:#0b1f16;touch-action:none"></canvas>'+
     '<p id="twMsg" class="lsub" style="min-height:20px"></p><div class="row" style="justify-content:center"><button class="btn pri" id="twGo">Başla</button><button class="btn" id="twDrop" style="min-width:120px;font-size:18px">Bırak ⬇</button></div>');
   TW.ctx=$('#twC').getContext('2d');
@@ -2318,22 +2517,31 @@ function towerOpen(){
   $('#twGo').onclick=towerStart;
   $('#twDrop').onclick=towerDrop;
   $('#twC').onpointerdown=function(e){e.preventDefault();towerDrop()};
+  cmpUpdateHud('tower',rv.best,mult,null);
   towerDraw();
 }
 function towerStop(){clearInterval(TW.t);TW.on=false}
-function towerStart(){towerStop();var W=TW.W;TW.bl=[{x:50,w:200,c:'hsl(0,0%,60%)'}];TW.cur={x:0,w:200};TW.dir=1;TW.sp=2.5;TW.won=false;TW.on=true;
-  $('#twGo').hidden=true;$('#twMsg').textContent='';$('#twS').textContent=0;towerDraw();TW.t=setInterval(towerTick,20)}
+function towerStart(){towerStop();TW.bl=[{x:50,w:200,c:'hsl(0,0%,60%)'}];TW.cur={x:0,w:200};TW.dir=1;TW.sp=2.5;TW.score=0;TW.perfectStreak=0;TW.won=false;TW.on=true;TW.passed={};
+  $('#twGo').hidden=true;$('#twMsg').textContent='';$('#twS').textContent=0;if($('#twSc'))$('#twSc').textContent=0;if($('#twCb'))$('#twCb').textContent=0;towerDraw();TW.t=setInterval(towerTick,20)}
 function towerTick(){if(!TW.on)return;var C=TW.cur;C.x+=TW.dir*TW.sp;
   if(C.x<0){C.x=0;TW.dir=1}if(C.x+C.w>TW.W){C.x=TW.W-C.w;TW.dir=-1}towerDraw()}
 function towerDrop(){if(!TW.on)return;var prev=TW.bl[TW.bl.length-1],C=TW.cur;
   var l=Math.max(C.x,prev.x),r=Math.min(C.x+C.w,prev.x+prev.w),w=r-l;
   if(w<=3){towerEnd(false);return}
-  var perfect=Math.abs(C.x-prev.x)<3;if(perfect){l=prev.x;w=prev.w}
+  var perfect=Math.abs(C.x-prev.x)<4;
+  if(perfect){l=prev.x;w=prev.w;TW.perfectStreak++;if(TW.perfectStreak>=3)w=Math.min(200,w+6);}
+  else TW.perfectStreak=0;
   var n=TW.bl.length;TW.bl.push({x:l,w:w,c:'hsl('+((n*23)%360)+',70%,60%)'});
-  $('#twS').textContent=TW.bl.length-1;
-  synthPop(perfect?880:520+n*8,perfect?1320:700,.1,perfect?'triangle':'sine');
-  if(!TW.won&&TW.bl.length-1>=rvTarget('tower')){towerWin()}
-  TW.sp=Math.min(9,2.5+n*0.25);
+  var floors=TW.bl.length-1;
+  var mult=1+rvGet('tower').tier*0.2+Math.floor(floors/5)*0.15+(TW.perfectStreak*0.15);
+  TW.score+=Math.round((perfect?15:10)*mult);
+  $('#twS').textContent=floors;
+  if($('#twSc'))$('#twSc').textContent=TW.score;
+  if($('#twCb'))$('#twCb').textContent=TW.perfectStreak+(TW.perfectStreak>=2?' 🔥':'');
+  cmpUpdateHud('tower',TW.score,mult,TW.passed);
+  synthPop(perfect?880+TW.perfectStreak*40:520+n*8,perfect?1320:700,.1,perfect?'triangle':'sine');
+  if(!TW.won&&floors>=rvTarget('tower')){towerWin()}
+  TW.sp=Math.min(9.5,2.5+n*0.26);
   TW.cur={x:(n%2)?0:TW.W-w,w:w};TW.dir=(n%2)?1:-1;
   towerDraw()}
 function towerDraw(){var c=TW.ctx;if(!c)return;var W=TW.W,H=TW.H,bh=TW.bh;c.fillStyle='#0b1f16';c.fillRect(0,0,W,H);
@@ -2341,24 +2549,28 @@ function towerDraw(){var c=TW.ctx;if(!c)return;var W=TW.W,H=TW.H,bh=TW.bh;c.fill
   TW.bl.forEach(function(b,i){var y=H-bh*(i+1)+cam;if(y>H)return;c.fillStyle=b.c;c.fillRect(b.x,y,b.w,bh-2)});
   if(TW.cur&&TW.on){var y2=H-bh*(n+1)+cam;c.fillStyle=TW.bl.length?'hsl('+((n*23)%360)+',70%,60%)':'#fff';c.fillRect(TW.cur.x,y2,TW.cur.w,bh-2)}
 }
-function towerWin(){TW.won=true;var x=rvResult('tower',true,TW.bl.length-1);
+function towerWin(){TW.won=true;var x=rvResult('tower',true,TW.score);
   $('#twMsg').innerHTML='<b>🏆 Lig atladın! Yeni rakip: '+RANKS[x.tier]+' · Kule büyümeye devam!</b>';gameVoice('lululu','Lig atladın, devam!','🏆')}
-function towerEnd(){towerStop();var score=TW.bl.length-1;if(TW.won)rvBest('tower',score);else rvResult('tower',false,score);
-  $('#twMsg').innerHTML='<b>😵 Blok kaydı! '+score+' kat'+(TW.won?'':' · hedef '+rvTarget('tower'))+'</b>';
+function towerEnd(){towerStop();var floors=TW.bl.length-1;if(TW.won)rvBest('tower',TW.score);else rvResult('tower',false,TW.score);
+  $('#twMsg').innerHTML='<b>😵 Blok kaydı! '+floors+' kat · Skor: '+TW.score+(TW.won?'':' · hedef '+rvTarget('tower')+' kat')+'</b>';
   $('#twGo').hidden=false;$('#twGo').textContent='Tekrar oyna';gameVoice('aaaaa','Kule çöktü!','🏗️')}
 
-/* ---------- Mayın Tarlası (rakipli lig, süre hedefi) ---------- */
-var MN={N:6,K:0,m:[],o:[],f:[],flag:false,first:true,on:false,over:false,time:0,ti:null,nt:null};
+/* ---------- Mayın Tarlası (Rakipli Lig + Hız Bonusu + Seri Çarpanı + Kapışma) ---------- */
+var MN={N:6,K:0,m:[],o:[],f:[],flag:false,first:true,on:false,over:false,time:0,streak:0,ti:null,nt:null,passed:{}};
 var MN_NUM=['','#60a5fa','#22c55e','#ef4444','#a855f7','#f97316','#06b6d4','#e2e8f0','#94a3b8'];
 function minesOpen(){
-  var tg=rvTarget('mines'),rv=rvGet('mines');
-  openGame('💣 Mayın Tarlası','<p class="lsub">Rakip: <b>'+RANKS[rv.tier]+'</b> · Tarlayı en fazla <b>'+tg+' sn</b> içinde temizle!</p><div class="bstat">Süre <b id="mnT">0</b> sn · Mayın <b id="mnK">0</b> · Limit <b>'+tg+'</b></div>'+
+  var tg=rvTarget('mines'),rv=rvGet('mines'),mult=1+rv.tier*0.25;
+  openGame('💣 Mayın Tarlası',
+    cmpHudHtml('mines')+
+    '<p class="lsub">Rakip: <b>'+RANKS[rv.tier]+'</b> · Tarlayı <b>'+tg+' sn</b> içinde çöz! Ne kadar hızlı çözersen o kadar yüksek puan!</p>'+
+    '<div class="bstat">Süre <b id="mnT">0</b>/'+tg+' sn · Mayın <b id="mnK">0</b> · Seri <b id="mnSt">0</b> · Rekor <b>'+rv.best+'</b></div>'+
     '<div id="mnGrid" style="display:grid;gap:3px;max-width:360px;margin:0 auto"></div>'+
     '<p id="mnMsg" class="lsub" style="min-height:20px"></p><div class="row" style="justify-content:center"><button class="btn" id="mnFlag">🚩 Bayrak kapalı</button><button class="btn pri" id="mnGo">Yeni tarla</button></div>');
   activeGameStop=minesStop;
   $('#mnGo').onclick=minesNew;
   $('#mnFlag').onclick=function(){MN.flag=!MN.flag;$('#mnFlag').textContent=MN.flag?'🚩 Bayrak açık':'🚩 Bayrak kapalı'};
   $('#mnGrid').onpointerdown=function(e){var b=e.target.closest('[data-i]');if(!b)return;e.preventDefault();minesTap(+b.dataset.i)};
+  cmpUpdateHud('mines',rv.best,mult,null);
   minesNew();
 }
 function minesStop(){clearInterval(MN.ti);clearTimeout(MN.nt);MN.on=false}
@@ -2366,9 +2578,9 @@ function minesSize(t){return 6+Math.floor(t/2)}
 function minesNb(i){var N=MN.N,x=i%N,y=Math.floor(i/N),r=[];for(var dy=-1;dy<=1;dy++)for(var dx=-1;dx<=1;dx++){if(!dx&&!dy)continue;var nx=x+dx,ny=y+dy;if(nx>=0&&ny>=0&&nx<N&&ny<N)r.push(ny*N+nx)}return r}
 function minesNew(){minesStop();var rv=rvGet('mines');var N=minesSize(rv.tier);
   MN.N=N;MN.K=Math.round(N*N*0.14)+Math.floor(rv.tier/3);MN.m=new Array(N*N).fill(false);MN.o=new Array(N*N).fill(false);MN.f=new Array(N*N).fill(false);
-  MN.first=true;MN.on=true;MN.over=false;MN.time=0;
+  MN.first=true;MN.on=true;MN.over=false;MN.time=0;MN.passed={};
   $('#mnGrid').style.gridTemplateColumns='repeat('+N+',1fr)';
-  $('#mnT').textContent=0;$('#mnK').textContent=MN.K;$('#mnMsg').textContent='İlk dokunuş güvenli!';$('#mnGo').textContent='Yeni tarla';
+  $('#mnT').textContent=0;$('#mnK').textContent=MN.K;if($('#mnSt'))$('#mnSt').textContent=MN.streak;$('#mnMsg').textContent='İlk dokunuş güvenli!';$('#mnGo').textContent='Yeni tarla';
   minesRender()}
 function minesPlace(safe){var ex=minesNb(safe).concat([safe]),placed=0;
   while(placed<MN.K){var i=Math.floor(Math.random()*MN.N*MN.N);if(MN.m[i]||ex.indexOf(i)>=0)continue;MN.m[i]=true;placed++}}
@@ -2394,8 +2606,14 @@ function minesRender(){var N=MN.N,h='';
 function minesEnd(won,msg){minesStop();MN.over=!won;
   for(var i=0;i<MN.N*MN.N;i++){if(won)MN.o[i]=MN.o[i]||!MN.m[i];}
   minesRender();
-  var x=rvResult('mines',won,won?rvTarget('mines')-MN.time:0);
-  $('#mnMsg').innerHTML='<b>'+(won?'🏆 Kazandın! '+MN.time+' sn. Yeni rakip: '+RANKS[x.tier]:(msg||'')+' Hedef '+rvTarget('mines')+' sn')+'</b>';
+  var rv=rvGet('mines'),tg=rvTarget('mines');
+  var mult=1+rv.tier*0.25+MN.streak*0.15;
+  var score=won?Math.max(10,Math.round((tg-MN.time+15)*mult)):0;
+  if(won)MN.streak++;else MN.streak=0;
+  if($('#mnSt'))$('#mnSt').textContent=MN.streak;
+  var x=rvResult('mines',won,score);
+  if(won)cmpUpdateHud('mines',score,1+x.tier*0.25+MN.streak*0.15,MN.passed);
+  $('#mnMsg').innerHTML='<b>'+(won?'🏆 Kazandın! '+MN.time+' sn · Skor: '+score+' (x'+mult.toFixed(1)+') · Yeni rakip: '+RANKS[x.tier]:(msg||'')+' Hedef '+tg+' sn')+'</b>';
   gameVoice(won?'lululu':'aaaaa',won?'Lig atladın, sıradaki tarla!':'Patladın!',won?'🏆':'💣')
   if(won){MN.nt=setTimeout(minesNew,1800)}}
 
@@ -3055,46 +3273,62 @@ function lingoClick(e){
 var BUG={score:0,left:30,tI:null,sT:null,on:false,combo:0,lastHit:0};
 function bugBest(){return +(lsGet('hb-bug-best')||0)}
 function bugOpenUI(){
-  openGame(isAslan()?'🪢 Aslan Yakalama':'🩴 Böcek Öldürme',(isAslan()?'<p class="lsub">30 saniyede koşan aslanlara ip at, yakala! Hızlı yakalarsan kombo bonusu kazanırsın.</p>':'<p class="lsub">30 saniyede kaçışan hamam böceklerini ez! Hızlı vurursan kombo bonusu kazanırsın.</p>')+'<div class="bstat">Süre <b id="bT">30</b> · Skor <b id="bS">0</b> · En iyi <b id="bB">'+bugBest()+'</b></div><div class="bfield" id="bF"></div><div class="row" style="justify-content:center;margin-top:12px"><button class="btn pri" id="bGo">Başla</button></div>');
+  BUG.lvl=1;BUG.passed={};
+  openGame(isAslan()?'🪢 Aslan Yakalama':'🩴 Böcek Öldürme',
+    cmpHudHtml('bug')+
+    (isAslan()?'<p class="lsub">30 saniyede koşan aslanları yakala! <b>👑 Altın Aslan = +5 puan</b>, seri kombo seviye çarpanını artırır!</p>':'<p class="lsub">30 saniyede kaçışan böcekleri ez! <b>👑 Altın Böcek = +5 puan</b>, seri kombo seviye çarpanını artırır!</p>')+
+    '<div class="bstat">Süre <b id="bT">30</b> · Sv <b id="bLv">1</b> · Skor <b id="bS">0</b> · Rekor <b id="bB">'+bugBest()+'</b></div>'+
+    '<div class="bfield" id="bF"></div><div class="row" style="justify-content:center;margin-top:12px"><button class="btn pri" id="bGo">Başla</button></div>');
   activeGameStop=function(){bugStop(false)};
   $('#bGo').onclick=bugStart;
+  cmpUpdateHud('bug',bugBest(),1,null);
   $('#bF').onpointerdown=function(e){
     var b=e.target.closest('.hb');if(!b||!BUG.on||b.dataset.dead)return;
     e.preventDefault();
     b.dataset.dead='1';
     var now=Date.now();BUG.combo=(now-BUG.lastHit<950)?BUG.combo+1:1;BUG.lastHit=now;
-    var pts=BUG.combo>=3?2:1;BUG.score+=pts;$('#bS').textContent=BUG.score;
+    var isGold=b.dataset.gold==='1';
+    var lv=1+Math.floor(BUG.score/12);
+    BUG.lvl=lv;
+    var mult=1+(lv-1)*0.2+(BUG.combo>=4?0.3:0);
+    var basePts=isGold?5:(BUG.combo>=3?2:1);
+    var pts=Math.max(1,Math.round(basePts*mult));
+    BUG.score+=pts;$('#bS').textContent=BUG.score;
+    if($('#bLv'))$('#bLv').textContent=lv;
+    cmpUpdateHud('bug',BUG.score,mult,BUG.passed);
     var f=$('#bF');
     if(f){
       var pop=document.createElement('div');pop.className='hit-pop';
       var fr=f.getBoundingClientRect(),br=b.getBoundingClientRect();pop.style.left=((br.left+br.width/2-fr.left)/fr.width*100)+'%';pop.style.top=((br.top+br.height/2-fr.top)/fr.height*100)+'%';
-      pop.textContent=BUG.combo>=3?'🔥 +2 KOMBO!':(isAslan()?'🪢 Yakalandı +1':'+1');
+      pop.textContent=isGold?'👑 ALTIN +'+pts+'!':(BUG.combo>=3?'🔥 +'+pts+' KOMBO!':(isAslan()?'🪢 +'+pts:'+'+pts));
       f.appendChild(pop);setTimeout(function(){pop.remove()},560);
       if(isAslan()){var rx=document.createElement('div');rx.className='rope-fx';rx.style.left=pop.style.left;rx.style.top=pop.style.top;f.appendChild(rx);setTimeout(function(){rx.remove()},480)}
     }
     b.textContent='💥';b.style.animation='none';b.style.transform='translate(-50%,-50%) scale(1.55)';b.style.opacity='0';
-    if(BUG.score%7===0)gameVoice('death');else gameVoice('squish');
+    if(isGold||BUG.score%7===0)gameVoice('death');else gameVoice('squish');
     setTimeout(function(){b.remove()},150);
   };
 }
 function bugStart(){
-  bugStop(false);BUG.score=0;BUG.left=30;BUG.on=true;BUG.combo=0;
-  $('#bS').textContent=0;$('#bT').textContent=30;$('#bF').innerHTML='';$('#bGo').hidden=true;
+  bugStop(false);BUG.score=0;BUG.left=30;BUG.on=true;BUG.combo=0;BUG.lvl=1;BUG.passed={};
+  $('#bS').textContent=0;$('#bT').textContent=30;if($('#bLv'))$('#bLv').textContent=1;$('#bF').innerHTML='';$('#bGo').hidden=true;
+  cmpUpdateHud('bug',0,1,null);
   gameVoice('lululu',isAslan()?'Aslanlar kaçıyor, ipi at! 🪢':'Böcekler kaçıyor, yakala! 🩴','🪳');
   BUG.tI=setInterval(function(){BUG.left--;if($('#bT'))$('#bT').textContent=BUG.left;if(BUG.left<=0)bugStop(true)},1000);
   bugSpawnLoop();
 }
-function bugSpawnLoop(){if(!BUG.on)return;bugSpawn();BUG.sT=setTimeout(bugSpawnLoop,Math.max(220,620-BUG.score*12))}
+function bugSpawnLoop(){if(!BUG.on)return;bugSpawn();BUG.sT=setTimeout(bugSpawnLoop,Math.max(200,610-BUG.score*7))}
 function bugSpawn(){
-  var f=$('#bF');if(!f)return;var L=isAslan();var b=document.createElement('div');b.className='hb';b.textContent=L?'🦁':'🪳';
-  var life=Math.max(580,1420-BUG.score*22);
+  var f=$('#bF');if(!f)return;var L=isAslan();var isGold=Math.random()<0.16;
+  var b=document.createElement('div');b.className='hb';b.textContent=isGold?'👑':(L?'🦁':'🪳');
+  if(isGold)b.dataset.gold='1';
+  var life=Math.max(540,1400-BUG.score*14);
   if(L){
-    /* Koşan aslan: bir kenardan öbür kenara koşar, ip atılınca yakalanır */
     var lr=Math.random()<.5;
     b.style.top=(12+Math.random()*76)+'%';b.style.left=(lr?-8:108)+'%';
     b.style.transition='none';f.appendChild(b);void b.offsetWidth;
-    b.style.transition='left '+(life+400)+'ms linear';b.style.left=(lr?108:-8)+'%';
-    setTimeout(function(){b.remove()},life+400);
+    b.style.transition='left '+(life+380)+'ms linear';b.style.left=(lr?108:-8)+'%';
+    setTimeout(function(){b.remove()},life+380);
     return;
   }
   b.style.left=(10+Math.random()*80)+'%';b.style.top=(10+Math.random()*80)+'%';
@@ -3109,10 +3343,10 @@ function bugStop(ended){
   }
 }
 
-/* ---------- 3. Oyun: Tek Kale Böcek Futbolu (Serbest Nişan + Şut Hızı + Köşeler & Aut + Sinirlenen ve Hiç Durmayan Kaleci) ---------- */
-var FOOT={goals:0,saves:0,shooting:false,angryUntil:0,dragStart:null,dragCur:null,gkX:50,gkDir:1,raf:null,lastTs:0,banT:null,shotT:null};
+/* ---------- 3. Oyun: Tek Kale Böcek Futbolu (Seviye Sistemi + Gol Serisi Çarpanı + Canlı Kapışma) ---------- */
+var FOOT={goals:0,score:0,streak:0,lvl:1,saves:0,shooting:false,angryUntil:0,dragStart:null,dragCur:null,gkX:50,gkDir:1,raf:null,lastTs:0,banT:null,shotT:null,passed:{}};
 function footPatrolSpeed(){
-  return Math.min(240, 48 + FOOT.goals * 13);
+  return Math.min(250, 48 + FOOT.goals * 13);
 }
 function gkKeeperSvg(){
   var base=buildRoachInnerSvg(getLook());
@@ -3135,7 +3369,6 @@ function footStartPatrol(){
     FOOT.lastTs=ts;
     var isAngry = ts < FOOT.angryUntil;
     gk.classList.toggle('angry', isAngry);
-    /* Kaleci gol sırasında dahi HİÇ durmaz, sürekli hareket eder! */
     if(FOOT.saves < 3){
       gk.classList.add('patrol');
       var spd = footPatrolSpeed() * (isAngry ? 1.28 : 1);
@@ -3168,17 +3401,18 @@ function updateSpeedHud(kmh){
 }
 function footOpen(){
   cancelAnimationFrame(FOOT.raf);clearTimeout(FOOT.banT);clearTimeout(FOOT.shotT);
-  FOOT={goals:0,saves:0,shooting:false,angryUntil:0,dragStart:null,dragCur:null,gkX:50,gkDir:1,raf:null,lastTs:0,banT:null,shotT:null};
+  FOOT={goals:0,score:0,streak:0,lvl:1,saves:0,shooting:false,angryUntil:0,dragStart:null,dragCur:null,gkX:50,gkDir:1,raf:null,lastTs:0,banT:null,shotT:null,passed:{}};
   var best=+(lsGet('hb-foot-best')||0);
   openGame('⚽ Tek Kale Böcek Futbolu',
-    '<p class="lsub">Kalenin her yerine (köşelere, 90\'a) şut çekebilirsin! Parmağınla hızlı çekersen sert şut, yavaş çekersen plase gider; fazla açarsan <b>auta</b> çıkar!</p>'+
-    '<div class="bstat">Gol <b id="fG">0</b> · Kaleci <b id="fSp">1.0x</b> · Hak <b id="fL">❤️❤️❤️</b> · Rekor <b id="fB">'+best+'</b></div>'+
+    cmpHudHtml('football')+
+    '<p class="lsub">90\'a ve köşelere şut çek! Her 3 golde seviye atlar, gol serisinde ekstra sıralama puanı toplarsın!</p>'+
+    '<div class="bstat">Puan <b id="fG">0</b> · Sv <b id="fLv">1</b> · Seri <b id="fSt">0</b> · Hak <b id="fL">❤️❤️❤️</b> · Rekor <b id="fB">'+best+'</b></div>'+
     '<div class="pitch" id="fPitch">'+
       '<div class="goal-top-banner" id="fGoalBan">⚽ GOOOOOL!</div>'+
       '<div class="goal-frame" id="fGoal">'+
         '<span class="goal-corner tl">90\'</span>'+
         '<span class="goal-corner tr">90\'</span>'+
-        '<span class="goal-post-lbl">KÖŞELERE & HER YERE VUR</span>'+
+        '<span class="goal-post-lbl">KÖŞELERE & 90\'A VUR = BONUS</span>'+
       '</div>'+
       '<div class="gk-roach patrol" id="fGk">'+gkKeeperSvg()+'</div>'+
       '<div class="pitch-lines"></div><div class="pitch-spot"></div>'+
@@ -3191,6 +3425,7 @@ function footOpen(){
     '<div class="row" style="justify-content:center;margin-top:12px"><button class="btn pri" id="fRst" hidden>🔄 Tekrar Oyna</button></div>'
   );
   activeGameStop=function(){cancelAnimationFrame(FOOT.raf);clearTimeout(FOOT.banT);clearTimeout(FOOT.shotT);FOOT.raf=null};
+  cmpUpdateHud('football',best,1,null);
   var pitch=$('#fPitch'),aim=$('#fAim');
   pitch.onpointerdown=function(e){
     if(FOOT.saves>=3||FOOT.shooting)return;
@@ -3228,7 +3463,6 @@ function footOpen(){
     var dt=Math.max(18,performance.now()-st.t);
     var targetX,targetBottom,kmh;
     if(dist>22 && dy<-12){
-      /* Parmağı kaydırarak şut: açı + çekiş hızına göre top hızı ve yönü */
       var slopeX=dx/Math.abs(dy);
       targetX=50+slopeX*58;
       var powerRatio=Math.min(1.25,dist/(r.height*0.42));
@@ -3236,13 +3470,10 @@ function footOpen(){
       var vel=dist/dt;
       kmh=Math.round(Math.max(60,Math.min(145,62+vel*44+dist*0.16)));
     }else{
-      /* Herhangi bir noktaya (köşeler, üst doksan, direk veya aut) dokunarak şut */
       targetX=((e.clientX-r.left)/r.width)*100;
       var relTop=((e.clientY-r.top)/r.height)*100;
       targetBottom=100-relTop;
-      /* Dokunulan yer çok aşağıdaysa kaleye doğru yükselt */
       if(targetBottom<58)targetBottom=65+Math.random()*22;
-      /* Basılı tutma süresine ve mesafeye göre dinamik şut hızı */
       var holdBoost=Math.min(48,dt*0.11);
       var edgeBoost=Math.abs(targetX-50)*0.45;
       kmh=Math.round(Math.max(64,Math.min(142,72+holdBoost+edgeBoost+(Math.random()*14-7))));
@@ -3265,15 +3496,16 @@ function footResetBallInstant(){
   FOOT.shooting=false;
 }
 function footLoseHeart(bannerTxt,mode,voiceKind,speechTxt,speechIc){
-  FOOT.saves++;
+  FOOT.saves++;FOOT.streak=0;
+  if($('#fSt'))$('#fSt').textContent=0;
   var hearts='';for(var i=0;i<3-FOOT.saves;i++)hearts+='❤️';for(var j=0;j<FOOT.saves;j++)hearts+='🖤';
   $('#fL').textContent=hearts;
   showGoalTopBanner(bannerTxt+' ('+(3-FOOT.saves)+' hak)',mode);
   if(FOOT.saves>=3){
     var endBan=$('#fBan');
-    if(endBan){endBan.textContent='🏁 MAÇ BİTTİ! TOPLAM GOL: '+FOOT.goals;endBan.classList.add('show')}
+    if(endBan){endBan.textContent='🏁 MAÇ BİTTİ! GOL: '+FOOT.goals+' · PUAN: '+FOOT.score;endBan.classList.add('show')}
     $('#fRst').hidden=false;
-    gameVoice('death','Maç bitti! Toplam '+FOOT.goals+' gol attın!','⚽');
+    gameVoice('death','Maç bitti! '+FOOT.goals+' gol, '+FOOT.score+' puan!','⚽');
   }else{
     gameVoice(voiceKind,speechTxt,speechIc);
     FOOT.shotT=setTimeout(footResetBallInstant,290);
@@ -3285,7 +3517,6 @@ function footShootAt(targetX,targetBottom,kmh){
   updateSpeedHud(kmh);
   gameVoice('kick');
   var ball=$('#fBall'),dot=$('#fDot');
-  /* Şut hızına göre topun uçuş süresi değişir (145 km/s -> ~150ms roket, 60 km/s -> ~410ms plase) */
   var flightMs=Math.round(Math.max(150,Math.min(420,490-(kmh*2.35))));
   var spinDeg=Math.round(kmh*6.5);
   var endScale=Math.max(0.44,0.68-(targetBottom-60)*0.006);
@@ -3299,7 +3530,6 @@ function footShootAt(targetX,targetBottom,kmh){
   ball.style.bottom=targetBottom+'%';
   ball.style.transform='scale('+endScale.toFixed(2)+') rotate('+spinDeg+'deg)';
 
-  /* Kale sınırları: left 12%..88% (iç ağ 13.5%..86.5%), üst direk bottom 89% */
   var isWideOut = (targetX < 12.6 || targetX > 87.4);
   var isHighOut = (targetBottom > 89.4);
   var hitPost = (!isWideOut && !isHighOut) && (targetX <= 14.2 || targetX >= 85.8 || targetBottom >= 88.0);
@@ -3307,7 +3537,6 @@ function footShootAt(targetX,targetBottom,kmh){
   FOOT.shotT=setTimeout(function(){
     if(!$('#fPitch'))return;
     if(isWideOut || isHighOut){
-      /* Top auta çıktı! */
       ball.style.transition='left 180ms ease-out,bottom 180ms ease-out,opacity 180ms';
       ball.style.left=(targetX<50?Math.max(1,targetX-6):Math.min(99,targetX+6))+'%';
       ball.style.bottom=Math.min(98,targetBottom+5)+'%';
@@ -3315,7 +3544,6 @@ function footShootAt(targetX,targetBottom,kmh){
       return;
     }
     if(hitPost){
-      /* Direkten döndü! */
       synthPop(260,110,.22,'square');
       ball.style.transition='left 220ms ease-out,bottom 220ms ease-out';
       ball.style.bottom='48%';
@@ -3323,7 +3551,6 @@ function footShootAt(targetX,targetBottom,kmh){
       footLoseHeart('🥅 DİREKTEN DÖNDÜ!','out','lululu','Direk kurtardı! Lülülü! 🥅','💥');
       return;
     }
-    /* Kalecinin o anki X konumuna göre kurtarış kontrolü (hızlı şutlarda kurtarmak zorlaşır) */
     var dist=Math.abs(FOOT.gkX - targetX);
     var reach=Math.max(9.5, 16.2 - (kmh - 60) * 0.065);
     var caught = dist < reach;
@@ -3333,16 +3560,22 @@ function footShootAt(targetX,targetBottom,kmh){
       ball.style.left=(targetX<50?'16%':'84%');
       footLoseHeart('🧤 KURTARDI! ('+kmh+' km/s)','save','lululu','Kurtardım lülülü! 🧤','🧤');
     }else{
-      /* GOOOOOL! Kaleci HİÇ durmadan hareket etmeye devam eder ve SINIRLENIR! */
-      FOOT.goals++;$('#fG').textContent=FOOT.goals;
-      FOOT.angryUntil=performance.now()+1450;
-      var mult=(footPatrolSpeed()/48).toFixed(1)+'x';
-      if($('#fSp'))$('#fSp').textContent=mult;
-      var best=Math.max(+(lsGet('hb-foot-best')||0),FOOT.goals);lsSet('hb-foot-best',best);lbSubmit('football',best);$('#fB').textContent=best;
+      FOOT.goals++;FOOT.streak++;
+      FOOT.lvl=1+Math.floor(FOOT.goals/3);
       var isCorner=(targetX<=22 || targetX>=78);
       var isTopBin=(isCorner && targetBottom>=80);
-      var gTitle=isTopBin?'🚀 90\'A TAKTI! GOOOOOL!':(isCorner?'🔥 TAM KÖŞEYE! GOOOOOL!':'⚽ GOOOOOL! ('+kmh+' km/s)');
-      showGoalTopBanner(gTitle+' · '+FOOT.goals, 'goal');
+      var baseGoal=isTopBin?3:(isCorner?2:1);
+      var mult=1+(FOOT.lvl-1)*0.25+(FOOT.streak>=3?0.3:0);
+      var pts=Math.max(1,Math.round(baseGoal*mult));
+      FOOT.score+=pts;
+      $('#fG').textContent=FOOT.score;
+      if($('#fLv'))$('#fLv').textContent=FOOT.lvl;
+      if($('#fSt'))$('#fSt').textContent=FOOT.streak+(FOOT.streak>=3?' 🔥':'');
+      FOOT.angryUntil=performance.now()+1450;
+      cmpUpdateHud('football',FOOT.score,mult,FOOT.passed);
+      var best=Math.max(+(lsGet('hb-foot-best')||0),FOOT.score);lsSet('hb-foot-best',best);lbSubmit('football',best);$('#fB').textContent=best;
+      var gTitle=isTopBin?'🚀 90\'A TAKTI! +'+pts:((isCorner?'🔥 TAM KÖŞEYE! +':'⚽ GOOOOOL! +')+pts);
+      showGoalTopBanner(gTitle+' ('+FOOT.goals+' gol)', 'goal');
       var angryLines=[
         ['aaaaa','😡 YETER BE! GOL YEDİK!','😡'],
         ['duktur','🤬 NASIL KAÇIRDIM BUNU!','🤬'],
@@ -3351,25 +3584,26 @@ function footShootAt(targetX,targetBottom,kmh){
       ];
       var pick=angryLines[FOOT.goals % angryLines.length];
       gameVoice(pick[0],pick[1],pick[2]);
-      /* Gol sırasında oyun ve kaleci HİÇ durmaz, top anında yenilenir */
       FOOT.shotT=setTimeout(footResetBallInstant,165);
     }
   },flightMs);
 }
 
-/* ---------- 4. Oyun: Bardak Altında Saklamaca (Sayılar Kaldırıldı, Akıcı Kaydırma) ---------- */
-var CUP={level:1,score:0,lives:3,roachIdx:0,slots:[],busy:true,timer:null};
+/* ---------- 4. Oyun: Bardak Altında Saklamaca (Seri Çarpanı + Seviye Atlamalı Kapışma) ---------- */
+var CUP={level:1,score:0,streak:0,lives:3,roachIdx:0,slots:[],busy:true,timer:null,passed:{}};
 function cupOpen(){
-  CUP={level:1,score:0,lives:3,roachIdx:0,slots:[],busy:true,timer:null};
+  CUP={level:1,score:0,streak:0,lives:3,roachIdx:0,slots:[],busy:true,timer:null,passed:{}};
   var best=+(lsGet('hb-cup-best')||0);
   openGame('🥤 Bardak Altı Saklamaca',
-    '<p class="lsub">Hamam böceğinin saklandığı bardağı gözünle takip et! Bulunca böcek "Aaaaaa!" diye bağırır.</p>'+
-    '<div class="bstat">Seviye <b id="cLv">1</b> · Skor <b id="cSc">0</b> · Hak <b id="cLi">❤️❤️❤️</b> · Rekor <b id="cBs">'+best+'</b></div>'+
+    cmpHudHtml('cups')+
+    '<p class="lsub">Böceği takip et! Üst üste doğru tahminlerde <b>Seri Çarpanı</b> katlanır, Sv.4\'te 4 bardak açılır!</p>'+
+    '<div class="bstat">Seviye <b id="cLv">1</b> · Skor <b id="cSc">0</b> · Seri <b id="cSt">0</b> · Hak <b id="cLi">❤️❤️❤️</b> · Rekor <b id="cBs">'+best+'</b></div>'+
     '<div class="cup-stage" id="cStage"><div class="cup-table"></div></div>'+
     '<div class="lmsg" id="cMsg">Hazırlanıyor...</div>'+
     '<div class="row" style="justify-content:center;margin-top:8px"><button class="btn pri" id="cRst" hidden>🔄 Tekrar Oyna</button></div>'
   );
   activeGameStop=function(){clearTimeout(CUP.timer)};
+  cmpUpdateHud('cups',best,1,null);
   $('#cRst').onclick=cupOpen;
   cupRound();
 }
@@ -3400,7 +3634,7 @@ function cupRound(){
   CUP.timer=setTimeout(function(){
     document.querySelectorAll('#cStage .cup-item').forEach(function(el){el.classList.remove('lifted')});
     $('#cMsg').textContent='🌀 Bardaklar karışıyor...';
-    var swaps=4+CUP.level*2,step=0,spd=Math.max(165,360-CUP.level*24);
+    var swaps=4+CUP.level*2,step=0,spd=Math.max(155,360-CUP.level*25);
     function doSwap(){
       if(!$('#cStage'))return;
       if(step>=swaps){
@@ -3432,14 +3666,20 @@ function cupGuess(idx){
   if(picked)picked.classList.add('lifted');
   if(real)real.classList.add('lifted');
   if(idx===CUP.roachIdx){
-    CUP.score+=CUP.level*10;CUP.level++;
+    CUP.streak++;
+    var mult=1+(CUP.level-1)*0.25+(CUP.streak>=2?CUP.streak*0.15:0);
+    var gain=Math.round(CUP.level*10*mult);
+    CUP.score+=gain;CUP.level++;
     var best=Math.max(+(lsGet('hb-cup-best')||0),CUP.score);lsSet('hb-cup-best',best);lbSubmit('cups',best);
     $('#cSc').textContent=CUP.score;$('#cLv').textContent=CUP.level;$('#cBs').textContent=best;
-    $('#cMsg').textContent='😱 AAAAAAA! Böceği buldun! Sonraki seviye...';
+    if($('#cSt'))$('#cSt').textContent=CUP.streak+(CUP.streak>=3?' 🔥':'');
+    cmpUpdateHud('cups',CUP.score,mult,CUP.passed);
+    $('#cMsg').textContent='😱 AAAAAAA! +'+gain+' puan (x'+mult.toFixed(1)+')! Seviye '+CUP.level+'...';
     gameVoice('aaaaa','Aaaaaaaaa! Buldun beni! 😱','🪳');
-    CUP.timer=setTimeout(cupRound,1350);
+    CUP.timer=setTimeout(cupRound,1300);
   }else{
-    CUP.lives--;
+    CUP.lives--;CUP.streak=0;
+    if($('#cSt'))$('#cSt').textContent=0;
     var hearts='';for(var i=0;i<CUP.lives;i++)hearts+='❤️';for(var j=0;j<3-CUP.lives;j++)hearts+='🖤';
     $('#cLi').textContent=hearts;
     if(CUP.lives<=0){
@@ -3449,19 +3689,20 @@ function cupGuess(idx){
     }else{
       $('#cMsg').textContent='😜 Yanlış bardak! Böcek diğer bardaktaydı!';
       gameVoice('lululu','Buradaydım lülülü! 😜','🥤');
-      CUP.timer=setTimeout(cupRound,1350);
+      CUP.timer=setTimeout(cupRound,1300);
     }
   }
 }
 
-/* ---------- 5. Oyun: Seviyeli Beceri Oyunu — Terlikten Kaçış (GPU Translate3d + Anında Tepki) ---------- */
-var SK={lvl:1,lane:1,got:0,need:5,lives:3,objs:[],raf:null,lastSpawn:0,lastTs:0,on:false};
+/* ---------- 5. Oyun: Seviyeli Beceri Oyunu — Terlikten Kaçış (Altın Ödül + Kombo + Canlı Kapışma) ---------- */
+var SK={lvl:1,lane:1,got:0,need:5,combo:0,lives:3,objs:[],raf:null,lastSpawn:0,lastTs:0,on:false,passed:{}};
 function skillOpen(){
   var savedLvl=+(lsGet('hb-skill-lvl')||1);
-  SK={lvl:1,lane:1,got:0,need:5,lives:3,objs:[],raf:null,lastSpawn:0,lastTs:0,on:false};
+  SK={lvl:1,lane:1,got:0,need:5,combo:0,lives:3,objs:[],raf:null,lastSpawn:0,lastTs:0,on:false,passed:{}};
   openGame(isAslan()?'🏃 Jandarmadan Kaçış (Seviyeli)':'🏆 Terlikten Kaçış (Seviyeli)',
-    (isAslan()?'<p class="lsub">Et 🍖 ve yem 🥩 toplayarak seviyeleri geç! Jandarma 🪖 ve polis arabası 🚓 seni yakalamasın.</p>':'<p class="lsub">Kahve ☕ ve şeker 🍰 toplayarak seviyeleri geç! Terlik 🩴 ve böcek ilacından 🧴 kaç.</p>')+
-    '<div class="bstat">Seviye <b id="sLv">1</b> · Hedef <b id="sPr">0/5</b> · Can <b id="sLi">❤️❤️❤️</b> · En Yüksek Sv. <b>'+savedLvl+'</b></div>'+
+    cmpHudHtml('skill')+
+    (isAslan()?'<p class="lsub">Et 🍖 ve <b>👑 Altın Taç (+2)</b> toplayarak seviyeleri geç! Jandarma 🪖 ve polis 🚓 yakalamasın.</p>':'<p class="lsub">Kahve ☕, şeker 🍰 ve <b>👑 Altın Taç (+2)</b> toplayarak seviyeleri geç! Terlik 🩴 ve ilaçtan 🧴 kaç.</p>')+
+    '<div class="bstat">Seviye <b id="sLv">1</b> · Hedef <b id="sPr">0/5</b> · Seri <b id="sCb">0</b> · Can <b id="sLi">❤️❤️❤️</b> · Rekor Sv. <b>'+savedLvl+'</b></div>'+
     '<div class="sk-prog"><i id="sBar"></i></div>'+
     '<div class="sk-arena" id="sArena">'+
       '<div class="sk-lanes"><div class="sk-lane" data-ln="0"></div><div class="sk-lane" data-ln="1"></div><div class="sk-lane" data-ln="2"></div><div class="sk-lane" data-ln="3"></div></div>'+
@@ -3470,6 +3711,7 @@ function skillOpen(){
     '</div>'+
     '<div class="row sp" style="margin-top:10px"><button class="btn" id="sLeft" style="flex:1;padding:12px">⬅️ Sol</button><button class="btn pri" id="sStart" style="flex:1.4;padding:12px">▶️ Başla</button><button class="btn" id="sRight" style="flex:1;padding:12px">Sağ ➡️</button></div>'
   );
+  cmpUpdateHud('skill',savedLvl,1,null);
   function moveLane(ln){SK.lane=Math.max(0,Math.min(3,ln));var pl=$('#sPl');if(pl)pl.style.left=(SK.lane*25+12.5)+'%'}
   var onKey=function(e){
     if(!SK.on)return;
@@ -3491,9 +3733,11 @@ function skillOpen(){
 function skillStartLevel(lv){
   cancelAnimationFrame(SK.raf);
   SK.lvl=lv;SK.got=0;SK.need=4+lv*2;SK.objs=[];SK.on=true;SK.lastSpawn=0;SK.lastTs=performance.now();
-  if(lv===1)SK.lives=3;
+  if(lv===1){SK.lives=3;SK.combo=0;SK.passed={};}
   $('#sStart').hidden=true;
   $('#sLv').textContent=SK.lvl;$('#sPr').textContent='0/'+SK.need;$('#sBar').style.width='0%';
+  if($('#sCb'))$('#sCb').textContent=SK.combo;
+  cmpUpdateHud('skill',SK.lvl,1+(SK.lvl-1)*0.2,SK.passed);
   var hearts='';for(var i=0;i<SK.lives;i++)hearts+='❤️';for(var j=0;j<3-SK.lives;j++)hearts+='🖤';
   $('#sLi').textContent=hearts;$('#sObjs').innerHTML='';
   gameVoice('lululu',isAslan()?'Seviye '+lv+' başladı! Jandarma peşinde, koş! 🏃':'Seviye '+lv+' başladı! Kaç böcek kaç! 🏃','🪳');
@@ -3502,38 +3746,48 @@ function skillStartLevel(lv){
 function skillLoop(ts){
   if(!SK.on||!$('#sArena'))return;
   var dt=Math.min(0.05,(ts-SK.lastTs)/1000);SK.lastTs=ts;
-  var spawnInt=Math.max(340,880-SK.lvl*72);
+  var spawnInt=Math.max(320,860-SK.lvl*72);
   if(ts-SK.lastSpawn>spawnInt){
     SK.lastSpawn=ts;
     var ln=Math.floor(Math.random()*4);
-    var good=Math.random()<0.45;
-    var L=isAslan();var ic=good?(Math.random()<0.5?(L?'🍖':'☕'):(L?'🥩':'🍰')):(Math.random()<0.6?(L?'🪖':'🩴'):(L?'🚓':'🧴'));
+    var r=Math.random();
+    var good=r<0.48;
+    var isGold=good && r<0.11;
+    var L=isAslan();
+    var ic=isGold?'👑':(good?(Math.random()<0.5?(L?'🍖':'☕'):(L?'🥩':'🍰')):(Math.random()<0.6?(L?'🪖':'🩴'):(L?'🚓':'🧴')));
     var el=document.createElement('div');el.className='sk-obj';el.textContent=ic;
     el.style.left=(ln*25+12.5)+'%';
     el.style.transform='translate3d(0,-30px,0)';
     $('#sObjs').appendChild(el);
-    SK.objs.push({ln:ln,y:-30,good:good,el:el});
+    SK.objs.push({ln:ln,y:-30,good:good,gold:isGold,el:el});
   }
   var arenaH=$('#sArena').clientHeight||380;
-  var speed=175+SK.lvl*35;
+  var speed=178+SK.lvl*36;
   for(var i=SK.objs.length-1;i>=0;i--){
     var o=SK.objs[i];o.y+=speed*dt;
     o.el.style.transform='translate3d(0,'+o.y.toFixed(1)+'px,0)';
     if(o.y>arenaH-66&&o.y<arenaH-14&&o.ln===SK.lane){
       o.el.remove();SK.objs.splice(i,1);
       if(o.good){
-        SK.got++;$('#sPr').textContent=SK.got+'/'+SK.need;$('#sBar').style.width=Math.min(100,Math.round(SK.got/SK.need*100))+'%';
-        synthPop(520,840,.11,'triangle');
+        SK.combo++;
+        var stepGain=o.gold?2:(SK.combo>=5?2:1);
+        SK.got+=stepGain;
+        $('#sPr').textContent=Math.min(SK.need,SK.got)+'/'+SK.need;
+        $('#sBar').style.width=Math.min(100,Math.round(SK.got/SK.need*100))+'%';
+        if($('#sCb'))$('#sCb').textContent=SK.combo+(SK.combo>=5?' 🔥':'');
+        synthPop(o.gold?880:520+SK.combo*25,940,.11,'triangle');
         if(SK.got>=SK.need){
           SK.on=false;
           var next=SK.lvl+1;
           var bestLv=Math.max(+(lsGet('hb-skill-lvl')||1),next);lsSet('hb-skill-lvl',bestLv);lbSubmit('skill',bestLv);
+          cmpUpdateHud('skill',next,1+(next-1)*0.2,SK.passed);
           gameVoice('aaaaa','Seviye '+SK.lvl+' geçildi! Sıradaki Seviye '+next+' 🎉','🏆');
-          setTimeout(function(){if($('#sArena'))skillStartLevel(next)},1050);
+          setTimeout(function(){if($('#sArena'))skillStartLevel(next)},1000);
           return;
         }
       }else{
-        SK.lives--;
+        SK.lives--;SK.combo=0;
+        if($('#sCb'))$('#sCb').textContent=0;
         var hearts='';for(var h=0;h<SK.lives;h++)hearts+='❤️';for(var k=0;k<3-SK.lives;k++)hearts+='🖤';
         $('#sLi').textContent=hearts;
         if(SK.lives<=0){
@@ -3551,7 +3805,6 @@ function skillLoop(ts){
   }
   SK.raf=requestAnimationFrame(skillLoop);
 }
-
 /* ---------- VIP Görsel Efekt Motoru (Matrix Yağmuru & Havai Fişekler) ---------- */
 var FX={mode:'none',raf:null,particles:[],cols:[]};
 function resizeFx(){
@@ -4496,8 +4749,10 @@ function lbBadName(name){
 function lbName(){return (S.settings&&S.settings.username)||''}
 function lbUid(){if(!S.settings.uid){S.settings.uid=Math.random().toString(36).slice(2)+Date.now().toString(36);save()}return S.settings.uid}
 function lbHeaders(){return {'apikey':LB_CFG.key,'Authorization':'Bearer '+LB_CFG.key,'Content-Type':'application/json','x-uid':lbUid()}}
+function lbBannedList(){try{return JSON.parse(lsGet('hb-adm-banned')||'[]')}catch(e){return []}}
+function lbIsBanned(u,uid){var b=lbBannedList();return b.some(function(x){return (u&&x.u===u)||(uid&&x.uid===uid)})}
 function lbSubmit(g,score){
-  if(!LB_CFG.url||!lbName()||!(score>0)||lbBadName(lbName()))return;
+  if(!LB_CFG.url||!lbName()||!(score>0)||lbBadName(lbName())||lbIsBanned(lbName(),lbUid()))return;
   try{fetch(LB_CFG.url+'/rest/v1/scores',{method:'POST',headers:Object.assign(lbHeaders(),{'Prefer':'return=minimal'}),
     body:JSON.stringify({username:lbName(),game:g,score:Math.round(score),uid:lbUid()})}).catch(function(){})}catch(e){}}
 function lbRenameRemote(oldName,newName){if(!LB_CFG.url||!oldName||oldName===newName)return;
@@ -4534,7 +4789,7 @@ function lbRender(){
   fetch(LB_CFG.url+'/rest/v1/scores?game=eq.'+encodeURIComponent(g)+'&select=username,score&order=score.desc&limit=500',{headers:lbHeaders()})
     .then(function(r){if(!r.ok)throw new Error('http');return r.json()})
     .then(function(rows){
-      var best={};rows.forEach(function(r){if(!best[r.username]||r.score>best[r.username])best[r.username]=r.score});
+      var best={};rows.forEach(function(r){if(lbIsBanned(r.username))return;if(!best[r.username]||r.score>best[r.username])best[r.username]=r.score});
       var top=Object.keys(best).map(function(u){return {u:u,s:best[u]}}).sort(function(a,b){return b.s-a.s}).slice(0,20);
       $('#lbInfo').textContent=top.length?'En iyi 20 oyuncu':'Bu oyunda henüz skor yok. İlk sen ol!';
       list.innerHTML=top.map(function(r){return '<li'+(r.u===me?' style="font-weight:800;color:var(--accent)"':'')+'>'+escapeHtml(r.u)+' — '+r.s+'</li>'}).join('');
@@ -5337,5 +5592,299 @@ document.addEventListener('touchmove',function(e){
 document.addEventListener('touchend',function(){y0=null},{passive:true});
 })();
 </script>
+
+<script>
+/* ---------- SÜPER YÖNETİCİ OYUNCU & SUPABASE SKOR KONTROL MODÜLÜ ---------- */
+(function(){
+  var ADM_PASS_KEY = 'hb-adm-pass-v1';
+  var DEF_PASS     = 'ferdi1453';
+  var admRowsCache = [];
+
+  function getAdmPass(){ return lsGet(ADM_PASS_KEY) || DEF_PASS; }
+  function setAdmPass(p){ lsSet(ADM_PASS_KEY, p); }
+
+  if($('#gmLbAllBtn')){
+    $('#gmLbAllBtn').onclick = function(){
+      replaceNext = true;
+      close('#gamesModal', true);
+      lbOpen('lingo');
+    };
+  }
+
+  var tapCnt = 0, tapTmr = null, lastTapTs = 0;
+  function handleSecretTap(e){
+    var now = Date.now();
+    if(now - lastTapTs < 90) return;
+    lastTapTs = now;
+    tapCnt++;
+    clearTimeout(tapTmr);
+    tapTmr = setTimeout(function(){ tapCnt = 0; }, 2200);
+    if(tapCnt >= 5){
+      tapCnt = 0;
+      if(e && e.preventDefault) e.preventDefault();
+      openAdminAuth();
+    }
+  }
+  function bindSecretTrigger(el){
+    if(!el) return;
+    el.addEventListener('click', handleSecretTap);
+    el.addEventListener('touchend', handleSecretTap, {passive:false});
+  }
+  bindSecretTrigger($('#gmT'));
+  bindSecretTrigger($('#gmSecretIcon'));
+  bindSecretTrigger($('#lbSheet .tic'));
+
+  function openAdminAuth(){
+    var authEl = $('#adminAuthSheet');
+    if(!authEl) return;
+    $('#admPassIn').value = '';
+    $('#admAuthErr').textContent = '';
+    authEl.style.zIndex = '140';
+    open('#adminAuthSheet');
+    setTimeout(function(){ if($('#admPassIn')) $('#admPassIn').focus(); }, 140);
+  }
+
+  if($('#admAuthCancel')) $('#admAuthCancel').onclick = function(){ close('#adminAuthSheet'); };
+  if($('#admAuthOk')) $('#admAuthOk').onclick = verifyAdmin;
+  if($('#admPassIn')) $('#admPassIn').onkeydown = function(e){ if(e.key === 'Enter') verifyAdmin(); };
+
+  function verifyAdmin(){
+    var v = ($('#admPassIn').value || '').trim();
+    if(v === getAdmPass()){
+      replaceNext = true;
+      close('#adminAuthSheet', true);
+      initAdminPanel();
+      var pEl = $('#adminPanelSheet');
+      if(pEl) pEl.style.zIndex = '145';
+      open('#adminPanelSheet');
+      toast('🛡️ Süper Yönetici Paneli açıldı');
+    } else {
+      $('#admAuthErr').textContent = '❌ Hatalı yönetici parolası!';
+      if(navigator.vibrate) navigator.vibrate([80,50,80]);
+    }
+  }
+
+  function initAdminPanel(){
+    var sel = $('#admGameSel');
+    if(sel && !sel.options.length){
+      sel.innerHTML = '<option value="all">🌐 Tüm Oyunlar</option>' +
+        Object.keys(LB_GAMES).map(function(k){
+          return '<option value="'+k+'">'+escapeHtml(LB_GAMES[k])+'</option>';
+        }).join('');
+    }
+    if($('#admBanCnt')) $('#admBanCnt').textContent = lbBannedList().length;
+    fetchAdminPlayers();
+  }
+
+  function fetchAdminPlayers(){
+    var g = ($('#admGameSel') && $('#admGameSel').value) || 'all';
+    $('#admCountLbl').textContent = 'Buluttan çekiliyor...';
+    $('#admPlayerList').innerHTML = '<li class="empty">Yükleniyor...</li>';
+
+    if(!LB_CFG.url){
+      $('#admCountLbl').textContent = 'Çevrimiçi veritabanı bağlı değil';
+      return;
+    }
+
+    var url = LB_CFG.url + '/rest/v1/scores?select=id,username,game,score,uid,created_at&order=score.desc&limit=1000';
+    if(g !== 'all') url += '&game=eq.' + encodeURIComponent(g);
+
+    fetch(url, { headers: lbHeaders() })
+      .then(function(r){ if(!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function(rows){
+        admRowsCache = Array.isArray(rows) ? rows : [];
+        renderAdminPlayers();
+      })
+      .catch(function(err){
+        $('#admCountLbl').textContent = 'Bağlantı hatası';
+        $('#admPlayerList').innerHTML = '<li class="empty">Veriler çekilemedi: ' + escapeHtml(err.message) + '</li>';
+      });
+  }
+
+  function renderAdminPlayers(){
+    var q = ($('#admSearch').value || '').toLowerCase().trim();
+    var filtered = admRowsCache.filter(function(r){
+      if(!q) return true;
+      return String(r.username||'').toLowerCase().indexOf(q) >= 0 ||
+             String(r.uid||'').toLowerCase().indexOf(q) >= 0 ||
+             String(r.game||'').toLowerCase().indexOf(q) >= 0;
+    });
+
+    $('#admCountLbl').textContent = 'Kayıtlı Skor / Oyuncu (' + filtered.length + ')';
+    $('#admBanCnt').textContent = lbBannedList().length;
+
+    if(!filtered.length){
+      $('#admPlayerList').innerHTML = '<li class="empty">Eşleşen oyuncu kaydı bulunamadı.</li>';
+      return;
+    }
+
+    $('#admPlayerList').innerHTML = filtered.map(function(r, idx){
+      var banned = lbIsBanned(r.username, r.uid);
+      var gName = LB_GAMES[r.game] || r.game;
+      var badge = banned ? ' <span style="color:var(--danger);font-size:11px;font-weight:800">[ENGELLİ]</span>' : '';
+      return '<li class="item" style="flex-direction:column;align-items:stretch;gap:6px;'+(banned?'opacity:.65;border-color:var(--danger)':'')+'">' +
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">' +
+          '<div style="min-width:0">' +
+            '<b style="font-size:14px">👤 ' + escapeHtml(r.username) + badge + '</b>' +
+            '<span style="font-size:11px;color:var(--muted)">🎮 ' + escapeHtml(gName) + ' • UID: ' + escapeHtml(String(r.uid||'-').slice(0,10)) + '</span>' +
+          '</div>' +
+          '<b style="font:800 17px var(--f-display);color:var(--accent);white-space:nowrap">🏆 ' + r.score + '</b>' +
+        '</div>' +
+        '<div style="display:flex;gap:5px;flex-wrap:wrap">' +
+          '<button type="button" class="btn" style="padding:4px 8px;font-size:11.5px" data-adm="rename" data-idx="'+idx+'">✏️ Ad Değiştir</button>' +
+          '<button type="button" class="btn" style="padding:4px 8px;font-size:11.5px" data-adm="score" data-idx="'+idx+'">🎯 Skor Düzenle</button>' +
+          '<button type="button" class="btn" style="padding:4px 8px;font-size:11.5px" data-adm="ban" data-idx="'+idx+'">'+(banned?'✅ Engeli Kaldır':'🚫 Engelle')+'</button>' +
+          '<button type="button" class="btn dng" style="padding:4px 8px;font-size:11.5px" data-adm="del" data-idx="'+idx+'">🗑️ Sil</button>' +
+        '</div>' +
+      '</li>';
+    }).join('');
+
+    $('#admPlayerList')._filtered = filtered;
+  }
+
+  $('#admPlayerList').onclick = function(e){
+    var btn = e.target.closest('button');
+    if(!btn || !btn.dataset.adm) return;
+    var act = btn.dataset.adm;
+    var list = $('#admPlayerList')._filtered || [];
+    var row = list[+btn.dataset.idx];
+    if(!row) return;
+
+    if(act === 'rename'){
+      var nn = prompt('"' + row.username + '" için yeni kullanıcı adı (tüm skorlarında güncellenir):', row.username);
+      if(!nn || nn.trim().length < 2) return;
+      nn = nn.trim().slice(0,14);
+      var filterQ = row.uid ? ('uid=eq.' + encodeURIComponent(row.uid)) : ('username=eq.' + encodeURIComponent(row.username));
+      fetch(LB_CFG.url + '/rest/v1/scores?' + filterQ, {
+        method: 'PATCH',
+        headers: Object.assign(lbHeaders(), {'Prefer':'return=minimal'}),
+        body: JSON.stringify({ username: nn })
+      }).then(function(r){
+        if(!r.ok) throw new Error('Güncellenemedi');
+        if(lbName() === row.username){ S.settings.username = nn; save(); }
+        toast('✅ Kullanıcı adı "' + nn + '" olarak güncellendi');
+        fetchAdminPlayers();
+        if(!$('#lbSheet').hidden) lbRender();
+      }).catch(function(err){ toast('❌ Hata: ' + err.message); });
+
+    } else if(act === 'score'){
+      var ns = prompt(row.username + ' (' + (LB_GAMES[row.game]||row.game) + ') için yeni skor:', row.score);
+      if(ns === null || isNaN(Number(ns))) return;
+      var newVal = Math.max(0, Math.round(Number(ns)));
+      var targetQ = row.id ? ('id=eq.' + encodeURIComponent(row.id)) :
+        ('username=eq.' + encodeURIComponent(row.username) + '&game=eq.' + encodeURIComponent(row.game));
+      fetch(LB_CFG.url + '/rest/v1/scores?' + targetQ, {
+        method: 'PATCH',
+        headers: Object.assign(lbHeaders(), {'Prefer':'return=minimal'}),
+        body: JSON.stringify({ score: newVal })
+      }).then(function(r){
+        if(!r.ok) throw new Error('Skor güncellenemedi');
+        toast('🎯 Yeni skor kaydedildi: ' + newVal);
+        fetchAdminPlayers();
+        if(!$('#lbSheet').hidden) lbRender();
+      }).catch(function(err){ toast('❌ Hata: ' + err.message); });
+
+    } else if(act === 'ban'){
+      var bl = lbBannedList();
+      var existsIdx = bl.findIndex(function(x){ return x.u === row.username || (row.uid && x.uid === row.uid); });
+      if(existsIdx >= 0){
+        bl.splice(existsIdx, 1);
+        toast('✅ ' + row.username + ' engeli kaldırıldı');
+      } else {
+        bl.push({ u: row.username, uid: row.uid || '' });
+        toast('🚫 ' + row.username + ' sıralamadan gizlendi');
+      }
+      lsSet('hb-adm-banned', JSON.stringify(bl));
+      renderAdminPlayers();
+      if(!$('#lbSheet').hidden) lbRender();
+
+    } else if(act === 'del'){
+      if(!confirm(row.username + ' adlı oyuncunun bu skor kaydı silinsin mi?\n\nTamam = Sadece bu skoru sil')) return;
+      var delQ = row.id ? ('id=eq.' + encodeURIComponent(row.id)) :
+        ('username=eq.' + encodeURIComponent(row.username) + '&game=eq.' + encodeURIComponent(row.game));
+      fetch(LB_CFG.url + '/rest/v1/scores?' + delQ, {
+        method: 'DELETE',
+        headers: Object.assign(lbHeaders(), {'Prefer':'return=minimal'})
+      }).then(function(r){
+        if(!r.ok) throw new Error('Silme yetkisi reddedildi veya hata oluştu');
+        toast('🗑️ Kayıt silindi');
+        fetchAdminPlayers();
+        if(!$('#lbSheet').hidden) lbRender();
+      }).catch(function(err){ toast('❌ Hata: ' + err.message); });
+    }
+  };
+
+  $('#admAddBtn').onclick = function(){
+    var nm = ($('#admNewName').value || '').trim().slice(0,14);
+    var sc = Number($('#admNewScore').value);
+    var g = $('#admGameSel').value;
+    if(g === 'all') g = 'lingo';
+    if(nm.length < 2 || isNaN(sc) || sc < 0){
+      toast('Geçerli bir kullanıcı adı ve skor girin');
+      return;
+    }
+    fetch(LB_CFG.url + '/rest/v1/scores', {
+      method: 'POST',
+      headers: Object.assign(lbHeaders(), {'Prefer':'return=minimal'}),
+      body: JSON.stringify({
+        username: nm,
+        game: g,
+        score: Math.round(sc),
+        uid: 'adm_' + Math.random().toString(36).slice(2,10)
+      })
+    }).then(function(r){
+      if(!r.ok) throw new Error('Kayıt eklenemedi');
+      $('#admNewName').value = '';
+      $('#admNewScore').value = '';
+      toast('✅ Oyuncu skoru eklendi');
+      fetchAdminPlayers();
+      if(!$('#lbSheet').hidden) lbRender();
+    }).catch(function(err){ toast('❌ Hata: ' + err.message); });
+  };
+
+  $('#admClearGame').onclick = function(){
+    var g = $('#admGameSel').value;
+    if(g === 'all'){
+      toast('Sıfırlamak için önce üstten belirli bir oyun seçin');
+      return;
+    }
+    if(!confirm((LB_GAMES[g]||g) + ' oyunundaki TÜM oyuncu skorları buluttan silinecek. Emin misiniz?')) return;
+    fetch(LB_CFG.url + '/rest/v1/scores?game=eq.' + encodeURIComponent(g), {
+      method: 'DELETE',
+      headers: Object.assign(lbHeaders(), {'Prefer':'return=minimal'})
+    }).then(function(r){
+      if(!r.ok) throw new Error('Sıfırlama başarısız');
+      toast('🗑️ ' + (LB_GAMES[g]||g) + ' skorları sıfırlandı');
+      fetchAdminPlayers();
+      if(!$('#lbSheet').hidden) lbRender();
+    }).catch(function(err){ toast('❌ Hata: ' + err.message); });
+  };
+
+  $('#admBanListBtn').onclick = function(){
+    var bl = lbBannedList();
+    if(!bl.length){ toast('Engelli hesap bulunmuyor'); return; }
+    var names = bl.map(function(x,i){ return (i+1) + '. ' + x.u; }).join('\n');
+    if(confirm('Engelli Hesaplar:\n' + names + '\n\nTüm engelleri kaldırmak ister misiniz?')){
+      lsSet('hb-adm-banned', '[]');
+      renderAdminPlayers();
+      toast('✅ Tüm engeller kaldırıldı');
+    }
+  };
+
+  $('#admPassChange').onclick = function(){
+    var np = prompt('Yeni yönetici parolasını girin (en az 4 karakter):');
+    if(np && np.trim().length >= 4){
+      setAdmPass(np.trim());
+      toast('🔑 Yönetici parolası güncellendi');
+    }
+  };
+
+  $('#admGameSel').onchange = fetchAdminPlayers;
+  $('#admSearch').oninput = renderAdminPlayers;
+  $('#admRefreshBtn').onclick = fetchAdminPlayers;
+  $('#admClose').onclick = function(){ close('#adminPanelSheet'); };
+})();
+</script>
+
 </body>
 </html>
