@@ -773,7 +773,7 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
     <div class="trow"><button class="btn" id="wtSnooze">⏰ 10 dk sonra</button><button class="btn pri" id="wtDrink">💧 İçtim</button></div>
   </div>
 </div>
-<div class="tour" id="confirmSheet" hidden role="dialog" aria-modal="true" aria-labelledby="cfT">
+<div class="tour" id="confirmSheet" hidden role="dialog" aria-modal="true" aria-labelledby="cfT" style="z-index:170">
   <div class="tcard">
     <div class="tic" id="cfIc">🚪</div>
     <h3 id="cfT"></h3>
@@ -922,64 +922,81 @@ body.vip-sofi .glow{background:rgba(16,185,129,.28)!important}
   </div>
 </div>
 
-<!-- Yönetici Parola Doğrulama Penceresi -->
-<div class="tour" id="adminAuthSheet" hidden role="dialog" aria-modal="true" style="z-index:110">
+<!-- Yönetici: parola penceresi -->
+<div class="tour" id="adminAuthSheet" hidden role="dialog" aria-modal="true" aria-labelledby="admAT" style="z-index:140">
   <div class="tcard" style="max-width:360px">
     <div class="tic">🔐</div>
-    <h3>Yönetici Doğrulama</h3>
-    <p class="sub" style="margin:0 0 10px">Çevrimiçi oyuncu hesapları ve skorlarına müdahale etmek için yönetici parolasını girin.</p>
-    <input type="password" id="admPassIn" placeholder="Yönetici parolası" style="width:100%;padding:10px;border-radius:10px;font-size:16px;text-align:center;margin-bottom:8px">
+    <h3 id="admAT">Yönetici Doğrulama</h3>
+    <p class="sub" style="margin:0 0 10px">Oyuncu hesaplarını ve skorlarını yönetmek için yönetici parolasını gir.</p>
+    <input type="password" id="admPassIn" placeholder="Yönetici parolası" autocomplete="off" style="width:100%;padding:10px;border-radius:10px;font-size:16px;text-align:center;margin-bottom:8px">
     <p id="admAuthErr" class="sub" style="color:var(--danger);min-height:18px;margin:0 0 8px"></p>
     <div class="trow">
       <button type="button" class="btn" id="admAuthCancel">Vazgeç</button>
-      <button type="button" class="btn pri" id="admAuthOk">Giriş Yap</button>
+      <button type="button" class="btn pri" id="admAuthOk">Giriş</button>
     </div>
   </div>
 </div>
 
-<!-- Gizli Süper Yönetici Kontrol Merkezi -->
-<div class="tour" id="adminPanelSheet" hidden role="dialog" aria-modal="true" style="z-index:115">
-  <div class="tcard" style="max-width:460px;max-height:92vh;overflow:auto;text-align:left">
+<!-- Yönetici: panel -->
+<div class="tour" id="adminPanelSheet" hidden role="dialog" aria-modal="true" aria-labelledby="admPT" style="z-index:145">
+  <div class="tcard" style="max-width:480px;max-height:92vh;overflow:auto;text-align:left">
     <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px">
-      <span class="vip-badge">🛡️ SÜPER YÖNETİCİ PANELİ</span>
-      <button type="button" class="btn" id="admPassChange" style="padding:4px 9px;font-size:11px">🔑 Parola Değiştir</button>
+      <span class="vip-badge">🛡️ YÖNETİCİ PANELİ</span>
+      <button type="button" class="btn" id="admPassChange" style="padding:4px 9px;font-size:11px">🔑 Parola</button>
     </div>
-    <h3 style="margin:0 0 4px">Oyuncu & Skor Yönetimi</h3>
-    <p class="sub" style="margin:0 0 10px;font-size:12px">Supabase üzerindeki canlı oyuncu adlarını ve skorlarını düzenleyebilir, yeni skor ekleyebilir veya hesapları silebilirsiniz.</p>
+    <h3 id="admPT" style="margin:0 0 4px">Oyuncu & Skor Yönetimi</h3>
+    <p class="sub" style="margin:0 0 10px;font-size:12px">Canlı sıralamadaki adları ve skorları görür, düzenler, gizler veya silersin. Silmeden önce yedek otomatik duruyor (scores_yedek_1127).</p>
+
+    <div class="two" style="margin-bottom:8px">
+      <button type="button" class="btn pri" id="admModeScores">🏆 Skorlar</button>
+      <button type="button" class="btn" id="admModeAcc">👤 Hesaplar</button>
+    </div>
 
     <div class="two" style="margin-bottom:10px">
-      <label style="font-size:12px">Oyun Seçimi
+      <label style="font-size:12px">Oyun
         <select id="admGameSel" style="width:100%;margin-top:4px"></select>
       </label>
-      <label style="font-size:12px">Oyuncu Ara
-        <input type="text" id="admSearch" placeholder="İsim veya UID..." style="width:100%;margin-top:4px">
+      <label style="font-size:12px">Ara
+        <input type="text" id="admSearch" placeholder="Ad veya UID" style="width:100%;margin-top:4px">
       </label>
     </div>
 
     <details class="sec" style="margin-bottom:10px">
-      <summary style="font-size:13.5px;padding:8px 0">➕ Yeni Oyuncu / Manuel Skor Ekle</summary>
+      <summary style="font-size:13.5px;padding:8px 0">➕ Manuel skor ekle (seçili oyuna)</summary>
       <div class="secbody" style="gap:8px;padding-top:6px">
         <div class="two">
           <input type="text" id="admNewName" maxlength="14" placeholder="Kullanıcı adı">
-          <input type="number" id="admNewScore" placeholder="Skor (Örn: 500)">
+          <input type="number" id="admNewScore" placeholder="Skor">
         </div>
-        <button type="button" class="btn pri" id="admAddBtn">Buluta Ekle / Kaydet</button>
+        <button type="button" class="btn pri" id="admAddBtn">Ekle</button>
       </div>
     </details>
 
     <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:6px;flex-wrap:wrap">
-      <b style="font-size:12.5px;color:var(--accent)" id="admCountLbl">Oyuncular Yükleniyor...</b>
+      <b style="font-size:12.5px;color:var(--accent)" id="admCountLbl">Yükleniyor…</b>
       <div style="display:flex;gap:5px">
         <button type="button" class="btn" id="admRefreshBtn" style="padding:4px 8px;font-size:11px">🔄 Yenile</button>
-        <button type="button" class="btn dng" id="admClearGame" style="padding:4px 8px;font-size:11px">🗑️ Oyunu Sıfırla</button>
+        <button type="button" class="btn dng" id="admClearGame" style="padding:4px 8px;font-size:11px">🗑️ Oyunu sıfırla</button>
       </div>
     </div>
 
-    <ul class="list" id="admPlayerList" style="max-height:42vh;overflow:auto;margin-bottom:12px"></ul>
+    <ul class="list" id="admList" style="max-height:42vh;overflow:auto;margin-bottom:12px"></ul>
 
+    <div class="trow"><button type="button" class="btn pri" id="admClose">Paneli Kapat</button></div>
+  </div>
+</div>
+
+<!-- Yönetici: metin/sayı giriş penceresi (prompt yerine) -->
+<div class="tour" id="admInputSheet" hidden role="dialog" aria-modal="true" aria-labelledby="admInT" style="z-index:160">
+  <div class="tcard" style="max-width:340px">
+    <div class="tic" id="admInIc">✏️</div>
+    <h3 id="admInT"></h3>
+    <p class="sub" id="admInP" style="margin:0 0 8px"></p>
+    <input type="text" id="admInV" autocomplete="off" style="width:100%;padding:10px;border-radius:10px;font-size:16px;text-align:center;margin-bottom:6px">
+    <p id="admInErr" class="sub" style="color:var(--danger);min-height:16px;margin:0 0 8px"></p>
     <div class="trow">
-      <button type="button" class="btn" id="admBanListBtn">🚫 Engelli Hesaplar (<span id="admBanCnt">0</span>)</button>
-      <button type="button" class="btn pri" id="admClose">Paneli Kapat</button>
+      <button type="button" class="btn" id="admInNo">Vazgeç</button>
+      <button type="button" class="btn pri" id="admInYes">Tamam</button>
     </div>
   </div>
 </div>
@@ -1337,7 +1354,7 @@ function close(id,silent){var el=$(id);if(!el||el.hidden)return;el.hidden=true;v
 function navInit(){try{history.replaceState({hb:'base'},'');history.pushState({hb:'root'},'')}catch(e){}}
 window.addEventListener('popstate',function(){
   if(ignorePop>0){ignorePop--;return}
-  if(modalStack.length){var id=modalStack.pop();var el=$(id);if(el)el.hidden=true;return}
+  if(modalStack.length){var id=modalStack.pop();var el=$(id);if(el)el.hidden=true;if(id==='#gameOv')gameBackToList();return}
   if(tabStack.length){curTab=tabStack.pop();switchTab(curTab);return}
   if(Date.now()-rootBackAt<2000){try{history.back()}catch(e){}return}
   rootBackAt=Date.now();toast('Çıkmak için bir kez daha geri basın');
@@ -2155,7 +2172,7 @@ function cmpFetchRival(g,localBest,cb){
     .then(function(rows){
       var bestByUser={};
       (rows||[]).forEach(function(r){
-        if(!r||!r.username||lbIsBanned(r.username,r.uid))return;
+        if(!r||!r.username)return;
         var k=r.username;
         if(!bestByUser[k]||r.score>bestByUser[k].s)bestByUser[k]={u:r.username,s:+r.score||0};
       });
@@ -2633,6 +2650,12 @@ function openGame(t,h){
   $('#gTitle').textContent=t;$('#gBody').innerHTML=(LB_CUR&&LB_GAMES[LB_CUR]?'<div style="text-align:center;margin-bottom:6px"><button type="button" class="btn" id="gLb">🏅 Bu oyunun sıralaması</button></div>':'')+h;
   if(LB_CUR&&$('#gLb'))$('#gLb').onclick=function(){lbOpen(LB_CUR)};
   open('#gameOv');
+}
+function gameBackToList(){
+  if(activeGameStop){try{activeGameStop()}catch(e){}activeGameStop=null}
+  try{bugStop(false)}catch(e){}
+  $('#gameOv').classList.remove('lingo-mode');
+  renderGamesHub();open('#gamesModal');
 }
 $('#gClose').onclick=function(){
   if(activeGameStop){try{activeGameStop()}catch(e){}activeGameStop=null}
@@ -4749,10 +4772,8 @@ function lbBadName(name){
 function lbName(){return (S.settings&&S.settings.username)||''}
 function lbUid(){if(!S.settings.uid){S.settings.uid=Math.random().toString(36).slice(2)+Date.now().toString(36);save()}return S.settings.uid}
 function lbHeaders(){return {'apikey':LB_CFG.key,'Authorization':'Bearer '+LB_CFG.key,'Content-Type':'application/json','x-uid':lbUid()}}
-function lbBannedList(){try{return JSON.parse(lsGet('hb-adm-banned')||'[]')}catch(e){return []}}
-function lbIsBanned(u,uid){var b=lbBannedList();return b.some(function(x){return (u&&x.u===u)||(uid&&x.uid===uid)})}
 function lbSubmit(g,score){
-  if(!LB_CFG.url||!lbName()||!(score>0)||lbBadName(lbName())||lbIsBanned(lbName(),lbUid()))return;
+  if(!LB_CFG.url||!lbName()||!(score>0)||lbBadName(lbName()))return;
   try{fetch(LB_CFG.url+'/rest/v1/scores',{method:'POST',headers:Object.assign(lbHeaders(),{'Prefer':'return=minimal'}),
     body:JSON.stringify({username:lbName(),game:g,score:Math.round(score),uid:lbUid()})}).catch(function(){})}catch(e){}}
 function lbRenameRemote(oldName,newName){if(!LB_CFG.url||!oldName||oldName===newName)return;
@@ -4789,7 +4810,7 @@ function lbRender(){
   fetch(LB_CFG.url+'/rest/v1/scores?game=eq.'+encodeURIComponent(g)+'&select=username,score&order=score.desc&limit=500',{headers:lbHeaders()})
     .then(function(r){if(!r.ok)throw new Error('http');return r.json()})
     .then(function(rows){
-      var best={};rows.forEach(function(r){if(lbIsBanned(r.username))return;if(!best[r.username]||r.score>best[r.username])best[r.username]=r.score});
+      var best={};rows.forEach(function(r){if(!best[r.username]||r.score>best[r.username])best[r.username]=r.score});
       var top=Object.keys(best).map(function(u){return {u:u,s:best[u]}}).sort(function(a,b){return b.s-a.s}).slice(0,20);
       $('#lbInfo').textContent=top.length?'En iyi 20 oyuncu':'Bu oyunda henüz skor yok. İlk sen ol!';
       list.innerHTML=top.map(function(r){return '<li'+(r.u===me?' style="font-weight:800;color:var(--accent)"':'')+'>'+escapeHtml(r.u)+' — '+r.s+'</li>'}).join('');
@@ -4996,9 +5017,12 @@ document.querySelectorAll('#skinSheet .skin-opt').forEach(function(b){
 });
 
 
-var APP_VERSION='2026-11-25-v51';
-var APP_VER_NO=51;
+var APP_VERSION='2026-11-27-v52';
+var APP_VER_NO=52;
 var APP_CHANGES=[
+  'Yönetici paneli: oyun ekranındaki 🎮 simgesine 5 kez dokun, parolayı gir. Oyuncu adı, skor ve hesapları görür, düzenler, gizler, engeller veya silersin (parola sunucuda doğrulanır).',
+  'Geri tuşu: oyunda geri basınca oyun listesine, sekmelerde bir önceki menüye döner.',
+  'Oyun listesinde 🏅 Genel Sıralama düğmesi var.',
   'Sıralama ekranından "Adımı değiştir" artık çalışıyor (ad penceresi üstte açılıyor).',
   'Karakterin yanında 💧 su damlası: bugünkü bardak sayını gösterir, +1 ve geri al yapar.',
   'Su İçme Hatırlatıcı: aç/kapa, dakika ayarı, 5 mod (klasik, karakter sesi, aslan kükremesi, meydan okuma, sessiz).',
@@ -5399,6 +5423,181 @@ if(!isStandaloneMode()&&lsGet('hb-install-guide-seen')!=='1'){
 }else{
   gateCheck();
 }
+/* ---------- YÖNETİCİ PANELİ (parola sunucuda doğrulanır) ---------- */
+var admPw='',admRows=[],admView=[],admMode='scores';
+
+$('#gmLbAllBtn').onclick=function(){lbOpen('lingo')};
+
+var admTap=0,admTapT=null;
+function admSecretTap(){
+  admTap++;clearTimeout(admTapT);admTapT=setTimeout(function(){admTap=0},2200);
+  if(admTap>=5){admTap=0;admAuthOpen()}
+}
+['#gmT','#gmSecretIcon','#lbSheet .tic'].forEach(function(s){var el=$(s);if(el)el.addEventListener('click',admSecretTap)});
+
+function admRpc(fn,args){
+  if(!LB_CFG.url)return Promise.reject(new Error('Çevrimiçi veritabanı bağlı değil'));
+  args=args||{};args.p=admPw;
+  return fetch(LB_CFG.url+'/rest/v1/rpc/'+fn,{method:'POST',headers:lbHeaders(),body:JSON.stringify(args)})
+    .then(function(r){return r.text().then(function(t){
+      var j=null;try{j=t?JSON.parse(t):null}catch(e){}
+      if(!r.ok){var m=(j&&j.message)||('HTTP '+r.status);if(r.status===404)m='Yönetici SQL kurulumu yapılmamış (Supabase).';throw new Error(m)}
+      if(j&&j.ok===false)throw new Error(j.err||'Reddedildi');
+      return j})},function(){throw new Error('İnternet bağlantısı yok')});
+}
+
+function admAuthOpen(){
+  $('#admPassIn').value='';$('#admAuthErr').textContent='';
+  open('#adminAuthSheet');
+  setTimeout(function(){$('#admPassIn').focus()},150);
+}
+function admVerify(){
+  var v=($('#admPassIn').value||'').trim();if(!v)return;
+  $('#admAuthErr').textContent='Kontrol ediliyor…';admPw=v;
+  admRpc('admin_login').then(function(){
+    replaceNext=true;close('#adminAuthSheet',true);admPanelOpen();
+  }).catch(function(e){admPw='';$('#admAuthErr').textContent='❌ '+e.message});
+}
+$('#admAuthCancel').onclick=function(){close('#adminAuthSheet')};
+$('#admAuthOk').onclick=admVerify;
+$('#admPassIn').onkeydown=function(e){if(e.key==='Enter')admVerify()};
+
+function admPanelOpen(){
+  var sel=$('#admGameSel');
+  if(!sel.options.length){
+    sel.innerHTML='<option value="all">🌐 Tüm oyunlar</option>'+Object.keys(LB_GAMES).map(function(k){return '<option value="'+k+'">'+escapeHtml(LB_GAMES[k])+'</option>'}).join('');
+  }
+  admSetMode('scores',true);
+  open('#adminPanelSheet');
+  admLoad();
+}
+function admSetMode(m,noRender){
+  admMode=m;
+  $('#admModeScores').classList.toggle('pri',m==='scores');
+  $('#admModeAcc').classList.toggle('pri',m==='acc');
+  if(!noRender)admRender();
+}
+function admLoad(){
+  $('#admCountLbl').textContent='Yükleniyor…';
+  admRpc('admin_list').then(function(j){admRows=j.rows||[];admRender()}).catch(function(e){
+    $('#admCountLbl').textContent='Hata';
+    $('#admList').innerHTML='<li class="empty">'+escapeHtml(e.message)+'</li>';
+  });
+}
+function admDone(msg){toast(msg);admLoad();if(!$('#lbSheet').hidden)lbRender();CMP_CACHE={}}
+function admFail(e){toast('❌ '+e.message)}
+
+function admKey(r){return r.uid?('u:'+r.uid):('n:'+r.username)}
+function admRender(){
+  var g=$('#admGameSel').value,q=($('#admSearch').value||'').toLowerCase().trim();
+  function hit(r){return !q||String(r.username).toLowerCase().indexOf(q)>=0||String(r.uid||'').toLowerCase().indexOf(q)>=0}
+  var html='';
+  if(admMode==='scores'){
+    admView=admRows.filter(function(r){return (g==='all'||r.game===g)&&hit(r)});
+    $('#admCountLbl').textContent='Skor kayıtları ('+admView.length+')';
+    html=admView.map(function(r,i){
+      var d=r.created_at?new Date(r.created_at).toLocaleDateString('tr-TR'):'';
+      return '<li class="item" style="flex-direction:column;align-items:stretch;gap:6px;'+(r.hidden?'opacity:.6;':'')+'">'+
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">'+
+          '<div style="min-width:0"><b style="font-size:14px;display:block">👤 '+escapeHtml(r.username)+(r.hidden?' <span style="color:var(--danger);font-size:11px">[GİZLİ]</span>':'')+'</b>'+
+          '<span style="font-size:11px;color:var(--muted)">🎮 '+escapeHtml(LB_GAMES[r.game]||r.game)+' · '+escapeHtml(String(r.uid||'uid yok').slice(0,10))+' · '+d+'</span></div>'+
+          '<b style="font:800 17px var(--f-display);color:var(--accent);white-space:nowrap">'+r.score+'</b></div>'+
+        '<div style="display:flex;gap:5px;flex-wrap:wrap">'+
+          '<button type="button" class="btn" style="padding:4px 8px;font-size:11.5px" data-a="score" data-i="'+i+'">🎯 Skor</button>'+
+          '<button type="button" class="btn" style="padding:4px 8px;font-size:11.5px" data-a="hide" data-i="'+i+'">'+(r.hidden?'👁️ Göster':'🙈 Gizle')+'</button>'+
+          '<button type="button" class="btn dng" style="padding:4px 8px;font-size:11.5px" data-a="del" data-i="'+i+'">🗑️ Sil</button>'+
+        '</div></li>';
+    }).join('');
+  }else{
+    var map={},order=[];
+    admRows.forEach(function(r){
+      if(!hit(r))return;var k=admKey(r);
+      if(!map[k]){map[k]={uid:r.uid||null,name:r.username,games:{},hid:0,n:0};order.push(k)}
+      var a=map[k];a.n++;if(r.hidden)a.hid++;
+      if(!a.games[r.game]||r.score>a.games[r.game])a.games[r.game]=r.score;
+    });
+    admView=order.map(function(k){return map[k]}).sort(function(a,b){return a.name.localeCompare(b.name,'tr')});
+    $('#admCountLbl').textContent='Hesaplar ('+admView.length+')';
+    html=admView.map(function(a,i){
+      var gs=Object.keys(a.games).map(function(k){return escapeHtml(LB_GAMES[k]||k)+' '+a.games[k]}).join(' · ');
+      var ban=a.hid>0&&a.hid===a.n;
+      return '<li class="item" style="flex-direction:column;align-items:stretch;gap:6px;'+(ban?'opacity:.6;':'')+'">'+
+        '<div style="min-width:0"><b style="font-size:14px;display:block">👤 '+escapeHtml(a.name)+(ban?' <span style="color:var(--danger);font-size:11px">[ENGELLİ]</span>':'')+'</b>'+
+        '<span style="font-size:11px;color:var(--muted)">UID: '+escapeHtml(String(a.uid||'yok').slice(0,10))+' · '+a.n+' kayıt</span>'+
+        '<div style="font-size:11.5px;margin-top:3px;word-break:break-word">'+gs+'</div></div>'+
+        '<div style="display:flex;gap:5px;flex-wrap:wrap">'+
+          '<button type="button" class="btn" style="padding:4px 8px;font-size:11.5px" data-a="ren" data-i="'+i+'">✏️ Ad değiştir</button>'+
+          '<button type="button" class="btn" style="padding:4px 8px;font-size:11.5px" data-a="ban" data-i="'+i+'">'+(ban?'✅ Engeli kaldır':'🚫 Engelle')+'</button>'+
+          '<button type="button" class="btn dng" style="padding:4px 8px;font-size:11.5px" data-a="accdel" data-i="'+i+'">🗑️ Hesabı sil</button>'+
+        '</div></li>';
+    }).join('');
+  }
+  $('#admList').innerHTML=html||'<li class="empty">Kayıt bulunamadı.</li>';
+}
+
+function admAsk(title,text,val,icon,numeric,cb){
+  var inp=$('#admInV');
+  $('#admInIc').textContent=icon;$('#admInT').textContent=title;$('#admInP').textContent=text;
+  inp.type=numeric?'number':'text';inp.value=val;$('#admInErr').textContent='';
+  function go(){var err=cb(inp.value.trim());if(err){$('#admInErr').textContent=err;return}close('#admInputSheet')}
+  $('#admInYes').onclick=go;
+  $('#admInNo').onclick=function(){close('#admInputSheet')};
+  inp.onkeydown=function(e){if(e.key==='Enter')go()};
+  open('#admInputSheet');
+  setTimeout(function(){inp.focus()},150);
+}
+function admNameCheck(v){return (v.length<2||v.length>14)?'2–14 karakter olmalı':null}
+
+$('#admList').onclick=function(e){
+  var b=e.target.closest('button');if(!b||!b.dataset.a)return;
+  var it=admView[+b.dataset.i];if(!it)return;var a=b.dataset.a;
+  if(a==='score'){
+    admAsk('Skoru düzenle',it.username+' · '+(LB_GAMES[it.game]||it.game),it.score,'🎯',true,function(v){
+      var n=Math.round(Number(v));if(v===''||isNaN(n)||n<0)return 'Geçerli bir sayı gir';
+      admRpc('admin_set_score',{rid:it.id,sc:n}).then(function(){admDone('🎯 Skor güncellendi')}).catch(admFail)});
+  }else if(a==='hide'){
+    admRpc('admin_row_hide',{rid:it.id,hide:!it.hidden}).then(function(){admDone(it.hidden?'👁️ Kayıt gösterildi':'🙈 Kayıt gizlendi')}).catch(admFail);
+  }else if(a==='del'){
+    askConfirm('Skor silinsin mi?',it.username+' · '+(LB_GAMES[it.game]||it.game)+' · '+it.score+' kaydı kalıcı silinir.','Evet, sil','🗑️',function(){
+      admRpc('admin_row_delete',{rid:it.id}).then(function(){admDone('🗑️ Kayıt silindi')}).catch(admFail)});
+  }else if(a==='ren'){
+    admAsk('Ad değiştir','"'+it.name+'" hesabının tüm skorlarında güncellenir.',it.name,'✏️',false,function(v){
+      var er=admNameCheck(v);if(er)return er;
+      admRpc('admin_acc_rename',{a_uid:it.uid,a_name:it.name,new_name:v}).then(function(){admDone('✏️ Ad güncellendi')}).catch(admFail)});
+  }else if(a==='ban'){
+    var ban=!(it.hid>0&&it.hid===it.n);
+    admRpc('admin_acc_ban',{a_uid:it.uid,a_name:it.name,ban:ban}).then(function(){admDone(ban?'🚫 Hesap engellendi (sıralamada görünmez)':'✅ Engel kaldırıldı')}).catch(admFail);
+  }else if(a==='accdel'){
+    askConfirm('Hesap silinsin mi?',it.name+' hesabının '+it.n+' skor kaydı kalıcı silinir.','Evet, sil','🗑️',function(){
+      admRpc('admin_acc_delete',{a_uid:it.uid,a_name:it.name}).then(function(){admDone('🗑️ Hesap silindi')}).catch(admFail)});
+  }
+};
+
+$('#admAddBtn').onclick=function(){
+  var g=$('#admGameSel').value,nm=($('#admNewName').value||'').trim(),sc=Math.round(Number($('#admNewScore').value));
+  if(g==='all'){toast('Önce yukarıdan bir oyun seç');return}
+  if(nm.length<2||isNaN(sc)||sc<0){toast('Geçerli ad ve skor gir');return}
+  admRpc('admin_add',{g:g,uname:nm,sc:sc}).then(function(){
+    $('#admNewName').value='';$('#admNewScore').value='';admDone('✅ Skor eklendi')}).catch(admFail);
+};
+$('#admClearGame').onclick=function(){
+  var g=$('#admGameSel').value;
+  if(g==='all'){toast('Sıfırlamak için bir oyun seç');return}
+  askConfirm('Oyun sıfırlansın mı?',(LB_GAMES[g]||g)+' oyunundaki TÜM skorlar kalıcı silinir.','Evet, sıfırla','⚠️',function(){
+    admRpc('admin_game_reset',{g:g}).then(function(){admDone('🗑️ Oyun sıfırlandı')}).catch(admFail)});
+};
+$('#admPassChange').onclick=function(){
+  admAsk('Yeni parola','En az 6 karakter.','','🔑',false,function(v){
+    if(v.length<6)return 'En az 6 karakter olmalı';
+    admRpc('admin_change_pass',{np:v}).then(function(){admPw=v;toast('🔑 Parola değişti')}).catch(admFail)});
+};
+$('#admModeScores').onclick=function(){admSetMode('scores')};
+$('#admModeAcc').onclick=function(){admSetMode('acc')};
+$('#admGameSel').onchange=admRender;
+$('#admSearch').oninput=admRender;
+$('#admRefreshBtn').onclick=admLoad;
+$('#admClose').onclick=function(){close('#adminPanelSheet')};
+
 navInit();populateCitySelects();syncPrayerTabVisibility();syncToolsTabVisibility();checkAppUpdate();syncNotifSettings();syncWaterSettings();setInterval(waterTick,15000);initNotifs();syncStepsSettings();applySkin();loadLion();autoBackup();applyTheme();applyRoachLook();renderAll();tick();setInterval(tick,1000);
 })();
 </script>
@@ -5593,298 +5792,7 @@ document.addEventListener('touchend',function(){y0=null},{passive:true});
 })();
 </script>
 
-<script>
-/* ---------- SÜPER YÖNETİCİ OYUNCU & SUPABASE SKOR KONTROL MODÜLÜ ---------- */
-(function(){
-  var ADM_PASS_KEY = 'hb-adm-pass-v1';
-  var DEF_PASS     = 'ferdi1453';
-  var admRowsCache = [];
 
-  function getAdmPass(){ return lsGet(ADM_PASS_KEY) || DEF_PASS; }
-  function setAdmPass(p){ lsSet(ADM_PASS_KEY, p); }
-
-  if($('#gmLbAllBtn')){
-    $('#gmLbAllBtn').onclick = function(){
-      replaceNext = true;
-      close('#gamesModal', true);
-      lbOpen('lingo');
-    };
-  }
-
-  var tapCnt = 0, tapTmr = null, lastTapTs = 0;
-  function handleSecretTap(e){
-    var now = Date.now();
-    if(now - lastTapTs < 90) return;
-    lastTapTs = now;
-    tapCnt++;
-    clearTimeout(tapTmr);
-    tapTmr = setTimeout(function(){ tapCnt = 0; }, 2200);
-    if(tapCnt >= 5){
-      tapCnt = 0;
-      if(e && e.preventDefault) e.preventDefault();
-      openAdminAuth();
-    }
-  }
-  function bindSecretTrigger(el){
-    if(!el) return;
-    el.addEventListener('click', handleSecretTap);
-    el.addEventListener('touchend', handleSecretTap, {passive:false});
-  }
-  bindSecretTrigger($('#gmT'));
-  bindSecretTrigger($('#gmSecretIcon'));
-  bindSecretTrigger($('#lbSheet .tic'));
-
-  function openAdminAuth(){
-    var authEl = $('#adminAuthSheet');
-    if(!authEl) return;
-    $('#admPassIn').value = '';
-    $('#admAuthErr').textContent = '';
-    authEl.style.zIndex = '140';
-    open('#adminAuthSheet');
-    setTimeout(function(){ if($('#admPassIn')) $('#admPassIn').focus(); }, 140);
-  }
-
-  if($('#admAuthCancel')) $('#admAuthCancel').onclick = function(){ close('#adminAuthSheet'); };
-  if($('#admAuthOk')) $('#admAuthOk').onclick = verifyAdmin;
-  if($('#admPassIn')) $('#admPassIn').onkeydown = function(e){ if(e.key === 'Enter') verifyAdmin(); };
-
-  function verifyAdmin(){
-    var v = ($('#admPassIn').value || '').trim();
-    if(v === getAdmPass()){
-      replaceNext = true;
-      close('#adminAuthSheet', true);
-      initAdminPanel();
-      var pEl = $('#adminPanelSheet');
-      if(pEl) pEl.style.zIndex = '145';
-      open('#adminPanelSheet');
-      toast('🛡️ Süper Yönetici Paneli açıldı');
-    } else {
-      $('#admAuthErr').textContent = '❌ Hatalı yönetici parolası!';
-      if(navigator.vibrate) navigator.vibrate([80,50,80]);
-    }
-  }
-
-  function initAdminPanel(){
-    var sel = $('#admGameSel');
-    if(sel && !sel.options.length){
-      sel.innerHTML = '<option value="all">🌐 Tüm Oyunlar</option>' +
-        Object.keys(LB_GAMES).map(function(k){
-          return '<option value="'+k+'">'+escapeHtml(LB_GAMES[k])+'</option>';
-        }).join('');
-    }
-    if($('#admBanCnt')) $('#admBanCnt').textContent = lbBannedList().length;
-    fetchAdminPlayers();
-  }
-
-  function fetchAdminPlayers(){
-    var g = ($('#admGameSel') && $('#admGameSel').value) || 'all';
-    $('#admCountLbl').textContent = 'Buluttan çekiliyor...';
-    $('#admPlayerList').innerHTML = '<li class="empty">Yükleniyor...</li>';
-
-    if(!LB_CFG.url){
-      $('#admCountLbl').textContent = 'Çevrimiçi veritabanı bağlı değil';
-      return;
-    }
-
-    var url = LB_CFG.url + '/rest/v1/scores?select=id,username,game,score,uid,created_at&order=score.desc&limit=1000';
-    if(g !== 'all') url += '&game=eq.' + encodeURIComponent(g);
-
-    fetch(url, { headers: lbHeaders() })
-      .then(function(r){ if(!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-      .then(function(rows){
-        admRowsCache = Array.isArray(rows) ? rows : [];
-        renderAdminPlayers();
-      })
-      .catch(function(err){
-        $('#admCountLbl').textContent = 'Bağlantı hatası';
-        $('#admPlayerList').innerHTML = '<li class="empty">Veriler çekilemedi: ' + escapeHtml(err.message) + '</li>';
-      });
-  }
-
-  function renderAdminPlayers(){
-    var q = ($('#admSearch').value || '').toLowerCase().trim();
-    var filtered = admRowsCache.filter(function(r){
-      if(!q) return true;
-      return String(r.username||'').toLowerCase().indexOf(q) >= 0 ||
-             String(r.uid||'').toLowerCase().indexOf(q) >= 0 ||
-             String(r.game||'').toLowerCase().indexOf(q) >= 0;
-    });
-
-    $('#admCountLbl').textContent = 'Kayıtlı Skor / Oyuncu (' + filtered.length + ')';
-    $('#admBanCnt').textContent = lbBannedList().length;
-
-    if(!filtered.length){
-      $('#admPlayerList').innerHTML = '<li class="empty">Eşleşen oyuncu kaydı bulunamadı.</li>';
-      return;
-    }
-
-    $('#admPlayerList').innerHTML = filtered.map(function(r, idx){
-      var banned = lbIsBanned(r.username, r.uid);
-      var gName = LB_GAMES[r.game] || r.game;
-      var badge = banned ? ' <span style="color:var(--danger);font-size:11px;font-weight:800">[ENGELLİ]</span>' : '';
-      return '<li class="item" style="flex-direction:column;align-items:stretch;gap:6px;'+(banned?'opacity:.65;border-color:var(--danger)':'')+'">' +
-        '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">' +
-          '<div style="min-width:0">' +
-            '<b style="font-size:14px">👤 ' + escapeHtml(r.username) + badge + '</b>' +
-            '<span style="font-size:11px;color:var(--muted)">🎮 ' + escapeHtml(gName) + ' • UID: ' + escapeHtml(String(r.uid||'-').slice(0,10)) + '</span>' +
-          '</div>' +
-          '<b style="font:800 17px var(--f-display);color:var(--accent);white-space:nowrap">🏆 ' + r.score + '</b>' +
-        '</div>' +
-        '<div style="display:flex;gap:5px;flex-wrap:wrap">' +
-          '<button type="button" class="btn" style="padding:4px 8px;font-size:11.5px" data-adm="rename" data-idx="'+idx+'">✏️ Ad Değiştir</button>' +
-          '<button type="button" class="btn" style="padding:4px 8px;font-size:11.5px" data-adm="score" data-idx="'+idx+'">🎯 Skor Düzenle</button>' +
-          '<button type="button" class="btn" style="padding:4px 8px;font-size:11.5px" data-adm="ban" data-idx="'+idx+'">'+(banned?'✅ Engeli Kaldır':'🚫 Engelle')+'</button>' +
-          '<button type="button" class="btn dng" style="padding:4px 8px;font-size:11.5px" data-adm="del" data-idx="'+idx+'">🗑️ Sil</button>' +
-        '</div>' +
-      '</li>';
-    }).join('');
-
-    $('#admPlayerList')._filtered = filtered;
-  }
-
-  $('#admPlayerList').onclick = function(e){
-    var btn = e.target.closest('button');
-    if(!btn || !btn.dataset.adm) return;
-    var act = btn.dataset.adm;
-    var list = $('#admPlayerList')._filtered || [];
-    var row = list[+btn.dataset.idx];
-    if(!row) return;
-
-    if(act === 'rename'){
-      var nn = prompt('"' + row.username + '" için yeni kullanıcı adı (tüm skorlarında güncellenir):', row.username);
-      if(!nn || nn.trim().length < 2) return;
-      nn = nn.trim().slice(0,14);
-      var filterQ = row.uid ? ('uid=eq.' + encodeURIComponent(row.uid)) : ('username=eq.' + encodeURIComponent(row.username));
-      fetch(LB_CFG.url + '/rest/v1/scores?' + filterQ, {
-        method: 'PATCH',
-        headers: Object.assign(lbHeaders(), {'Prefer':'return=minimal'}),
-        body: JSON.stringify({ username: nn })
-      }).then(function(r){
-        if(!r.ok) throw new Error('Güncellenemedi');
-        if(lbName() === row.username){ S.settings.username = nn; save(); }
-        toast('✅ Kullanıcı adı "' + nn + '" olarak güncellendi');
-        fetchAdminPlayers();
-        if(!$('#lbSheet').hidden) lbRender();
-      }).catch(function(err){ toast('❌ Hata: ' + err.message); });
-
-    } else if(act === 'score'){
-      var ns = prompt(row.username + ' (' + (LB_GAMES[row.game]||row.game) + ') için yeni skor:', row.score);
-      if(ns === null || isNaN(Number(ns))) return;
-      var newVal = Math.max(0, Math.round(Number(ns)));
-      var targetQ = row.id ? ('id=eq.' + encodeURIComponent(row.id)) :
-        ('username=eq.' + encodeURIComponent(row.username) + '&game=eq.' + encodeURIComponent(row.game));
-      fetch(LB_CFG.url + '/rest/v1/scores?' + targetQ, {
-        method: 'PATCH',
-        headers: Object.assign(lbHeaders(), {'Prefer':'return=minimal'}),
-        body: JSON.stringify({ score: newVal })
-      }).then(function(r){
-        if(!r.ok) throw new Error('Skor güncellenemedi');
-        toast('🎯 Yeni skor kaydedildi: ' + newVal);
-        fetchAdminPlayers();
-        if(!$('#lbSheet').hidden) lbRender();
-      }).catch(function(err){ toast('❌ Hata: ' + err.message); });
-
-    } else if(act === 'ban'){
-      var bl = lbBannedList();
-      var existsIdx = bl.findIndex(function(x){ return x.u === row.username || (row.uid && x.uid === row.uid); });
-      if(existsIdx >= 0){
-        bl.splice(existsIdx, 1);
-        toast('✅ ' + row.username + ' engeli kaldırıldı');
-      } else {
-        bl.push({ u: row.username, uid: row.uid || '' });
-        toast('🚫 ' + row.username + ' sıralamadan gizlendi');
-      }
-      lsSet('hb-adm-banned', JSON.stringify(bl));
-      renderAdminPlayers();
-      if(!$('#lbSheet').hidden) lbRender();
-
-    } else if(act === 'del'){
-      if(!confirm(row.username + ' adlı oyuncunun bu skor kaydı silinsin mi?\n\nTamam = Sadece bu skoru sil')) return;
-      var delQ = row.id ? ('id=eq.' + encodeURIComponent(row.id)) :
-        ('username=eq.' + encodeURIComponent(row.username) + '&game=eq.' + encodeURIComponent(row.game));
-      fetch(LB_CFG.url + '/rest/v1/scores?' + delQ, {
-        method: 'DELETE',
-        headers: Object.assign(lbHeaders(), {'Prefer':'return=minimal'})
-      }).then(function(r){
-        if(!r.ok) throw new Error('Silme yetkisi reddedildi veya hata oluştu');
-        toast('🗑️ Kayıt silindi');
-        fetchAdminPlayers();
-        if(!$('#lbSheet').hidden) lbRender();
-      }).catch(function(err){ toast('❌ Hata: ' + err.message); });
-    }
-  };
-
-  $('#admAddBtn').onclick = function(){
-    var nm = ($('#admNewName').value || '').trim().slice(0,14);
-    var sc = Number($('#admNewScore').value);
-    var g = $('#admGameSel').value;
-    if(g === 'all') g = 'lingo';
-    if(nm.length < 2 || isNaN(sc) || sc < 0){
-      toast('Geçerli bir kullanıcı adı ve skor girin');
-      return;
-    }
-    fetch(LB_CFG.url + '/rest/v1/scores', {
-      method: 'POST',
-      headers: Object.assign(lbHeaders(), {'Prefer':'return=minimal'}),
-      body: JSON.stringify({
-        username: nm,
-        game: g,
-        score: Math.round(sc),
-        uid: 'adm_' + Math.random().toString(36).slice(2,10)
-      })
-    }).then(function(r){
-      if(!r.ok) throw new Error('Kayıt eklenemedi');
-      $('#admNewName').value = '';
-      $('#admNewScore').value = '';
-      toast('✅ Oyuncu skoru eklendi');
-      fetchAdminPlayers();
-      if(!$('#lbSheet').hidden) lbRender();
-    }).catch(function(err){ toast('❌ Hata: ' + err.message); });
-  };
-
-  $('#admClearGame').onclick = function(){
-    var g = $('#admGameSel').value;
-    if(g === 'all'){
-      toast('Sıfırlamak için önce üstten belirli bir oyun seçin');
-      return;
-    }
-    if(!confirm((LB_GAMES[g]||g) + ' oyunundaki TÜM oyuncu skorları buluttan silinecek. Emin misiniz?')) return;
-    fetch(LB_CFG.url + '/rest/v1/scores?game=eq.' + encodeURIComponent(g), {
-      method: 'DELETE',
-      headers: Object.assign(lbHeaders(), {'Prefer':'return=minimal'})
-    }).then(function(r){
-      if(!r.ok) throw new Error('Sıfırlama başarısız');
-      toast('🗑️ ' + (LB_GAMES[g]||g) + ' skorları sıfırlandı');
-      fetchAdminPlayers();
-      if(!$('#lbSheet').hidden) lbRender();
-    }).catch(function(err){ toast('❌ Hata: ' + err.message); });
-  };
-
-  $('#admBanListBtn').onclick = function(){
-    var bl = lbBannedList();
-    if(!bl.length){ toast('Engelli hesap bulunmuyor'); return; }
-    var names = bl.map(function(x,i){ return (i+1) + '. ' + x.u; }).join('\n');
-    if(confirm('Engelli Hesaplar:\n' + names + '\n\nTüm engelleri kaldırmak ister misiniz?')){
-      lsSet('hb-adm-banned', '[]');
-      renderAdminPlayers();
-      toast('✅ Tüm engeller kaldırıldı');
-    }
-  };
-
-  $('#admPassChange').onclick = function(){
-    var np = prompt('Yeni yönetici parolasını girin (en az 4 karakter):');
-    if(np && np.trim().length >= 4){
-      setAdmPass(np.trim());
-      toast('🔑 Yönetici parolası güncellendi');
-    }
-  };
-
-  $('#admGameSel').onchange = fetchAdminPlayers;
-  $('#admSearch').oninput = renderAdminPlayers;
-  $('#admRefreshBtn').onclick = fetchAdminPlayers;
-  $('#admClose').onclick = function(){ close('#adminPanelSheet'); };
-})();
-</script>
 
 </body>
 </html>
